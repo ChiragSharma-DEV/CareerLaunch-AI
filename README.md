@@ -1,332 +1,286 @@
-<!-- PROJECT HERO -->
+<!-- HERO SECTION START -->
 <div align="center">
 
-<!-- Centered Project Logo (SVG Placeholder) -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="120" height="120">
+<!-- Custom Dynamic Gradient SVG Logo -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 220" width="100%" max-width="600" height="auto">
   <defs>
-    <linearGradient id="grad-primary" x1="0%" y1="0%" x2="100%" y2="100%">
+    <linearGradient id="purplePink" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" style="stop-color:#a855f7;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#d946ef;stop-opacity:1" />
       <stop offset="100%" style="stop-color:#ec4899;stop-opacity:1" />
     </linearGradient>
-    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="5" result="blur" />
+    <linearGradient id="blueTeal" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:1" />
+    </linearGradient>
+    <filter id="neonGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
       <feComposite in="SourceGraphic" in2="blur" operator="over" />
     </filter>
   </defs>
-  <circle cx="50" cy="50" r="40" fill="url(#grad-primary)" filter="url(#glow)" />
-  <path d="M35 65 L48 35 L65 65 Z" fill="none" stroke="#ffffff" stroke-width="6" stroke-linejoin="round" />
-  <circle cx="50" cy="48" r="4" fill="#ffffff" />
+  <!-- Background Glow Element -->
+  <rect x="10" y="10" width="780" height="200" rx="24" fill="#0e0d1a" stroke="url(#purplePink)" stroke-width="2" />
+  
+  <!-- Logo Icon -->
+  <g transform="translate(45, 50)">
+    <circle cx="60" cy="60" r="50" fill="url(#purplePink)" filter="url(#neonGlow)" opacity="0.9" />
+    <path d="M35 80 L60 35 L85 80 Z" fill="none" stroke="#ffffff" stroke-width="8" stroke-linejoin="round" stroke-linecap="round" />
+    <circle cx="60" cy="58" r="6" fill="#ffffff" />
+    <path d="M48 80 L72 80" stroke="#ffffff" stroke-width="4" stroke-linecap="round"/>
+  </g>
+
+  <!-- Typography -->
+  <text x="190" y="115" font-family="'Inter', 'Segoe UI', sans-serif" font-weight="900" font-size="44" fill="#f0eeff" letter-spacing="2">CAREERLAUNCH</text>
+  <text x="560" y="115" font-family="'Inter', 'Segoe UI', sans-serif" font-weight="900" font-size="44" fill="url(#blueTeal)" letter-spacing="2">AI</text>
+  <text x="192" y="155" font-family="'Inter', 'Segoe UI', sans-serif" font-weight="500" font-size="16" fill="#a8a3c9" letter-spacing="4">THE END-TO-END JOB READINESS SUITE</text>
 </svg>
-
-# Career Launch AI
-
-### The End-to-End Job Readiness Suite
-
-[![Build Status](https://img.shields.io/badge/build-passing-success?style=for-the-badge&logo=github-actions&logoColor=white&color=a855f7)](https://github.com/ChiragSharma-DEV/AI-FOR-IMPACT)
-[![License](https://img.shields.io/badge/license-MIT-blue?style=for-the-badge&logo=open-source-initiative&logoColor=white&color=ec4899)](https://github.com/ChiragSharma-DEV/AI-FOR-IMPACT/blob/main/LICENSE)
-[![Version](https://img.shields.io/badge/version-v1.0.0--beta-orange?style=for-the-badge&logo=git&logoColor=white&color=3b82f6)](https://github.com/ChiragSharma-DEV/AI-FOR-IMPACT)
-[![Tech Stack](https://img.shields.io/badge/tech--stack-AI%20%7C%20Serverless%20JS-brightgreen?style=for-the-badge&logo=javascript&logoColor=white&color=06b6d4)](https://github.com/ChiragSharma-DEV/AI-FOR-IMPACT)
-[![Contributors](https://img.shields.io/github/contributors/ChiragSharma-DEV/AI-FOR-IMPACT?style=for-the-badge&logo=github&logoColor=white&color=10b981)](https://github.com/ChiragSharma-DEV/AI-FOR-IMPACT/graphs/contributors)
-[![Stars](https://img.shields.io/github/stars/ChiragSharma-DEV/AI-FOR-IMPACT?style=for-the-badge&logo=github&logoColor=white&color=f59e0b)](https://github.com/ChiragSharma-DEV/AI-FOR-IMPACT/stargazers)
 
 <br/>
 
-**Career Launch AI** is a state-of-the-art, client-side, zero-persistence job readiness platform built explicitly for engineering students and freshers. By marrying high-performance LLMs (LLaMA-3 via Groq) with browser-based parsing engines (PDF.js) and real-time developer profiling (GitHub REST API), it equips candidates to audit their resumes, close technical skill gaps, simulate enterprise-grade AI technical interviews, and model collaborative development workstreams.
+<!-- Animated Showcase Banner -->
+<img src="https://via.placeholder.com/1200x450/08070f/a855f7?text=Career+Launch+AI+-+Cinematic+Dashboard+Orchestration" alt="Career Launch AI Dynamic Banner" width="100%" style="border-radius:14px; border: 1px solid rgba(168,85,247,0.25); box-shadow: 0 20px 50px rgba(0,0,0,0.8);" />
 
----
+<br/>
+<br/>
 
-<!-- Animated Banner Placeholder -->
+<!-- Modern Badge Row -->
+<p align="center">
+  <img src="https://img.shields.io/badge/build-passing-success?style=for-the-badge&logo=github-actions&logoColor=white&color=a855f7" alt="Build" />
+  <img src="https://img.shields.io/badge/release-v1.0.0--beta-blue?style=for-the-badge&logo=git&logoColor=white&color=3b82f6" alt="Version" />
+  <img src="https://img.shields.io/badge/license-MIT-green?style=for-the-badge&logo=open-source-initiative&logoColor=white&color=10b981" alt="License" />
+  <img src="https://img.shields.io/badge/stack-Serverless%20%7C%20AI-orange?style=for-the-badge&logo=javascript&logoColor=white&color=ec4899" alt="Stack" />
+  <img src="https://img.shields.io/github/stars/ChiragSharma-DEV/AI-FOR-IMPACT?style=for-the-badge&logo=github&logoColor=white&color=f59e0b" alt="Stars" />
+</p>
+
+<p align="center">
+  <strong>An elite, zero-persistence developer preparation workspace.</strong><br/>
+  Synthesizes browser-side document tokenization, GitHub contribution analytics, and LLaMA-3.1 inference gateways<br/>
+  to transform candidate portfolios into verified, interview-ready profiles.
+</p>
+
+</div>
+<!-- HERO SECTION END -->
+
+<!-- SECTION DIVIDER (SVG Gradient Wave) -->
 <div align="center">
-  <img src="https://via.placeholder.com/1200x500/08070f/a855f7?text=Career+Launch+AI+-+Interactive+Platform+Dashboard+Showcase" alt="Career Launch AI Dashboard Banner" width="100%" style="border-radius:10px; border: 1px solid rgba(168,85,247,0.15);" />
-  <p><em>[Animated Banner Demo: Synthesizing candidate resume text alongside real-time GitHub commit history graphs and projecting an interactive skill gap matrix on a dark glassmorphic dashboard.]</em></p>
-</div>
-
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 120" width="100%" height="auto" style="margin: 20px 0;">
+    <path fill="none" stroke="url(#purplePink)" stroke-width="2" d="M0,32L120,42.7C240,53,480,75,720,74.7C960,75,1200,53,1320,42.7L1440,32" />
+    <path fill="url(#purplePink)" fill-opacity="0.05" d="M0,32L120,42.7C240,53,480,75,720,74.7C960,75,1200,53,1320,42.7L1440,32L1440,120L1320,120C1200,120,960,120,720,120C480,120,240,120,120,120L0,120Z" />
+  </svg>
 </div>
 
 ---
 
-## 🕹️ Live Demo & Key Flows
-
-### Interactive Motion Showcase
-<!-- Embedded GIF demo placeholder -->
-<div align="center">
-  <img src="https://via.placeholder.com/800x450/0e0d1a/ec4899?text=AI+Interview+Coach+And+Resume+Auditing+In+Action" alt="Real-time interactive session" width="85%" style="border-radius:8px; border:1px solid rgba(236,72,153,0.12);" />
-  <p><em>[Interactive Demo: A user uploads a 2-page PDF resume, inputs a target frontend engineer GitHub repo, runs the auditor, watches the 3D dashboard light up with match scores, and boots up a live, audio-capable AI mock interview chat widget.]</em></p>
-</div>
-
-### Component Visualization Grid
-
-| **1. Resume Ingestion & Audit** | **2. GitHub Developer Profiler** |
-| :---: | :---: |
-| <img src="https://via.placeholder.com/400x250/08070f/3b82f6?text=PDF.js+Client-Side+Parser" width="100%" style="border-radius:6px;"/> | <img src="https://via.placeholder.com/400x250/08070f/06b6d4?text=GitHub+REST+API+Aggregator" width="100%" style="border-radius:6px;"/> |
-| Parses binary layouts, cleans control codes, and extracts strings directly in the browser sandbox. | Iterates over repository directory trees and commit histories to extract authentic code patterns. |
-| **3. AI Technical Interview Coach** | **4. Multi-Agent Team Planner** |
-| <img src="https://via.placeholder.com/400x250/08070f/a855f7?text=Real-time+LLaMA-3+Interview" width="100%" style="border-radius:6px;"/> | <img src="https://via.placeholder.com/400x250/08070f/d946ef?text=Developer+Simulation" width="100%" style="border-radius:6px;"/> |
-| Prompts candidate with technical questions, evaluates feedback, and scores answer completeness. | Simulates cooperative agile sprints with multiple AI developer personas using LLaMA-3. |
-
----
-
-## ⚠️ The Problem Statement
-
-Traditional university career prep and HR portals rely on static keywords and self-reported skills. Fresh graduates face an intense disconnect: **resumes look identical on paper**, yet their **practical code contributions remain unverified** and their **technical communication untested**.
+## ⚡ The Problem & The Solution
 
 ```mermaid
 graph TD
-    %% Current Broken Path
-    subgraph BrokenPath ["The Status Quo (Disconnected & Unverified)"]
-        A[Static Resume PDF] -->|A1: Manual Keyword Stuffing| B(Unverified Claims)
-        C[GitHub Repository] -->|C1: Raw Code Left Unlinked| D(Untapped Developer Signal)
-        B -->|A2: Blackbox ATS Filter| E{Reject / Screen-out}
-        D -->|C2: Ignored by HR Screening| E
-        E -->|If Passed| F[Live Technical Interview]
-        F -->|F1: High Stress & Unprepared| G[High Failure Rate]
+    subgraph StatusQuo ["The Broken Status Quo"]
+        A[Static Resume PDF] -->|1. Naive Keyword Matching| B(Keyword-Stuffed ATS Files)
+        C[Public Repositories] -->|2. Separated Code Signals| D(Untapped Developer Data)
+        B -->|3. Black-Box Rejections| E{Hiring Gateways}
+        D -->|4. Ignored Core Contributions| E
+        E -->|5. High Rejection Rate| F[Stressful, Generic Interviews]
     end
-    
-    style BrokenPath fill:#100d14,stroke:#f43f5e,stroke-width:2px,color:#fff
-    style E fill:#4f1c24,stroke:#f43f5e,color:#fff
-    style G fill:#5c1d24,stroke:#f43f5e,color:#fff
+
+    subgraph CareerLaunch ["The Career Launch AI Solution"]
+        G[PDF Resume] -->|A1: PDF.js In-Browser Parsing| H(Clean Client Text Buffer)
+        I[GitHub Profile] -->|A2: REST Contribution Audit| J(Verified Code Signatures)
+        H --> K[Groq AI Integration Layer]
+        J --> K
+        K -->|A3: LLaMA-3.1 Real-time Synthesis| L[Structured Readiness Score]
+        L --> M[Interactive Technical Interview Coaching]
+        L --> N[Collaborative Sprint Planner Simulator]
+    end
+
+    style StatusQuo fill:#140e15,stroke:#f43f5e,stroke-width:2px,color:#fff
+    style CareerLaunch fill:#0c101a,stroke:#10b981,stroke-width:2px,color:#fff
+    style E fill:#45161c,stroke:#f43f5e
+    style K fill:#25163a,stroke:#a855f7
 ```
 
-### The Broken Data Loop
-Candidates upload a PDF to an Applicant Tracking System (ATS). The system strips styling, applies naive string-matching algorithms, and fails to check if the candidate actually wrote the codebase they claimed to build. When candidates finally make it to interviews, they lack tailored feedback on their real-world experience, leading to high rejection rates.
+<details>
+<summary>📖 Click to expand System Overview & Architectural Motivation</summary>
+<br/>
+
+Traditional recruitment mechanisms rely on unverified textual claims, creating an optimization loophole where candidates focus on matching keywords rather than building practical engineering competencies. 
+
+**Career Launch AI** directly addresses this mismatch. By extracting structured data points from PDF formats locally and querying authentic commit signatures from the GitHub REST API, the platform builds an objective profile. It feeds this unified data model directly into high-throughput LLM endpoints, enabling automated skill audits and customized technical mock interviews.
+</details>
 
 ---
 
-## 💡 The Solution Overview
+## 🏛️ System & Container Architecture
 
-**Career Launch AI** unifies candidate profiles by executing real-time client-side analysis. It cross-checks resume text against functional GitHub commits and models role-specific tasks, preparing candidates for actual production expectations.
-
-```mermaid
-graph TB
-    subgraph Solution ["Career Launch AI Core Flow"]
-        H[Raw PDF Resume] -->|PDF.js Sandbox Extraction| I[Sanitized Resume Text]
-        J[GitHub Public Repo] -->|GitHub REST API Parser| K[Commit History & Tech Stack Profile]
-        
-        I --> L[AI Integration Engine]
-        K --> L
-        M[Target Job Description] --> L
-        
-        L -->|Groq API Orchestrator LLaMA-3.1| N[Structural Career Readiness Model]
-        
-        N --> O[Skill Match Analytics]
-        N --> P[Interactive Interview Coach]
-        N --> Q[Multi-Agent Team Sprint Planner]
-    end
-    
-    style Solution fill:#0e0d1a,stroke:#3b82f6,stroke-width:2px,color:#fff
-    style N fill:#1a1325,stroke:#a855f7,stroke-width:2px,color:#fff
-```
-
-### Modular Feature Breakdown
-*   **Ingestion Layer**: Sanitizes uploaded document streams and normalizes horizontal/vertical spacing inline to optimize LLM input token footprint.
-*   **Verification Engine**: Validates resume assertions by parsing code additions and refactoring metrics from remote Git commits.
-*   **Evaluation Pipeline**: Executes system prompts in Groq's high-speed completion engine, mapping candidate profiles to structured JSON readiness charts.
-
----
-
-## 🏛️ System Architecture
-
-Career Launch AI is designed as a **serverless client-side application** interacting with external services directly from the user's browser, eliminating server data storage risks and ensuring complete confidentiality.
-
-### Component Architecture Model
+### 1. System Component Block Diagram
+This system-level breakdown shows the separation of concerns between client sandboxes and external servers.
 
 ```mermaid
 graph TD
-    %% User Boundary
-    subgraph Client ["User Browser Sandbox"]
-        UI[Glassmorphic HTML5 UI]
-        Theme[Theme CSS Custom Tokens]
+    subgraph Browser ["User Browser Environment (Sandbox)"]
+        UI[Glassmorphic HTML UI]
+        Theme[Theme CSS & Design Tokens]
         State[Local Storage & Session State]
-        PDFEng[PDF.js Library Reader]
-    end
-
-    %% API Integrations
-    subgraph ExternalAPIs ["Secure API Gateways"]
-        GitAPI[GitHub REST API]
-        GroqAPI[Groq Inference Engine]
+        
+        subgraph Ingestion ["Ingestion Module"]
+            PDFJS[PDF.js Binary Parser]
+            GitConnector[GitHub REST API Connector]
+        end
     end
     
+    subgraph Gateways ["External API Services"]
+        GitHubAPI[GitHub REST Gateway]
+        GroqAPI[Groq Serverless Inference]
+    end
+
     UI -->|Loads| Theme
     UI -->|Reads/Writes| State
-    UI -->|Triggers| PDFEng
-    PDFEng -->|Extracts Text| State
+    UI -->|Instantiates| PDFJS
+    UI -->|Executes| GitConnector
     
-    UI -->|Authorized Request| GitAPI
-    UI -->|JSON Mode Payload| GroqAPI
+    GitConnector <-->|HTTPS REST| GitHubAPI
+    UI <-->|JSON Payload Mode| GroqAPI
     
-    GitAPI -->|Commit Data| State
+    GitHubAPI -->|Commit Data| State
     GroqAPI -->|Analysis JSON| State
-    State -->|Triggers Dynamic Re-render| UI
 
-    %% Styling
-    style Client fill:#0e0d1a,stroke:#a855f7,stroke-width:2px,color:#fff
-    style ExternalAPIs fill:#08070f,stroke:#06b6d4,stroke-width:2px,color:#fff
+    style Browser fill:#0e0d1a,stroke:#a855f7,stroke-width:2px,color:#fff
+    style Gateways fill:#08070f,stroke:#06b6d4,stroke-width:2px,color:#fff
 ```
 
-### Data Flow & Request Lifecycle Sequence
-The following sequence details how state transitions are managed client-side:
+### 2. C4 Container Diagram
+Illustrates the container boundaries and integration protocols.
+
+```mermaid
+graph LR
+    User[Developer Candidate] -->|Interacts HTTPS| WebApp[Single Page App Container]
+    
+    subgraph AppBoundary ["Career Launch AI Architecture"]
+        WebApp -->|Uses JS Runtime| PDFParser[PDF.js Text Extractor]
+        WebApp -->|Queries| GitFetcher[GitHub Data Retriever]
+        WebApp -->|Configures State| Storage[Browser LocalStorage]
+    end
+    
+    GitFetcher -->|OAuth HTTP Request| GitHub[GitHub REST API]
+    WebApp -->|Bearer Token HTTP POST| Groq[Groq AI Completion Engine]
+
+    style AppBoundary fill:#141325,stroke:#ec4899,stroke-width:2px,color:#fff
+    style WebApp fill:#1c1a30,stroke:#3b82f6,color:#fff
+    style GitHub fill:#0e0d1a,stroke:#10b981,color:#fff
+    style Groq fill:#0e0d1a,stroke:#a855f7,color:#fff
+```
+
+### 3. Chronological Ingestion & Analysis Sequence
 
 ```mermaid
 sequenceDiagram
     autonumber
-    actor User as Developer Browser
-    participant UI as Index / Core App
-    participant PDF as PDF.js Engine
+    actor User as Candidate Browser
+    participant UI as Glassmorphic View Layer
+    participant PDF as PDF.js Parser
     participant Git as GitHub Connector
-    participant Groq as Groq Gateway
+    participant Groq as Groq AI Gateway
     participant Storage as LocalStorage State
 
-    User->>UI: Uploads Resume (.pdf) & Enters Repository URL
-    UI->>PDF: Initialize Reader with File ArrayBuffer
+    User->>UI: Drop Resume & Enter Repo Target
+    UI->>PDF: Parse File Binary Buffer
     activate PDF
-    PDF->>PDF: Parse vertical/horizontal layout text
-    PDF-->>UI: Return Sanitized Resume String
+    PDF->>PDF: Extract raw layouts & format text
+    PDF-->>UI: Return sanitized string
     deactivate PDF
-    UI->>Storage: Save 'resume_text'
+    UI->>Storage: Update 'resume_text'
 
-    UI->>Git: Request commit & structure endpoints
+    UI->>Git: Request GitHub Repository Details
     activate Git
-    Git-->>UI: Return Commit Details, Languages & Structure JSON
+    Git->>Git: Verify OAuth Headers & Rate Limits
+    Git-->>UI: Return Commits, Code Topology & Languages
     deactivate Git
-    UI->>Storage: Save 'github_profile'
+    UI->>Storage: Update 'github_metadata'
 
-    UI->>Groq: POST request (Groq API Key + LLaMA-3 + Context payload)
+    UI->>Groq: Exec completion request (JSON Mode)
     activate Groq
-    Note over Groq: Process Prompt context in JSON-mode
-    Groq-->>UI: Return structured evaluation metrics
+    Note over Groq: Process Resume Text + GitHub Metadata <br/> against Job Description requirements
+    Groq-->>UI: Return structured JSON evaluation
     deactivate Groq
     
-    UI->>Storage: Save 'analysis_results'
-    UI-->>User: Render updated dynamic dashboard & enable mock interview coach
+    UI->>Storage: Update 'evaluation_results'
+    UI-->>User: Refresh dynamic widgets & unlock coach panels
 ```
 
-### Logical Database (Local Storage State) Schema
-As a zero-persistence application, the client uses `localStorage` as its local document store:
+### 4. Logical Database (Local Storage State) Entity-Relationship Model
 
 ```mermaid
 erDiagram
     CandidateProfile {
-        string groq_api_key
+        string groq_api_key PK
         string github_pat
         string resume_text
     }
     GitHubAnalysis {
-        string repository_url
-        string language_composition
-        list recent_commits
+        string repository_url PK
+        string primary_language
+        list active_commits
         list directory_tree
     }
     EvaluationResults {
         int fit_score
-        list discovered_skills
-        list evaluated_gaps
-        string project_assertions_review
+        list skills_discovered
+        list gaps_identified
+        string code_assertions_review
     }
-    CandidateProfile ||--|| GitHubAnalysis : "evaluates"
-    CandidateProfile ||--|| EvaluationResults : "produces"
+    CandidateProfile ||--|| GitHubAnalysis : "binds"
+    CandidateProfile ||--|| EvaluationResults : "evaluates"
 ```
 
-### Deployment Topology (Serverless Client-Side Cloud)
+### 5. Deployment Topology
 
 ```mermaid
-graph LR
-    subgraph CloudHosting ["Edge CDN Deployment"]
-        A[GitHub Pages / Vercel Edge] -->|HTTPS TLS 1.3| B[Client Web Browser]
+graph TD
+    subgraph Hosting ["Edge Content Delivery Network"]
+        CDN[GitHub Pages / Vercel Edge] -->|Deploy Static Assets| Edge[Client Browser Target]
     end
     
-    subgraph LLMCloud ["Groq Serverless Inference"]
-        C[Groq API Edge Server] -->|LLaMA-3.1 8B Model| D[Inference Logic]
+    subgraph AICloud ["Groq Serverless Cluster"]
+        Engine[Groq API Edge Nodes] -->|Execute Inference| LLaMA[LLaMA-3.1 8B Model]
     end
 
-    subgraph GithubCloud ["GitHub Platform"]
-        E[GitHub REST Endpoint]
+    subgraph PlatformCloud ["GitHub Platform"]
+        GitAPI[GitHub REST API Engine]
     end
 
-    B -->|Fetch Assets| A
-    B -->|Direct SDK Calls| C
-    B -->|Direct REST Queries| E
+    Edge -->|HTTP GET/POST| Engine
+    Edge -->|HTTP GET| GitAPI
 
-    style CloudHosting fill:#0e0d1a,stroke:#3b82f6,color:#fff
-    style LLMCloud fill:#0e0d1a,stroke:#ec4899,color:#fff
-    style GithubCloud fill:#0e0d1a,stroke:#10b981,color:#fff
+    style Hosting fill:#0e0d1a,stroke:#3b82f6,color:#fff
+    style AICloud fill:#0e0d1a,stroke:#ec4899,color:#fff
+    style PlatformCloud fill:#0e0d1a,stroke:#10b981,color:#fff
 ```
 
 ---
 
-## 🛠️ Core Features
+## 🕹️ Core Modules & Features
 
 <div align="center">
 
 | 📄 **Profile Auditor** | 💻 **GitHub Connector** | 🎙️ **AI Interview Coach** |
 | :--- | :--- | :--- |
 | Uses **PDF.js** directly inside the browser sandbox to parse binary layouts, strip control codes, and isolate clean candidate texts without server upload lags. | Queries public repositories via REST to check stars, file schemas, language splits, and commit frequency. | Runs live mock technical chats with LLaMA-3.1, providing detailed feedback on conceptual answers. |
-| **Diagram/Flow:** <br> `PDF -> [PDF.js] -> Clean Text -> State` | **Diagram/Flow:** <br> `Repo -> [REST API] -> Code Signature` | **Diagram/Flow:** <br> `Q & A -> [LLaMA-3] -> Gap Score` |
+| **Ingestion Flow:** <br> `PDF -> [PDF.js] -> Clean Text -> State` | **Audit Flow:** <br> `Repo -> [REST API] -> Code Signature` | **Execution Flow:** <br> `Q & A -> [LLaMA-3] -> Gap Score` |
+| <img src="https://via.placeholder.com/260x150/08070f/a855f7?text=PDF.js+Extractor+GIF" width="100%" /> | <img src="https://via.placeholder.com/260x150/08070f/3b82f6?text=Git+Audit+GIF" width="100%" /> | <img src="https://via.placeholder.com/260x150/08070f/ec4899?text=AI+Mock+Coach+GIF" width="100%" /> |
 
 <br/>
 
 | 📊 **Insights Dashboard** | 🎯 **Team Sprint Simulator** | ⌨️ **Omni Command Palette** |
 | :--- | :--- | :--- |
 | Maps resume skills against target job description requirements, highlighting matches and high-priority gaps. | Simulates an agile Scrum sprint, modeling technical task allocation across diverse developer personas. | Access global application state, run feature triggers, and search documentation instantly using `Ctrl+K`. |
-| **Diagram/Flow:** <br> `Text Analysis -> [Match Matrix] -> Chart` | **Diagram/Flow:** <br> `Sprint -> [AI Agents] -> Task Allocation` | **Diagram/Flow:** <br> `Ctrl+K -> [Dynamic Search] -> Route` |
+| **Dashboard Flow:** <br> `Text Analysis -> [Match Matrix] -> Chart` | **Simulation Flow:** <br> `Sprint -> [AI Agents] -> Task Allocation` | **Interface Flow:** <br> `Ctrl+K -> [Dynamic Search] -> Route` |
+| <img src="https://via.placeholder.com/260x150/08070f/06b6d4?text=Insights+Dashboard+GIF" width="100%" /> | <img src="https://via.placeholder.com/260x150/08070f/d946ef?text=Sprint+Simulator+GIF" width="100%" /> | <img src="https://via.placeholder.com/260x150/08070f/10b981?text=Command+Palette+GIF" width="100%" /> |
 
 </div>
 
 ---
 
-## 🎨 Tech Stack Visualization
-
-```mermaid
-graph TD
-    %% Tech Stack layers
-    subgraph UIUX ["1. Presentation Layer (UI/UX)"]
-        HTML5[HTML5 Semantic Shell]
-        Tailwind[TailwindCSS CDN Layouts]
-        ThemeCSS[Theme.css Design Tokens]
-    end
-    
-    subgraph PARSING ["2. Browser-Side Ingestion Layer"]
-        PDFJS[PDF.js Binary Document Reader]
-        GitREST[GitHub REST API Connector]
-    end
-    
-    subgraph AIENG ["3. Machine Learning & Inference"]
-        GroqSDK[Groq API Direct Gateway]
-        LLaMA[LLaMA-3.1 8B Instant Model]
-    end
-    
-    subgraph DEVOPS ["4. Deployment & Infrastructure"]
-        GitPages[GitHub Pages CDN Hosting]
-        LocalStore[Zero-Persistence LocalStorage]
-    end
-
-    UIUX --> PARSING
-    PARSING --> AIENG
-    AIENG --> DEVOPS
-
-    style UIUX fill:#0e0d1a,stroke:#a855f7,stroke-width:2px,color:#fff
-    style PARSING fill:#0e0d1a,stroke:#ec4899,stroke-width:2px,color:#fff
-    style AIENG fill:#0e0d1a,stroke:#3b82f6,stroke-width:2px,color:#fff
-    style DEVOPS fill:#0e0d1a,stroke:#10b981,stroke-width:2px,color:#fff
-```
-
-### Stack Breakdown
-
-*   **Frontend**: 
-    *   **TailwindCSS**: Handles responsive grid alignment and spacing.
-    *   **Vanilla JS**: Orchestrates event listeners, fetches, and state transitions.
-    *   **Theme CSS**: Implements custom atmospheric radial backdrops, glassmorphism panel backdrops, and active sidebar link glows.
-*   **Ingestion Engines**: 
-    *   **PDF.js**: Resolves PDF text arrays directly in the client thread.
-    *   **GitHub REST**: Extracts metadata and commit profiles safely.
-*   **AI/ML**: 
-    *   **Groq Cloud (LLaMA-3.1 8B Instant)**: Selected for sub-150ms token generation and JSON-mode capabilities.
-*   **Infrastructure & DevOps**: 
-    *   **GitHub Actions**: Powers unit test flows.
-    *   **Edge CDNs (GitHub Pages/Vercel)**: Delivers rapid global static site loads.
-
----
-
-## 📂 Repository Directory Structure
+## 📂 Repository Directory Layout
 
 ```
 career-launch-ai/
@@ -345,16 +299,130 @@ career-launch-ai/
 │       ├── auth.js                  # Secret validation & configuration module
 │       └── theme.css                # Visual style guide & glassmorphic tokens
 ├── li_script.js                     # Platform background operations parser
+├── .gitignore                       # Repository exclusion rules
 └── README.md                        # Project technical manual
 ```
 
 ---
 
-## 🚀 Installation & Setup
+## ⚡ API Architecture & Lifecycle
 
-Follow these steps to deploy Career Launch AI in a local development environment.
+The lifecycle of external requests is direct, moving from the client's browser sandbox to external API servers over secure HTTP connections.
 
-### 1. Clone the Repository
+### API Request Lifecycles
+```mermaid
+sequenceDiagram
+    autonumber
+    participant Client as User Web Browser
+    participant Git as GitHub API Endpoint
+    participant Groq as Groq Completions API
+
+    %% GitHub Lifecycle
+    Client->>Git: HTTP GET repo metadata (Bearer token header)
+    activate Git
+    Note over Git: Check API key validity & quota constraints
+    Git-->>Client: Return 200 OK (Metadata body)
+    deactivate Git
+
+    %% Groq LLM Lifecycle
+    Client->>Groq: HTTP POST chat/completions (JSON format request)
+    activate Groq
+    Note over Groq: Process system directives & output schema
+    Groq-->>Client: Return 200 OK (Structured JSON response)
+    deactivate Groq
+```
+
+### Endpoint Registry
+
+| Service | Target Route | Method | Header Keys | Payload Format |
+| :--- | :--- | :--- | :--- | :--- |
+| **GitHub REST** | `/repos/{owner}/{repo}` | `GET` | `Authorization: token <pat>` | Query params / JSON |
+| **GitHub Commits** | `/repos/{owner}/{repo}/commits` | `GET` | `Authorization: token <pat>` | Query params / JSON |
+| **Groq Engine** | `/openai/v1/chat/completions` | `POST` | `Authorization: Bearer <key>` | Structured JSON |
+
+### Sample Groq Payload (JSON Mode Request)
+
+**Request Payload:**
+```json
+{
+  "model": "llama-3.1-8b-instant",
+  "response_format": {
+    "type": "json_object"
+  },
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are an expert technical interviewer. Return evaluation metrics in a valid JSON schema."
+    },
+    {
+      "role": "user",
+      "content": "Resume: [Extracted Resume Content] ... Github: [Git Stats] ... Target JD: [Job Description]"
+    }
+  ]
+}
+```
+
+**Response Payload:**
+```json
+{
+  "fit_score": 88,
+  "skills_discovered": ["JavaScript", "TailwindCSS", "PDF.js"],
+  "gaps": [
+    {
+      "skill": "Docker",
+      "reason": "Target JD requests cloud container deployment, but candidate's git history shows no container configuration files.",
+      "priority": "HIGH"
+    }
+  ],
+  "project_validation": "Github repository contains commits matching assertions, verifying practical application."
+}
+```
+
+---
+
+## 🔒 Security & Performance Model
+
+### Zero-Persistence Privacy Model
+
+```mermaid
+graph TD
+    subgraph BrowserSandbox ["Secure Client Sandbox (In-Memory Only)"]
+        A[Raw Resume Data Buffer]
+        B[User OAuth Credentials]
+        C[LocalStorage Configuration]
+    end
+    
+    subgraph Blocked ["Untrusted Environments"]
+        D[No Backend Database Server]
+        E[No Proxy Server Logs]
+    end
+    
+    subgraph Gateways ["Target API Providers"]
+        F[GitHub REST Gateway]
+        G[Groq LLM Gateways]
+    end
+
+    A -->|Direct Call TLS 1.3| F
+    B -->|Direct Call TLS 1.3| G
+    C -.->|Access Boundary| D
+
+    style BrowserSandbox fill:#0d1c12,stroke:#10b981,stroke-width:2px,color:#fff
+    style Blocked fill:#1c0d0d,stroke:#f43f5e,stroke-width:2px,color:#fff
+    style Gateways fill:#0e0d1a,stroke:#3b82f6,color:#fff
+```
+
+### Performance Metrics & Token Flow
+By executing client-side, the app scales with zero cloud server overhead and minimal startup lag:
+
+*   **Document Ingestion (PDF.js)**: Reads, cleans, and outputs text in `< 350ms`.
+*   **Groq API Completion Generation**: LLaMA-3.1 generates a full assessment in `< 1.2s`.
+*   **Edge CDN Load Time**: Static UI components load in `< 500ms` globally.
+
+---
+
+## 🛠️ Local Installation & Setup
+
+### 1. Clone the repository
 ```bash
 git clone https://github.com/ChiragSharma-DEV/AI-FOR-IMPACT.git
 cd AI-FOR-IMPACT
@@ -386,129 +454,9 @@ Visit `http://localhost:8080` in your web browser.
 
 ---
 
-## 🔌 API Documentation
+## 🗺️ Project Timeline & CI/CD Pipeline
 
-Career Launch AI interacts directly with standard developer APIs.
-
-### Endpoint Integrations
-
-| Provider | Purpose | HTTP Method | Endpoint Target | Key Headers |
-| :--- | :--- | :--- | :--- | :--- |
-| **GitHub** | Fetch repository details | `GET` | `https://api.github.com/repos/{owner}/{repo}` | `Accept: application/vnd.github+json`<br>`Authorization: token <pat>` |
-| **GitHub** | Fetch repository commit logs | `GET` | `https://api.github.com/repos/{owner}/{repo}/commits` | `Accept: application/vnd.github+json`<br>`Authorization: token <pat>` |
-| **Groq API** | Generate structured analysis | `POST` | `https://api.groq.com/openai/v1/chat/completions` | `Content-Type: application/json`<br>`Authorization: Bearer <key>` |
-
-### Sample Groq Payload (JSON Mode Request)
-
-**Request Payload:**
-```json
-{
-  "model": "llama-3.1-8b-instant",
-  "response_format": {
-    "type": "json_object"
-  },
-  "messages": [
-    {
-      "role": "system",
-      "content": "You are an expert technical interviewer. Return evaluation metrics in a valid JSON schema."
-    },
-    {
-      "role": "user",
-      "content": "Resume Text: [Extracted Resume Content] ... Github Commits: [Git Stats] ... Target JD: [Job Description]"
-    }
-  ]
-}
-```
-
-**Response Payload:**
-```json
-{
-  "fit_score": 88,
-  "skills_discovered": ["JavaScript", "TailwindCSS", "PDF.js"],
-  "gaps": [
-    {
-      "skill": "Docker",
-      "reason": "Target JD requests cloud container deployment, but candidate's git history shows no container configuration files.",
-      "priority": "HIGH"
-    }
-  ],
-  "project_validation": "Github repository contains commits matching assertions, verifying practical application."
-}
-```
-
----
-
-## ⚡ Performance & Scalability
-
-### Metrics & Edge Latency
-By operating entirely client-side, Career Launch AI bypasses the performance and cost bottlenecks associated with server-side setups:
-
-*   **Average Ingestion Speed (PDF.js)**: < 350ms for a 3-page resume.
-*   **Average API Response Latency (Groq)**: < 1.2 seconds for full assessment queries.
-*   **Zero Server Scaling Costs**: App assets are static and delivered via edge CDNs, ensuring performance scales seamlessly regardless of active traffic volume.
-
-```mermaid
-graph LR
-    subgraph ClientExecution ["Client Thread Processing"]
-        A[Load Page Assets] -->|Static Cache| B[Instant Visual Render]
-        C[Upload Resume] -->|Local Parsing| D[PDF.js Extraction < 350ms]
-    end
-    
-    subgraph ServerlessLLM ["Serverless Engine Response"]
-        E[API Key Validation] -->|Direct Route| F[LLaMA-3.1 Inference < 1.2s]
-    end
-
-    D --> E
-    F -->|Return Structured JSON| B
-
-    style ClientExecution fill:#0e0d1a,stroke:#3b82f6,color:#fff
-    style ServerlessLLM fill:#0e0d1a,stroke:#ec4899,color:#fff
-```
-
----
-
-## 🔒 Security Architecture
-
-### Zero-Persistence Privacy Model
-Career Launch AI maintains candidate privacy by utilizing a **zero-persistence architecture**:
-
-*   **In-Memory Processing**: Uploaded PDF streams are stored temporarily in system RAM and destroyed when the browser tab is closed.
-*   **Direct-to-Client Connections**: Credentials and keys are sent directly from the client browser to GitHub and Groq endpoints over TLS 1.3, bypassing intermediate databases or proxies.
-*   **Local State Isolation**: Personal access tokens and API keys are stored securely in browser-level `localStorage` and never shared or logged.
-
-```mermaid
-graph TD
-    subgraph SafeZone ["User Sandbox (Secure Client Environment)"]
-        A[Resume File Buffer]
-        B[User API Keys]
-        C[Local State Store]
-    end
-    
-    subgraph UnsecureZone ["Intermediate Backend Servers"]
-        D[No Backend Database]
-        E[No Logging Proxy Servers]
-    end
-    
-    subgraph CloudGateways ["Target API Gateways (TLS 1.3)"]
-        F[GitHub API Endpoint]
-        G[Groq LLM Service]
-    end
-
-    A -->|Direct Call| F
-    B -->|Direct Call| G
-    C -.->|Isolated| D
-
-    style SafeZone fill:#0d1c12,stroke:#10b981,stroke-width:2px,color:#fff
-    style UnsecureZone fill:#1c0d0d,stroke:#f43f5e,stroke-width:2px,color:#fff
-    style CloudGateways fill:#0e0d1a,stroke:#3b82f6,color:#fff
-```
-
----
-
-## 🗺️ Project Roadmap
-
-The planned phases for Career Launch AI are detailed below:
-
+### 1. Gantt Implementation Roadmap
 ```mermaid
 gantt
     title Career Launch AI Implementation Roadmap
@@ -525,13 +473,22 @@ gantt
     Custom Multi-Repo Evaluator        :         des7, 2026-07-16, 15d
 ```
 
+### 2. CI/CD Pipeline Flow
+```mermaid
+graph LR
+    Push[Developer Push Commit] --> Lint[Linting Check]
+    Lint --> UT[Execute Unit Tests]
+    UT --> Build[Static Build Compilation]
+    Build --> Deploy[Edge CDN Deploy]
+
+    style Push fill:#0e0d1a,stroke:#a855f7,color:#fff
+    style UT fill:#0e0d1a,stroke:#ec4899,color:#fff
+    style Deploy fill:#0d1c12,stroke:#10b981,color:#fff
+```
+
 ---
 
-## 🤝 Contributing
-
-We welcome contributions to Career Launch AI! To maintain code quality and structural integrity, please follow these guidelines:
-
-### Contribution Workflow
+## 🤝 Contribution Strategy & Branch Workflow
 
 ```mermaid
 graph LR
@@ -547,10 +504,8 @@ graph LR
     style Merge fill:#0d1c12,stroke:#10b981,color:#fff
 ```
 
-### Branch Strategy
-*   **Main**: Houses the current production-stable release.
-*   **Feature Branches**: Named using the `feature/name-here` format.
-*   **Hotfixes**: Named using the `hotfix/issue-description` format.
+*   **Production Branch**: `main` houses the current production-stable deployment.
+*   **Development workflow**: Create a descriptive branch named `feature/your-feature-name` or `bugfix/issue-resolved` and submit a Pull Request targeting `main`.
 
 ---
 
