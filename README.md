@@ -1,155 +1,256 @@
 <!-- HERO SECTION START -->
 <div align="center">
 
-<!-- Custom Dynamic Gradient SVG Logo -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 220" width="100%" max-width="600" height="auto">
+<!-- Centered Animated SVG Logo with Dynamic CSS Keyframes -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 240" width="100%" max-width="650" height="auto">
+  <style>
+    @keyframes pulseGlow {
+      0% { filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.4)) drop-shadow(0 0 20px rgba(236, 72, 153, 0.2)); }
+      50% { filter: drop-shadow(0 0 25px rgba(168, 85, 247, 0.8)) drop-shadow(0 0 35px rgba(236, 72, 153, 0.5)); }
+      100% { filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.4)) drop-shadow(0 0 20px rgba(236, 72, 153, 0.2)); }
+    }
+    @keyframes orbitClockwise {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    @keyframes orbitCounterClockwise {
+      from { transform: rotate(360deg); }
+      to { transform: rotate(0deg); }
+    }
+    @keyframes dashFlow {
+      to { stroke-dashoffset: -40; }
+    }
+    @keyframes waveFloat {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+      100% { transform: translateY(0px); }
+    }
+    .glowing-bg {
+      animation: pulseGlow 4s ease-in-out infinite;
+    }
+    .orbit-outer {
+      transform-origin: 110px 120px;
+      animation: orbitClockwise 25s linear infinite;
+    }
+    .orbit-inner {
+      transform-origin: 110px 120px;
+      animation: orbitCounterClockwise 15s linear infinite;
+    }
+    .flow-line {
+      stroke-dasharray: 8, 12;
+      animation: dashFlow 2s linear infinite;
+    }
+    .text-title {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-weight: 900;
+      font-size: 46px;
+      letter-spacing: 2px;
+      fill: #ffffff;
+    }
+    .text-accent {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-weight: 900;
+      font-size: 46px;
+      letter-spacing: 2px;
+      fill: url(#blueTealGrad);
+    }
+    .text-subtitle {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-weight: 600;
+      font-size: 14px;
+      letter-spacing: 5px;
+      fill: #a8a3c9;
+      opacity: 0.85;
+    }
+  </style>
+
   <defs>
-    <linearGradient id="purplePink" x1="0%" y1="0%" x2="100%" y2="100%">
+    <linearGradient id="purplePinkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" style="stop-color:#a855f7;stop-opacity:1" />
       <stop offset="50%" style="stop-color:#d946ef;stop-opacity:1" />
       <stop offset="100%" style="stop-color:#ec4899;stop-opacity:1" />
     </linearGradient>
-    <linearGradient id="blueTeal" x1="0%" y1="0%" x2="100%" y2="100%">
+    <linearGradient id="blueTealGrad" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
       <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:1" />
     </linearGradient>
-    <filter id="neonGlow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="8" result="blur" />
-      <feComposite in="SourceGraphic" in2="blur" operator="over" />
-    </filter>
   </defs>
-  <!-- Background Glow Element -->
-  <rect x="10" y="10" width="780" height="200" rx="24" fill="#0e0d1a" stroke="url(#purplePink)" stroke-width="2" />
-  
-  <!-- Logo Icon -->
-  <g transform="translate(45, 50)">
-    <circle cx="60" cy="60" r="50" fill="url(#purplePink)" filter="url(#neonGlow)" opacity="0.9" />
-    <path d="M35 80 L60 35 L85 80 Z" fill="none" stroke="#ffffff" stroke-width="8" stroke-linejoin="round" stroke-linecap="round" />
-    <circle cx="60" cy="58" r="6" fill="#ffffff" />
-    <path d="M48 80 L72 80" stroke="#ffffff" stroke-width="4" stroke-linecap="round"/>
+
+  <!-- Dark Atmospheric Panel -->
+  <rect x="10" y="10" width="780" height="220" rx="28" fill="#08070f" stroke="#251b3d" stroke-width="1.5" />
+
+  <!-- Animated Orbiting Core Graphic -->
+  <g class="glowing-bg">
+    <!-- Inner glowing circle -->
+    <circle cx="110" cy="120" r="38" fill="url(#purplePinkGrad)" />
+    <!-- Triangle Logo -->
+    <path d="M96 136 L110 102 L124 136 Z" fill="none" stroke="#ffffff" stroke-width="6" stroke-linejoin="round" />
+    <circle cx="110" cy="113" r="4.5" fill="#ffffff" />
   </g>
 
-  <!-- Typography -->
-  <text x="190" y="115" font-family="'Inter', 'Segoe UI', sans-serif" font-weight="900" font-size="44" fill="#f0eeff" letter-spacing="2">CAREERLAUNCH</text>
-  <text x="560" y="115" font-family="'Inter', 'Segoe UI', sans-serif" font-weight="900" font-size="44" fill="url(#blueTeal)" letter-spacing="2">AI</text>
-  <text x="192" y="155" font-family="'Inter', 'Segoe UI', sans-serif" font-weight="500" font-size="16" fill="#a8a3c9" letter-spacing="4">THE END-TO-END JOB READINESS SUITE</text>
+  <!-- Outer Orbit Track -->
+  <circle cx="110" cy="120" r="56" fill="none" stroke="rgba(168,85,247,0.15)" stroke-width="1.5" />
+  <g class="orbit-outer">
+    <circle cx="110" cy="64" r="6" fill="#3b82f6" />
+    <circle cx="110" cy="176" r="4" fill="#06b6d4" />
+  </g>
+
+  <!-- Inner Orbit Track -->
+  <circle cx="110" cy="120" r="46" fill="none" stroke="rgba(236,72,153,0.15)" stroke-dasharray="4, 6" stroke-width="1" />
+  <g class="orbit-inner">
+    <circle cx="64" cy="120" r="4" fill="#ec4899" />
+    <circle cx="156" cy="120" r="4" fill="#a855f7" />
+  </g>
+
+  <!-- Title / Logo Typography -->
+  <text x="195" y="115" class="text-title">CAREERLAUNCH</text>
+  <text x="568" y="115" class="text-accent">AI</text>
+  
+  <!-- Dynamic Subheading -->
+  <text x="198" y="152" class="text-subtitle">THE END-TO-END JOB READINESS SUITE</text>
+
+  <!-- Dynamic Flow Dots decoration -->
+  <line x1="198" y1="180" x2="730" y2="180" stroke="rgba(255,255,255,0.08)" stroke-width="2" />
+  <line x1="198" y1="180" x2="730" y2="180" class="flow-line" stroke="url(#purplePinkGrad)" stroke-width="2" stroke-linecap="round" />
 </svg>
 
 <br/>
 
-<!-- Animated Showcase Banner -->
-<img src="https://via.placeholder.com/1200x450/08070f/a855f7?text=Career+Launch+AI+-+Cinematic+Dashboard+Orchestration" alt="Career Launch AI Dynamic Banner" width="100%" style="border-radius:14px; border: 1px solid rgba(168,85,247,0.25); box-shadow: 0 20px 50px rgba(0,0,0,0.8);" />
+<!-- Premium Cinematic Animated Banner GIF -->
+<img src="https://via.placeholder.com/1200x480/0e0d1a/a855f7?text=Career+Launch+AI+-+Dynamic+Web+Dashboard+Interface" alt="Career Launch AI Dynamic Showcase" width="100%" style="border-radius:16px; border: 1px solid rgba(168,85,247,0.22); box-shadow: 0 25px 60px rgba(0,0,0,0.85);" />
 
 <br/>
 <br/>
 
-<!-- Modern Badge Row -->
+<!-- Badge Grid Layout -->
 <p align="center">
-  <img src="https://img.shields.io/badge/build-passing-success?style=for-the-badge&logo=github-actions&logoColor=white&color=a855f7" alt="Build" />
-  <img src="https://img.shields.io/badge/release-v1.0.0--beta-blue?style=for-the-badge&logo=git&logoColor=white&color=3b82f6" alt="Version" />
-  <img src="https://img.shields.io/badge/license-MIT-green?style=for-the-badge&logo=open-source-initiative&logoColor=white&color=10b981" alt="License" />
-  <img src="https://img.shields.io/badge/stack-Serverless%20%7C%20AI-orange?style=for-the-badge&logo=javascript&logoColor=white&color=ec4899" alt="Stack" />
-  <img src="https://img.shields.io/github/stars/ChiragSharma-DEV/AI-FOR-IMPACT?style=for-the-badge&logo=github&logoColor=white&color=f59e0b" alt="Stars" />
-</p>
-
-<p align="center">
-  <strong>An elite, zero-persistence developer preparation workspace.</strong><br/>
-  Synthesizes browser-side document tokenization, GitHub contribution analytics, and LLaMA-3.1 inference gateways<br/>
-  to transform candidate portfolios into verified, interview-ready profiles.
+  <a href="https://github.com/ChiragSharma-DEV/AI-FOR-IMPACT">
+    <img src="https://img.shields.io/badge/Build-Success-success?style=for-the-badge&logo=github-actions&logoColor=white&color=a855f7" alt="Build" />
+  </a>
+  <a href="https://github.com/ChiragSharma-DEV/AI-FOR-IMPACT">
+    <img src="https://img.shields.io/badge/Release-v1.0.0--beta-blue?style=for-the-badge&logo=git&logoColor=white&color=3b82f6" alt="Version" />
+  </a>
+  <a href="https://github.com/ChiragSharma-DEV/AI-FOR-IMPACT/blob/main/LICENSE">
+    <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge&logo=open-source-initiative&logoColor=white&color=10b981" alt="License" />
+  </a>
+  <a href="https://github.com/ChiragSharma-DEV/AI-FOR-IMPACT">
+    <img src="https://img.shields.io/badge/Architecture-Serverless%20%7C%20AI-orange?style=for-the-badge&logo=javascript&logoColor=white&color=ec4899" alt="Architecture" />
+  </a>
+  <a href="https://github.com/ChiragSharma-DEV/AI-FOR-IMPACT/stargazers">
+    <img src="https://img.shields.io/github/stars/ChiragSharma-DEV/AI-FOR-IMPACT?style=for-the-badge&logo=github&logoColor=white&color=f59e0b" alt="Stars" />
+  </a>
 </p>
 
 </div>
 <!-- HERO SECTION END -->
 
-<!-- SECTION DIVIDER (SVG Gradient Wave) -->
-<div align="center">
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 120" width="100%" height="auto" style="margin: 20px 0;">
-    <path fill="none" stroke="url(#purplePink)" stroke-width="2" d="M0,32L120,42.7C240,53,480,75,720,74.7C960,75,1200,53,1320,42.7L1440,32" />
-    <path fill="url(#purplePink)" fill-opacity="0.05" d="M0,32L120,42.7C240,53,480,75,720,74.7C960,75,1200,53,1320,42.7L1440,32L1440,120L1320,120C1200,120,960,120,720,120C480,120,240,120,120,120L0,120Z" />
+<!-- ANIMATED SVG DIVIDER -->
+<div align="center" style="margin: 30px 0;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 100" width="100%" height="auto">
+    <style>
+      @keyframes waveAnimation {
+        0% { stroke-dashoffset: 0; }
+        100% { stroke-dashoffset: -120; }
+      }
+      .anim-wave {
+        stroke-dasharray: 60, 60;
+        animation: waveAnimation 6s linear infinite;
+      }
+    </style>
+    <path fill="none" stroke="rgba(168, 85, 247, 0.15)" stroke-width="4" d="M0,50 C360,100 720,0 1080,50 C1200,67 1320,67 1440,50" />
+    <path class="anim-wave" fill="none" stroke="url(#purplePinkGrad)" stroke-width="4" stroke-linecap="round" d="M0,50 C360,100 720,0 1080,50 C1200,67 1320,67 1440,50" />
   </svg>
 </div>
 
 ---
 
-## ⚡ The Problem & The Solution
+## 🏛️ High-Fidelity Animated Data Flow
 
-```mermaid
-graph TD
-    subgraph StatusQuo ["The Broken Status Quo"]
-        A[Static Resume PDF] -->|1. Naive Keyword Matching| B(Keyword-Stuffed ATS Files)
-        C[Public Repositories] -->|2. Separated Code Signals| D(Untapped Developer Data)
-        B -->|3. Black-Box Rejections| E{Hiring Gateways}
-        D -->|4. Ignored Core Contributions| E
-        E -->|5. High Rejection Rate| F[Stressful, Generic Interviews]
-    end
+This interactive diagram demonstrates how data packages move and process client-side in Career Launch AI.
 
-    subgraph CareerLaunch ["The Career Launch AI Solution"]
-        G[PDF Resume] -->|A1: PDF.js In-Browser Parsing| H(Clean Client Text Buffer)
-        I[GitHub Profile] -->|A2: REST Contribution Audit| J(Verified Code Signatures)
-        H --> K[Groq AI Integration Layer]
-        J --> K
-        K -->|A3: LLaMA-3.1 Real-time Synthesis| L[Structured Readiness Score]
-        L --> M[Interactive Technical Interview Coaching]
-        L --> N[Collaborative Sprint Planner Simulator]
-    end
+<div align="center">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 320" width="100%" max-width="700" height="auto">
+  <style>
+    @keyframes pulseNode {
+      0%, 100% { filter: drop-shadow(0 0 2px rgba(168,85,247,0.4)); r: 8; }
+      50% { filter: drop-shadow(0 0 12px rgba(168,85,247,0.9)); r: 11; }
+    }
+    @keyframes activeLine {
+      to { stroke-dashoffset: -40; }
+    }
+    .pulse-node {
+      animation: pulseNode 3s infinite ease-in-out;
+      fill: #d946ef;
+    }
+    .flow-active {
+      stroke-dasharray: 6, 12;
+      animation: activeLine 1.5s linear infinite;
+    }
+    .node-box {
+      fill: #0e0d1a;
+      stroke: rgba(255,255,255,0.08);
+      stroke-width: 2;
+      transition: all 0.3s;
+    }
+    .node-box:hover {
+      stroke: #a855f7;
+    }
+    .text-lbl {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      fill: #f0eeff;
+      font-weight: 600;
+    }
+    .text-desc {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      fill: #a8a3c9;
+    }
+  </style>
 
-    style StatusQuo fill:#140e15,stroke:#f43f5e,stroke-width:2px,color:#fff
-    style CareerLaunch fill:#0c101a,stroke:#10b981,stroke-width:2px,color:#fff
-    style E fill:#45161c,stroke:#f43f5e
-    style K fill:#25163a,stroke:#a855f7
-```
+  <!-- Flow Lines (Static Shadows) -->
+  <path d="M180,90 L380,160 M180,230 L380,160 M380,160 L620,90 M380,160 L620,230" stroke="rgba(255,255,255,0.05)" stroke-width="4" fill="none" />
+  
+  <!-- Flow Lines (Animated) -->
+  <path d="M180,90 L380,160" class="flow-active" stroke="url(#purplePinkGrad)" stroke-width="3.5" fill="none" />
+  <path d="M180,230 L380,160" class="flow-active" stroke="url(#blueTealGrad)" stroke-width="3.5" fill="none" />
+  <path d="M380,160 L620,90" class="flow-active" stroke="url(#purplePinkGrad)" stroke-width="3.5" fill="none" />
+  <path d="M380,160 L620,230" class="flow-active" stroke="url(#blueTealGrad)" stroke-width="3.5" fill="none" />
 
-<details>
-<summary>📖 Click to expand System Overview & Architectural Motivation</summary>
-<br/>
+  <!-- Node 1: PDF Resume Ingest -->
+  <rect x="20" y="50" width="160" height="70" rx="14" class="node-box" />
+  <text x="35" y="80" class="text-lbl">📄 Resume Ingest</text>
+  <text x="35" y="100" class="text-desc">PDF.js layout extraction</text>
 
-Traditional recruitment mechanisms rely on unverified textual claims, creating an optimization loophole where candidates focus on matching keywords rather than building practical engineering competencies. 
+  <!-- Node 2: Github Auditor -->
+  <rect x="20" y="195" width="160" height="70" rx="14" class="node-box" />
+  <text x="35" y="225" class="text-lbl">💻 GitHub REST</text>
+  <text x="35" y="245" class="text-desc">Verify commit records</text>
 
-**Career Launch AI** directly addresses this mismatch. By extracting structured data points from PDF formats locally and querying authentic commit signatures from the GitHub REST API, the platform builds an objective profile. It feeds this unified data model directly into high-throughput LLM endpoints, enabling automated skill audits and customized technical mock interviews.
-</details>
+  <!-- Core AI Node (Orchestrator) -->
+  <circle cx="380" cy="160" r="8" class="pulse-node" />
+  <circle cx="380" cy="160" r="28" fill="none" stroke="url(#purplePinkGrad)" stroke-width="2.5" />
+  <text x="345" y="210" class="text-lbl">Groq Core</text>
+  <text x="325" y="228" class="text-desc">LLaMA-3.1 Evaluation</text>
+
+  <!-- Node 3: Dashboard Analytics -->
+  <rect x="620" y="50" width="160" height="70" rx="14" class="node-box" />
+  <text x="635" y="80" class="text-lbl">📊 Insights View</text>
+  <text x="635" y="100" class="text-desc">Match levels & gaps</text>
+
+  <!-- Node 4: Interview Coach -->
+  <rect x="620" y="195" width="160" height="70" rx="14" class="node-box" />
+  <text x="635" y="225" class="text-lbl">🎙️ Interview Coach</text>
+  <text x="635" y="245" class="text-desc">Llama-3 Interactive Chat</text>
+</svg>
+</div>
 
 ---
 
 ## 🏛️ System & Container Architecture
 
-### 1. System Component Block Diagram
-This system-level breakdown shows the separation of concerns between client sandboxes and external servers.
-
-```mermaid
-graph TD
-    subgraph Browser ["User Browser Environment (Sandbox)"]
-        UI[Glassmorphic HTML UI]
-        Theme[Theme CSS & Design Tokens]
-        State[Local Storage & Session State]
-        
-        subgraph Ingestion ["Ingestion Module"]
-            PDFJS[PDF.js Binary Parser]
-            GitConnector[GitHub REST API Connector]
-        end
-    end
-    
-    subgraph Gateways ["External API Services"]
-        GitHubAPI[GitHub REST Gateway]
-        GroqAPI[Groq Serverless Inference]
-    end
-
-    UI -->|Loads| Theme
-    UI -->|Reads/Writes| State
-    UI -->|Instantiates| PDFJS
-    UI -->|Executes| GitConnector
-    
-    GitConnector <-->|HTTPS REST| GitHubAPI
-    UI <-->|JSON Payload Mode| GroqAPI
-    
-    GitHubAPI -->|Commit Data| State
-    GroqAPI -->|Analysis JSON| State
-
-    style Browser fill:#0e0d1a,stroke:#a855f7,stroke-width:2px,color:#fff
-    style Gateways fill:#08070f,stroke:#06b6d4,stroke-width:2px,color:#fff
-```
-
-### 2. C4 Container Diagram
-Illustrates the container boundaries and integration protocols.
+### C4 Container Diagram
+This illustrates the interaction routes and protocols used inside Career Launch AI:
 
 ```mermaid
 graph LR
@@ -170,8 +271,7 @@ graph LR
     style Groq fill:#0e0d1a,stroke:#a855f7,color:#fff
 ```
 
-### 3. Chronological Ingestion & Analysis Sequence
-
+### Chronological Ingestion & Analysis Sequence
 ```mermaid
 sequenceDiagram
     autonumber
@@ -207,8 +307,7 @@ sequenceDiagram
     UI-->>User: Refresh dynamic widgets & unlock coach panels
 ```
 
-### 4. Logical Database (Local Storage State) Entity-Relationship Model
-
+### State Store & Local Database Entities
 ```mermaid
 erDiagram
     CandidateProfile {
@@ -232,8 +331,7 @@ erDiagram
     CandidateProfile ||--|| EvaluationResults : "evaluates"
 ```
 
-### 5. Deployment Topology
-
+### Deployment Topology
 ```mermaid
 graph TD
     subgraph Hosting ["Edge Content Delivery Network"]
@@ -340,44 +438,6 @@ sequenceDiagram
 | **GitHub Commits** | `/repos/{owner}/{repo}/commits` | `GET` | `Authorization: token <pat>` | Query params / JSON |
 | **Groq Engine** | `/openai/v1/chat/completions` | `POST` | `Authorization: Bearer <key>` | Structured JSON |
 
-### Sample Groq Payload (JSON Mode Request)
-
-**Request Payload:**
-```json
-{
-  "model": "llama-3.1-8b-instant",
-  "response_format": {
-    "type": "json_object"
-  },
-  "messages": [
-    {
-      "role": "system",
-      "content": "You are an expert technical interviewer. Return evaluation metrics in a valid JSON schema."
-    },
-    {
-      "role": "user",
-      "content": "Resume: [Extracted Resume Content] ... Github: [Git Stats] ... Target JD: [Job Description]"
-    }
-  ]
-}
-```
-
-**Response Payload:**
-```json
-{
-  "fit_score": 88,
-  "skills_discovered": ["JavaScript", "TailwindCSS", "PDF.js"],
-  "gaps": [
-    {
-      "skill": "Docker",
-      "reason": "Target JD requests cloud container deployment, but candidate's git history shows no container configuration files.",
-      "priority": "HIGH"
-    }
-  ],
-  "project_validation": "Github repository contains commits matching assertions, verifying practical application."
-}
-```
-
 ---
 
 ## 🔒 Security & Performance Model
@@ -387,9 +447,9 @@ sequenceDiagram
 ```mermaid
 graph TD
     subgraph BrowserSandbox ["Secure Client Sandbox (In-Memory Only)"]
-        A[Raw Resume Data Buffer]
+        A[Resume File Buffer]
         B[User OAuth Credentials]
-        C[LocalStorage Configuration]
+        C[LocalStorage State Store]
     end
     
     subgraph Blocked ["Untrusted Environments"]
@@ -503,9 +563,6 @@ graph LR
     style PullRequest fill:#0e0d1a,stroke:#ec4899,color:#fff
     style Merge fill:#0d1c12,stroke:#10b981,color:#fff
 ```
-
-*   **Production Branch**: `main` houses the current production-stable deployment.
-*   **Development workflow**: Create a descriptive branch named `feature/your-feature-name` or `bugfix/issue-resolved` and submit a Pull Request targeting `main`.
 
 ---
 
