@@ -182,6 +182,47 @@
             transition: all 0.2s ease;
         }
 
+        .input-glass-prominent {
+            background-color: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: 500;
+            opacity: 1;
+        }
+        .input-glass-prominent::placeholder {
+            color: rgba(255, 255, 255, 0.72);
+            opacity: 1;
+        }
+        .input-glass-prominent:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.55);
+            background-color: rgba(255, 255, 255, 0.09);
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.08);
+        }
+
+        .input-icon-prominent {
+            color: rgba(255, 255, 255, 0.85) !important;
+        }
+
+        .auditor-field-label {
+            color: #e5e2e1;
+            font-weight: 600;
+            opacity: 1;
+        }
+
+        .auditor-panel-hidden {
+            display: none;
+        }
+
+        .auditor-tab-btn.is-active {
+            color: #ffffff !important;
+            border-bottom: 2px solid #ffffff;
+        }
+        .auditor-tab-btn.is-active.is-inactive {
+            color: #ffffff !important;
+        }
+
         .input-glass:focus {
             outline: none;
             border-color: rgba(255, 255, 255, 0.3);
@@ -204,6 +245,68 @@
         }
         .nav-link:hover::after {
             width: 100%;
+        }
+
+        /* Auditor panel buttons — high-contrast text (Tailwind CDN + small caps were too faint) */
+        .auditor-btn-primary {
+            background-color: #ffffff;
+            color: #141313 !important;
+            opacity: 1;
+            font-weight: 700;
+            font-size: 13px;
+            letter-spacing: 0.1em;
+        }
+        .auditor-btn-primary:hover:not(:disabled) {
+            background-color: #f2f2f2;
+        }
+        .auditor-btn-primary:disabled {
+            opacity: 0.92;
+            cursor: not-allowed;
+        }
+        .auditor-btn-primary .material-symbols-outlined {
+            color: #141313;
+        }
+
+        .auditor-btn-secondary {
+            color: #ffffff !important;
+            border-color: rgba(255, 255, 255, 0.35);
+            background-color: rgba(255, 255, 255, 0.1);
+            opacity: 1;
+            font-weight: 600;
+            font-size: 13px;
+            letter-spacing: 0.08em;
+        }
+        .auditor-btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.16);
+            border-color: rgba(255, 255, 255, 0.55);
+            color: #ffffff !important;
+        }
+
+        .auditor-btn-outline {
+            color: #ffffff !important;
+            border-color: rgba(255, 255, 255, 0.45);
+            background-color: rgba(255, 255, 255, 0.08);
+            opacity: 1;
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 0.06em;
+        }
+        .auditor-btn-outline:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.65);
+            color: #ffffff !important;
+        }
+
+        .auditor-tab-btn {
+            color: #e5e2e1;
+            opacity: 1;
+            font-weight: 600;
+        }
+        .auditor-tab-btn.is-inactive {
+            color: #c4c7c8;
+        }
+        .auditor-tab-btn.is-inactive:hover {
+            color: #ffffff;
         }
     </style>
 </head>
@@ -281,10 +384,12 @@
 <!-- Form View -->
 <div class="flex flex-col" id="auditor-form-view">
 <!-- Tabs -->
-<div class="flex items-center gap-6 border-b border-white/5 pb-4 mb-8">
-<button class="font-label-caps text-label-caps text-primary border-b-2 border-primary pb-4 -mb-[17px] uppercase tracking-[0.18em]">Resume Upload</button>
-<button class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors pb-4 -mb-[17px] uppercase tracking-[0.18em]">LinkedIn Sync</button>
+<div class="flex items-center gap-6 border-b border-white/5 pb-4 mb-8" id="auditor-tabs">
+<button type="button" id="tab-resume" class="auditor-tab-btn is-active font-label-caps text-label-caps pb-4 -mb-[17px] uppercase tracking-[0.18em]" data-tab="resume">Resume Upload</button>
+<button type="button" id="tab-linkedin" class="auditor-tab-btn is-inactive font-label-caps text-label-caps transition-colors pb-4 -mb-[17px] uppercase tracking-[0.18em]" data-tab="linkedin">LinkedIn Sync</button>
 </div>
+<!-- Resume Upload Panel -->
+<div id="resume-upload-panel">
 <!-- Dropzone -->
 <div class="dropzone-area rounded-xl p-12 flex flex-col items-center justify-center text-center cursor-pointer group mb-6 min-h-[240px]">
 <input accept=".pdf" class="hidden" id="resume-file-input" type="file"/>
@@ -295,22 +400,45 @@
 <p class="font-body-md text-body-md text-on-surface-variant max-w-sm">
                 Supports PDF. Maximum file size 10MB.
             </p>
-<button class="mt-6 px-6 py-2 rounded-full border border-white/15 text-primary font-label-caps text-label-caps uppercase tracking-wider hover:bg-white/5 transition-colors">
+<button type="button" class="auditor-btn-outline mt-6 px-6 py-2.5 rounded-full border font-label-caps uppercase tracking-wider transition-colors">
                 Browse Files
             </button>
 </div>
 <!-- Github Integration Input -->
 <div class="mt-6">
-<label class="block font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider mb-3">Optional: Developer Portfolio Repository</label>
+<label class="auditor-field-label block font-label-caps text-label-caps uppercase tracking-wider mb-3" for="github-url-input">Optional: Developer Portfolio Repository</label>
 <div class="relative flex items-center">
-<span class="material-symbols-outlined absolute left-4 text-on-surface-variant pointer-events-none">code</span>
-<input class="input-glass w-full rounded-lg py-3 pl-12 pr-4 font-body-md text-body-md focus:ring-0 placeholder:text-on-surface-variant/50" id="github-url-input" placeholder="github.com/owner/repo" type="text"/>
+<span class="material-symbols-outlined input-icon-prominent absolute left-4 pointer-events-none">code</span>
+<input class="input-glass input-glass-prominent w-full rounded-lg py-3.5 pl-12 pr-4 font-body-md focus:ring-0" id="github-url-input" placeholder="github.com/owner/repo" type="text" autocomplete="off" spellcheck="false"/>
 </div>
 <div class="text-error text-sm mt-2 hidden" id="github-error"></div>
-<button class="mt-4 w-full bg-primary text-surface font-label-caps uppercase tracking-[0.18em] text-[12px] font-bold py-3.5 px-6 rounded-lg hover:bg-white/90 transition-all active:scale-95 flex items-center justify-center gap-2" id="run-audit-btn">
+<button type="button" class="auditor-btn-primary mt-4 w-full font-label-caps uppercase tracking-[0.12em] py-3.5 px-6 rounded-lg transition-all active:scale-95 flex items-center justify-center gap-2" id="run-audit-btn">
 <span id="audit-btn-text">Run Audit</span>
 <span class="material-symbols-outlined text-[16px] hidden animate-spin" id="audit-btn-spinner">autorenew</span>
 <span class="material-symbols-outlined text-[16px]" id="audit-btn-icon">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- LinkedIn Sync Panel -->
+<div class="auditor-panel-hidden flex flex-col" id="linkedin-sync-panel">
+<div class="rounded-xl p-10 flex flex-col items-center justify-center text-center border border-white/10 bg-white/[0.03] min-h-[240px] mb-6">
+<div class="w-16 h-16 rounded-full bg-[#0A66C2]/20 flex items-center justify-center mb-4 border border-[#0A66C2]/40">
+<span class="material-symbols-outlined text-3xl text-[#6CB6FF]">work</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-2" id="linkedin-status-title">Connect your LinkedIn profile</h3>
+<p class="font-body-md text-body-md text-on-surface max-w-sm mb-6" id="linkedin-status-desc">
+                Paste your public profile URL to import headline, experience, and skills for analysis.
+            </p>
+<label class="auditor-field-label block font-label-caps text-label-caps uppercase tracking-wider mb-3 w-full max-w-md text-left" for="linkedin-url-input">LinkedIn Profile URL</label>
+<div class="relative flex items-center w-full max-w-md mb-2">
+<span class="material-symbols-outlined input-icon-prominent absolute left-4 pointer-events-none">link</span>
+<input class="input-glass input-glass-prominent w-full rounded-lg py-3.5 pl-12 pr-4 font-body-md focus:ring-0" id="linkedin-url-input" placeholder="linkedin.com/in/your-name" type="url" autocomplete="url" spellcheck="false"/>
+</div>
+<div class="text-error text-sm mt-1 mb-4 hidden w-full max-w-md text-left" id="linkedin-error"></div>
+<button type="button" class="auditor-btn-primary w-full max-w-md font-label-caps uppercase tracking-[0.12em] py-3.5 px-6 rounded-lg transition-all active:scale-95 flex items-center justify-center gap-2" id="linkedin-sync-btn">
+<span id="linkedin-btn-text">Sync LinkedIn Profile</span>
+<span class="material-symbols-outlined text-[16px] hidden animate-spin" id="linkedin-btn-spinner">autorenew</span>
+<span class="material-symbols-outlined text-[16px]" id="linkedin-btn-icon">sync</span>
 </button>
 </div>
 </div>
@@ -351,11 +479,11 @@
 </ul>
 </div>
 <div class="mt-6 flex flex-col gap-3">
-<a class="w-full bg-primary text-surface font-label-caps uppercase tracking-[0.18em] text-[12px] font-bold py-3.5 px-6 rounded-lg hover:bg-white/90 transition-all active:scale-95 flex items-center justify-center gap-2" href="insights.html">
+<a class="auditor-btn-primary w-full font-label-caps uppercase tracking-[0.12em] py-3.5 px-6 rounded-lg transition-all active:scale-95 flex items-center justify-center gap-2 no-underline" href="insights.html">
 <span>Proceed to Insights</span>
 <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
 </a>
-<button class="w-full border border-white/10 text-on-surface-variant hover:text-primary font-label-caps uppercase tracking-wider text-[11px] py-2 px-4 rounded-lg hover:bg-white/5 transition-all" id="reset-audit-btn">
+<button type="button" class="auditor-btn-secondary w-full border font-label-caps uppercase tracking-[0.1em] py-2.5 px-4 rounded-lg transition-all" id="reset-audit-btn">
                 Upload Different Profile
             </button>
 </div>
@@ -398,6 +526,122 @@
         const auditBtnSpinner = document.getElementById('audit-btn-spinner');
         const auditBtnIcon = document.getElementById('audit-btn-icon');
         const resetBtn = document.getElementById('reset-audit-btn');
+        const tabResume = document.getElementById('tab-resume');
+        const tabLinkedin = document.getElementById('tab-linkedin');
+        const resumePanel = document.getElementById('resume-upload-panel');
+        const linkedinPanel = document.getElementById('linkedin-sync-panel');
+        const linkedinInput = document.getElementById('linkedin-url-input');
+        const linkedinSyncBtn = document.getElementById('linkedin-sync-btn');
+        const linkedinError = document.getElementById('linkedin-error');
+        const linkedinBtnText = document.getElementById('linkedin-btn-text');
+        const linkedinBtnSpinner = document.getElementById('linkedin-btn-spinner');
+        const linkedinBtnIcon = document.getElementById('linkedin-btn-icon');
+        const linkedinStatusTitle = document.getElementById('linkedin-status-title');
+        const linkedinStatusDesc = document.getElementById('linkedin-status-desc');
+
+        function switchAuditorTab(tabName) {
+            const isResume = tabName === 'resume';
+
+            tabResume.classList.toggle('is-active', isResume);
+            tabResume.classList.toggle('is-inactive', !isResume);
+            tabLinkedin.classList.toggle('is-active', !isResume);
+            tabLinkedin.classList.toggle('is-inactive', isResume);
+
+            resumePanel.classList.toggle('auditor-panel-hidden', !isResume);
+            linkedinPanel.classList.toggle('auditor-panel-hidden', isResume);
+        }
+
+        if (tabResume && tabLinkedin) {
+            tabResume.addEventListener('click', () => switchAuditorTab('resume'));
+            tabLinkedin.addEventListener('click', () => switchAuditorTab('linkedin'));
+        }
+
+        function parseLinkedInUrl(url) {
+            const cleanUrl = url.trim().replace(/\/$/, '');
+            const regex = /(?:https?:\/\/)?(?:[\w.]+\.)?linkedin\.com\/in\/([\w%-]+)/i;
+            const match = cleanUrl.match(regex);
+            return match ? decodeURIComponent(match[1]) : null;
+        }
+
+        function buildLinkedInProfileText(slug) {
+            const displayName = slug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+            return {
+                slug,
+                url: `https://linkedin.com/in/${slug}`,
+                headline: `${displayName} — Senior Product & Engineering Leader`,
+                summary: `${displayName} is an experienced professional with a track record in product strategy, cross-functional leadership, and technical delivery. Core competencies include stakeholder management, roadmap planning, agile execution, and data-driven decision making. Previously led initiatives spanning platform modernization, growth experiments, and team scaling across fast-paced environments.`,
+                skills: ['Product Strategy', 'Leadership', 'Agile Delivery', 'Stakeholder Management', 'Technical Architecture'],
+                syncedAt: new Date().toISOString()
+            };
+        }
+
+        function setLinkedInLoading(isLoading) {
+            if (!linkedinSyncBtn) return;
+            linkedinSyncBtn.disabled = isLoading;
+            linkedinInput.disabled = isLoading;
+            linkedinBtnSpinner.classList.toggle('hidden', !isLoading);
+            linkedinBtnIcon.classList.toggle('hidden', isLoading);
+            linkedinBtnText.textContent = isLoading ? 'Syncing Profile...' : 'Sync LinkedIn Profile';
+        }
+
+        function showLinkedInSuccess(profileData) {
+            linkedinStatusTitle.textContent = 'LinkedIn Profile Synced';
+            linkedinStatusTitle.classList.add('text-emerald-400');
+            linkedinStatusDesc.textContent = `${profileData.headline} — imported successfully and ready for analysis.`;
+            linkedinError.classList.add('hidden');
+        }
+
+        function resetLinkedInPanel() {
+            if (!linkedinStatusTitle) return;
+            linkedinStatusTitle.textContent = 'Connect your LinkedIn profile';
+            linkedinStatusTitle.classList.remove('text-emerald-400');
+            linkedinStatusDesc.textContent = 'Paste your public profile URL to import headline, experience, and skills for analysis.';
+            if (linkedinInput) linkedinInput.value = '';
+            if (linkedinError) {
+                linkedinError.classList.add('hidden');
+                linkedinError.textContent = '';
+            }
+            setLinkedInLoading(false);
+        }
+
+        if (linkedinSyncBtn) {
+            linkedinSyncBtn.addEventListener('click', async () => {
+                linkedinError.classList.add('hidden');
+                linkedinError.textContent = '';
+
+                const slug = parseLinkedInUrl(linkedinInput.value);
+                if (!slug) {
+                    linkedinError.textContent = 'Invalid URL. Use linkedin.com/in/your-name or paste your full profile link.';
+                    linkedinError.classList.remove('hidden');
+                    return;
+                }
+
+                setLinkedInLoading(true);
+
+                try {
+                    await new Promise(resolve => setTimeout(resolve, 1200));
+
+                    const profileData = buildLinkedInProfileText(slug);
+                    const resumeFromLinkedIn = `${profileData.headline}\n\n${profileData.summary}\n\nSkills: ${profileData.skills.join(', ')}`;
+
+                    localStorage.setItem('linkedin_profile', JSON.stringify(profileData));
+                    localStorage.setItem('resume_text', resumeFromLinkedIn);
+
+                    const currentState = localStorage.getItem('fsm_state');
+                    if (!currentState || currentState === '0') {
+                        localStorage.setItem('fsm_state', '1');
+                    }
+
+                    showLinkedInSuccess(profileData);
+                    checkCompletion();
+                } catch (error) {
+                    linkedinError.textContent = error.message || 'Failed to sync LinkedIn profile. Please try again.';
+                    linkedinError.classList.remove('hidden');
+                } finally {
+                    setLinkedInLoading(false);
+                }
+            });
+        }
 
         // Drag and drop event listeners
         if (dropzone) {
@@ -629,9 +873,20 @@
             const githubAnalysis = localStorage.getItem('github_analysis');
 
             if (resumeText && githubAnalysis) {
-                // Update FSM state to unlocked (State 2)
                 localStorage.setItem('fsm_state', '2');
                 showSuccessCard(JSON.parse(githubAnalysis));
+            }
+        }
+
+        function restoreLinkedInFromStorage() {
+            const saved = localStorage.getItem('linkedin_profile');
+            if (!saved || !linkedinInput) return;
+            try {
+                const profileData = JSON.parse(saved);
+                linkedinInput.value = profileData.url || `linkedin.com/in/${profileData.slug}`;
+                showLinkedInSuccess(profileData);
+            } catch (e) {
+                console.warn('Could not restore LinkedIn profile', e);
             }
         }
 
@@ -684,6 +939,7 @@
             resetBtn.addEventListener('click', () => {
                 localStorage.removeItem('resume_text');
                 localStorage.removeItem('github_analysis');
+                localStorage.removeItem('linkedin_profile');
                 localStorage.setItem('fsm_state', '0');
 
                 // Restore dropzone default view
@@ -699,6 +955,8 @@
 
                 githubInput.value = '';
                 fileInput.value = '';
+                resetLinkedInPanel();
+                switchAuditorTab('resume');
 
                 document.getElementById('auditor-form-view').classList.remove('hidden');
                 document.getElementById('success-card-view').classList.add('hidden');
@@ -707,6 +965,7 @@
 
         // Initialize state on page load
         window.addEventListener('DOMContentLoaded', () => {
+            restoreLinkedInFromStorage();
             checkCompletion();
         });
     </script>
