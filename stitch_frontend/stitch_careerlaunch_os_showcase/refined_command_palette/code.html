@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CareerLaunch AI - Command Palette</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        @import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800;900&display=swap');
+
+        .glass-panel {
+            background: var(--surface-container, rgba(32, 31, 31, 1));
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .command-input-wrapper {
+            position: relative;
+            background: rgba(10, 10, 11, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .command-input-wrapper:focus-within {
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1);
+        }
+
+        .shortcut-key {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.3);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "background": "#141313",
+                      "error-container": "#93000a",
+                      "on-primary-fixed": "#1a1c1c",
+                      "surface-container": "#201f1f",
+                      "on-tertiary-fixed": "#1a1c1c",
+                      "outline-variant": "#444748",
+                      "surface": "#141313",
+                      "primary-container": "#e2e2e2",
+                      "on-surface-variant": "#c4c7c8",
+                      "on-tertiary": "#2f3131",
+                      "on-secondary-fixed-variant": "#46464a",
+                      "inverse-on-surface": "#313030",
+                      "secondary-fixed": "#e3e2e6",
+                      "on-primary-container": "#636565",
+                      "secondary": "#c7c6ca",
+                      "outline": "#8e9192",
+                      "on-tertiary-fixed-variant": "#454747",
+                      "tertiary-fixed-dim": "#c6c6c7",
+                      "primary": "#ffffff",
+                      "tertiary": "#ffffff",
+                      "inverse-primary": "#5d5f5f",
+                      "secondary-fixed-dim": "#c7c6ca",
+                      "on-background": "#e5e2e1",
+                      "tertiary-container": "#e2e2e2",
+                      "primary-fixed": "#e2e2e2",
+                      "surface-container-lowest": "#0e0e0e",
+                      "surface-variant": "#353434",
+                      "on-secondary-container": "#b5b4b8",
+                      "on-primary-fixed-variant": "#454747",
+                      "on-surface": "#e5e2e1",
+                      "on-primary": "#2f3131",
+                      "surface-container-high": "#2a2a2a",
+                      "on-tertiary-container": "#636565",
+                      "error": "#ffb4ab",
+                      "surface-tint": "#c6c6c7",
+                      "primary-fixed-dim": "#c6c6c7",
+                      "on-error-container": "#ffdad6",
+                      "surface-bright": "#3a3939",
+                      "surface-container-highest": "#353434",
+                      "on-secondary-fixed": "#1a1b1e",
+                      "tertiary-fixed": "#e2e2e2",
+                      "surface-dim": "#141313",
+                      "on-secondary": "#2f3033",
+                      "on-error": "#690005",
+                      "secondary-container": "#46464a",
+                      "surface-container-low": "#1c1b1b",
+                      "inverse-surface": "#e5e2e1"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "stack-sm": "8px",
+                      "stack-md": "16px",
+                      "stack-lg": "32px",
+                      "panel-padding": "32px",
+                      "gutter": "24px",
+                      "margin-page": "40px",
+                      "container-max": "1280px"
+              },
+              "fontFamily": {
+                      "body-md": [
+                              "Geist"
+                      ],
+                      "body-lg": [
+                              "Geist"
+                      ],
+                      "headline-md-mobile": [
+                              "Geist"
+                      ],
+                      "label-caps": [
+                              "Geist"
+                      ],
+                      "headline-sm": [
+                              "Geist"
+                      ],
+                      "headline-md": [
+                              "Geist"
+                      ],
+                      "display-lg": [
+                              "Geist"
+                      ]
+              },
+              "fontSize": {
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "1.5",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-md-mobile": [
+                              "28px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-caps": [
+                              "12px",
+                              {
+                                      "lineHeight": "1",
+                                      "letterSpacing": "0.18em",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "headline-sm": [
+                              "24px",
+                              {
+                                      "lineHeight": "1.3",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-md": [
+                              "32px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "letterSpacing": "-0.04em",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+            }
+          }
+        }
+    </script>
+</head>
+<body class="bg-black/80 text-on-background min-h-screen flex flex-col font-body-md overflow-hidden antialiased backdrop-blur-sm">
+<!-- Main Content Canvas -->
+<main class="flex-grow flex items-center justify-center p-margin-page relative w-full h-full min-h-screen z-50">
+<!-- Command Palette Modal -->
+<div class="glass-panel bg-surface-container rounded-xl w-full max-w-[600px] overflow-hidden flex flex-col shadow-2xl transform scale-100 transition-transform duration-300">
+<!-- Input Area -->
+<div class="p-4 border-b border-white/5">
+<div class="command-input-wrapper rounded-lg flex items-center px-4 py-3 bg-surface-container-lowest">
+<span class="material-symbols-outlined text-on-surface-variant mr-3 text-xl">search</span>
+<input autofocus="" class="w-full bg-transparent border-none text-on-surface focus:ring-0 focus:outline-none placeholder-on-surface-variant font-body-lg" placeholder="Type a command or search..." type="text"/>
+<button class="ml-3 text-on-surface-variant hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-sm">close</span>
+</button>
+</div>
+</div>
+<!-- Results Area -->
+<div class="max-h-[400px] overflow-y-auto p-2 scrollbar-hide bg-surface-container">
+<!-- Section: Navigation -->
+<div>
+<div class="px-4 py-2 font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">
+                        Navigation
+                    </div>
+<ul class="space-y-1">
+<!-- Item -->
+<li>
+<button class="w-full flex items-center justify-between px-4 py-3 rounded-lg bg-surface-variant border border-white/5 group relative overflow-hidden">
+<div class="flex items-center gap-3 relative z-10">
+<span class="material-symbols-outlined text-on-surface text-lg">dashboard</span>
+<span class="font-body-md text-on-surface font-medium">Go to Dashboard</span>
+</div>
+<div class="flex items-center gap-1 relative z-10">
+<kbd class="shortcut-key rounded px-1.5 py-1 text-xs font-mono text-on-surface-variant">G</kbd>
+<kbd class="shortcut-key rounded px-1.5 py-1 text-xs font-mono text-on-surface-variant">D</kbd>
+</div>
+</button>
+</li>
+<!-- Item -->
+<li>
+<button class="w-full flex items-center justify-between px-4 py-3 rounded-lg hover:bg-surface-variant transition-colors group">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-on-surface transition-colors text-lg">settings</span>
+<span class="font-body-md text-on-surface-variant group-hover:text-on-surface transition-colors">Open Settings</span>
+</div>
+<div class="flex items-center gap-1">
+<kbd class="shortcut-key rounded px-1.5 py-1 text-xs font-mono text-on-surface-variant">⌘</kbd>
+<kbd class="shortcut-key rounded px-1.5 py-1 text-xs font-mono text-on-surface-variant">,</kbd>
+</div>
+</button>
+</li>
+</ul>
+</div>
+</div>
+<!-- Footer Hints -->
+<div class="bg-surface-container-lowest border-t border-white/5 px-4 py-3 flex items-center justify-between text-xs text-on-surface-variant">
+<div class="flex items-center gap-4">
+<span class="flex items-center gap-1"><kbd class="font-mono bg-white/5 border border-white/10 px-1 rounded">↑</kbd><kbd class="font-mono bg-white/5 border border-white/10 px-1 rounded">↓</kbd> to navigate</span>
+<span class="flex items-center gap-1"><kbd class="font-mono bg-white/5 border border-white/10 px-1 rounded">↵</kbd> to select</span>
+</div>
+<div class="flex items-center gap-4">
+<span class="flex items-center gap-1"><kbd class="font-mono bg-white/5 border border-white/10 px-1 rounded">ESC</kbd> to close</span>
+</div>
+</div>
+</div>
+</main>
+<style>
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .scrollbar-hide {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+    </style>
+</body></html>

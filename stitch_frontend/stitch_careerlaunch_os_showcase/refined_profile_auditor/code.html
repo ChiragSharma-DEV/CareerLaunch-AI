@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Profile Auditor - CareerLaunch AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-container": "#636565",
+                        "error-container": "#93000a",
+                        "surface-container-low": "#1c1b1b",
+                        "on-primary-fixed": "#1a1c1c",
+                        "surface": "#141313",
+                        "on-tertiary-fixed-variant": "#454747",
+                        "surface-container-highest": "#353434",
+                        "outline": "#8e9192",
+                        "error": "#ffb4ab",
+                        "tertiary-container": "#e2e2e2",
+                        "inverse-primary": "#5d5f5f",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-primary-fixed-variant": "#454747",
+                        "on-primary": "#2f3131",
+                        "surface-dim": "#141313",
+                        "secondary": "#c7c6ca",
+                        "inverse-surface": "#e5e2e1",
+                        "secondary-fixed-dim": "#c7c6ca",
+                        "on-error-container": "#ffdad6",
+                        "tertiary-fixed-dim": "#c6c6c7",
+                        "on-tertiary": "#2f3131",
+                        "secondary-fixed": "#e3e2e6",
+                        "primary-fixed-dim": "#c6c6c7",
+                        "on-tertiary-container": "#636565",
+                        "on-secondary-container": "#b5b4b8",
+                        "on-background": "#e5e2e1",
+                        "primary-fixed": "#e2e2e2",
+                        "on-secondary-fixed-variant": "#46464a",
+                        "on-secondary": "#2f3033",
+                        "tertiary": "#ffffff",
+                        "surface-container": "#201f1f",
+                        "on-tertiary-fixed": "#1a1c1c",
+                        "on-surface": "#e5e2e1",
+                        "on-secondary-fixed": "#1a1b1e",
+                        "surface-tint": "#c6c6c7",
+                        "inverse-on-surface": "#313030",
+                        "primary-container": "#e2e2e2",
+                        "tertiary-fixed": "#e2e2e2",
+                        "surface-bright": "#3a3939",
+                        "primary": "#ffffff",
+                        "surface-container-high": "#2a2a2a",
+                        "on-surface-variant": "#c4c7c8",
+                        "surface-variant": "#353434",
+                        "secondary-container": "#46464a",
+                        "on-error": "#690005",
+                        "outline-variant": "#444748",
+                        "background": "#141313",
+                        
+                        // Custom Brand Colors for Cinematic Feel
+                        "brand-glow-blue": "rgba(66, 133, 244, 0.15)",
+                        "brand-glow-amber": "rgba(251, 188, 5, 0.1)",
+                        "panel-inner": "#111214",
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "3xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-page": "40px",
+                        "stack-md": "16px",
+                        "container-max": "1280px",
+                        "panel-padding": "32px",
+                        "stack-sm": "8px",
+                        "stack-lg": "32px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-sm": ["Geist", "sans-serif"],
+                        "headline-md-mobile": ["Geist", "sans-serif"],
+                        "display-lg": ["Geist", "sans-serif"],
+                        "body-lg": ["Geist", "sans-serif"],
+                        "headline-md": ["Geist", "sans-serif"],
+                        "label-caps": ["Geist", "sans-serif"],
+                        "body-md": ["Geist", "sans-serif"]
+                    },
+                    "fontSize": {
+                        "headline-sm": ["24px", { "lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "headline-md-mobile": ["28px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "headline-md": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "label-caps": ["12px", { "lineHeight": "1", "letterSpacing": "0.18em", "fontWeight": "500" }],
+                        "body-md": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }]
+                    },
+                    "backgroundImage": {
+                        'cinematic-bloom': 'radial-gradient(circle at 50% 50%, var(--tw-gradient-stops))',
+                        'panel-gradient': 'linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0) 100%)',
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        /* Custom utilities for the cinematic aesthetic */
+        body {
+            background-color: #0A0A0B;
+            color: #e5e2e1;
+            overflow-x: hidden;
+        }
+        
+        .cinematic-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            background: #0A0A0B;
+            overflow: hidden;
+        }
+
+        .bloom-primary {
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80vw;
+            height: 80vh;
+            background: radial-gradient(circle, rgba(66, 133, 244, 0.12) 0%, rgba(10, 10, 11, 0) 70%);
+            filter: blur(100px);
+            opacity: 0.8;
+            pointer-events: none;
+        }
+
+        .glass-panel {
+            background-color: #111214;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .glass-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0) 100%);
+            z-index: 10;
+        }
+
+        .dropzone-area {
+            background: linear-gradient(180deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0) 100%);
+            border: 1px dashed rgba(255,255,255,0.15);
+            transition: all 0.3s ease;
+        }
+
+        .dropzone-area:hover, .dropzone-area.active {
+            border-color: rgba(255,255,255,0.4);
+            background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 100%);
+            box-shadow: inset 0 0 40px rgba(255,255,255,0.02);
+        }
+
+        .input-glass {
+            background-color: #0A0A0B;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #e5e2e1;
+            transition: all 0.2s ease;
+        }
+
+        .input-glass:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
+        }
+
+        /* Nav specific overrides */
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: currentColor;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col relative font-body-md text-on-surface">
+<!-- Atmospheric Background -->
+<div class="cinematic-bg">
+<div class="bloom-primary"></div>
+<div class="absolute bottom-0 right-0 w-[60vw] h-[614px] bg-[radial-gradient(circle,rgba(251,188,5,0.05)_0%,rgba(10,10,11,0)_60%)] blur-[80px] pointer-events-none"></div>
+</div>
+<!-- TopNavBar -->
+<header class="bg-transparent docked full-width top-0 z-50">
+<div class="bg-gradient-to-b from-surface/90 to-transparent backdrop-blur-sm">
+<nav class="flex justify-between items-center px-margin-page py-6 w-full max-w-container-max mx-auto flat no shadows">
+<!-- Brand -->
+<a class="font-headline-md text-headline-md font-bold tracking-tighter text-primary flex items-center gap-2 scale-95 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">rocket_launch</span>
+                    CareerLaunch AI
+                </a>
+<!-- Nav Links (Desktop) -->
+<div class="hidden md:flex items-center gap-8">
+<!-- Semantic Active State: Profile Auditor implies Platform tool -->
+<a class="text-primary border-b border-primary pb-1 font-label-caps uppercase tracking-[0.18em] text-[12px] font-medium hover:bg-white/5 transition-all duration-300 px-2 py-1 rounded-sm" href="#">Platform</a>
+<a class="text-on-surface-variant font-label-caps uppercase tracking-[0.18em] text-[12px] font-medium hover:text-primary transition-colors hover:bg-white/5 duration-300 px-2 py-1 rounded-sm" href="#">Insights</a>
+<a class="text-on-surface-variant font-label-caps uppercase tracking-[0.18em] text-[12px] font-medium hover:text-primary transition-colors hover:bg-white/5 duration-300 px-2 py-1 rounded-sm" href="#">Network</a>
+<a class="text-on-surface-variant font-label-caps uppercase tracking-[0.18em] text-[12px] font-medium hover:text-primary transition-colors hover:bg-white/5 duration-300 px-2 py-1 rounded-sm" href="#">Resources</a>
+</div>
+<!-- Actions -->
+<div class="flex items-center gap-4">
+<a class="hidden md:block text-on-surface-variant font-label-caps uppercase tracking-[0.18em] text-[12px] hover:text-primary transition-colors py-2 px-4" href="#">Sign In</a>
+<a class="bg-primary text-surface font-label-caps uppercase tracking-[0.18em] text-[12px] font-bold py-3 px-6 rounded-full hover:bg-white/90 transition-all scale-95 active:scale-90 flex items-center gap-2" href="#">
+                        Sign Up
+                        <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+</nav>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow flex items-center justify-center relative z-10 px-margin-page py-stack-lg w-full max-w-container-max mx-auto mt-12 md:mt-0">
+<div class="w-full grid grid-cols-1 lg:grid-cols-12 gap-gutter items-center">
+<!-- Left Side: Header & Context -->
+<div class="lg:col-span-5 flex flex-col gap-stack-lg mb-12 lg:mb-0 pr-0 lg:pr-8">
+<div>
+<span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#18191C] border border-white/10 text-on-surface-variant font-label-caps text-label-caps mb-6">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                        Neural Analysis Active
+                    </span>
+<h1 class="font-display-lg text-display-lg text-primary mb-4 leading-tight">
+                        Profile <br/><span class="text-on-surface-variant">Auditor</span>
+</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-md">
+                        Our AI ingests your career history to identify strategic gaps, highlight strengths, and generate a launch-ready narrative designed for executive roles.
+                    </p>
+</div>
+<!-- Subtle features list -->
+<ul class="flex flex-col gap-4 mt-4">
+<li class="flex items-center gap-3 text-on-surface-variant">
+<span class="material-symbols-outlined text-primary/60 text-sm">check_circle</span>
+<span class="font-body-md text-body-md">ATS Semantic Keyword Mapping</span>
+</li>
+<li class="flex items-center gap-3 text-on-surface-variant">
+<span class="material-symbols-outlined text-primary/60 text-sm">check_circle</span>
+<span class="font-body-md text-body-md">Impact Metric Verification</span>
+</li>
+<li class="flex items-center gap-3 text-on-surface-variant">
+<span class="material-symbols-outlined text-primary/60 text-sm">check_circle</span>
+<span class="font-body-md text-body-md">Narrative Cohesion Scoring</span>
+</li>
+</ul>
+</div>
+<!-- Right Side: The Auditor Panel (Showcase) -->
+<div class="lg:col-span-7 relative">
+<!-- Main Upload Panel -->
+<div class="glass-panel rounded-2xl p-panel-padding relative z-20 w-full bg-panel-gradient">
+<!-- Tabs -->
+<div class="flex items-center gap-6 border-b border-white/5 pb-4 mb-8">
+<button class="font-label-caps text-label-caps text-primary border-b-2 border-primary pb-4 -mb-[17px] uppercase tracking-[0.18em]">Resume Upload</button>
+<button class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors pb-4 -mb-[17px] uppercase tracking-[0.18em]">LinkedIn Sync</button>
+</div>
+<!-- Dropzone -->
+<div class="dropzone-area rounded-xl p-12 flex flex-col items-center justify-center text-center cursor-pointer group mb-6 min-h-[240px]">
+<div class="w-16 h-16 rounded-full bg-surface-container flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 border border-white/5">
+<span class="material-symbols-outlined text-3xl text-on-surface-variant group-hover:text-primary transition-colors">upload_file</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-2">Drop your resume to begin analysis</h3>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-sm">
+                            Supports PDF, DOCX, or TXT. Maximum file size 10MB.
+                        </p>
+<button class="mt-6 px-6 py-2 rounded-full border border-white/15 text-primary font-label-caps text-label-caps uppercase tracking-wider hover:bg-white/5 transition-colors">
+                            Browse Files
+                        </button>
+</div>
+<!-- Github Integration Input -->
+<div class="mt-6">
+<label class="block font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider mb-3">Optional: Developer Portfolio</label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-4 text-on-surface-variant pointer-events-none">code</span>
+<input class="input-glass w-full rounded-lg py-3 pl-12 pr-4 font-body-md text-body-md focus:ring-0 placeholder:text-on-surface-variant/50" placeholder="github.com/username" type="text"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-surface border-t border-white/5 full-width bottom mt-24 relative z-20">
+<div class="flex flex-col md:flex-row justify-between items-center px-margin-page py-stack-lg w-full max-w-container-max mx-auto">
+<div class="font-headline-sm text-headline-sm text-primary mb-6 md:mb-0 flex items-center gap-2">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">rocket_launch</span>
+                CareerLaunch AI
+            </div>
+<div class="flex flex-wrap justify-center gap-6 mb-6 md:mb-0">
+<a class="text-on-surface-variant font-label-caps text-label-caps uppercase tracking-wider hover:text-primary transition-colors underline-offset-4 hover:underline" href="#">Terms of Service</a>
+<a class="text-on-surface-variant font-label-caps text-label-caps uppercase tracking-wider hover:text-primary transition-colors underline-offset-4 hover:underline" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant font-label-caps text-label-caps uppercase tracking-wider hover:text-primary transition-colors underline-offset-4 hover:underline" href="#">Cookie Settings</a>
+<a class="text-on-surface-variant font-label-caps text-label-caps uppercase tracking-wider hover:text-primary transition-colors underline-offset-4 hover:underline" href="#">Global Careers</a>
+</div>
+<div class="text-on-surface-variant font-body-md text-sm text-center md:text-right">
+                © 2024 CareerLaunch AI. Cinematic Professionalism for the Modern Leader.
+            </div>
+</div>
+</footer>
+<script>
+        // Simple drag and drop visual feedback
+        const dropzone = document.querySelector('.dropzone-area');
+        if(dropzone) {
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                dropzone.addEventListener(eventName, preventDefaults, false);
+            });
+
+            function preventDefaults (e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+
+            ['dragenter', 'dragover'].forEach(eventName => {
+                dropzone.addEventListener(eventName, highlight, false);
+            });
+
+            ['dragleave', 'drop'].forEach(eventName => {
+                dropzone.addEventListener(eventName, unhighlight, false);
+            });
+
+            function highlight(e) {
+                dropzone.classList.add('active');
+            }
+
+            function unhighlight(e) {
+                dropzone.classList.remove('active');
+            }
+            
+            dropzone.addEventListener('drop', handleDrop, false);
+            
+            function handleDrop(e) {
+                let dt = e.dataTransfer;
+                let files = dt.files;
+                // Just visual feedback for the demo
+                if(files.length > 0) {
+                    const h3 = dropzone.querySelector('h3');
+                    const p = dropzone.querySelector('p');
+                    const icon = dropzone.querySelector('.material-symbols-outlined');
+                    
+                    h3.textContent = files[0].name;
+                    h3.classList.add('text-primary');
+                    p.textContent = 'Processing document...';
+                    icon.textContent = 'autorenew';
+                    icon.classList.add('animate-spin', 'text-primary');
+                    
+                    setTimeout(() => {
+                        h3.textContent = 'Analysis Complete';
+                        p.textContent = 'Ready for review.';
+                        icon.textContent = 'check_circle';
+                        icon.classList.remove('animate-spin');
+                    }, 2000);
+                }
+            }
+        }
+    </script>
+</body></html>

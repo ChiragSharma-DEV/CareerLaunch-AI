@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Insights - CareerLaunch AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-surface": "#e5e2e1",
+                        "surface-tint": "#c6c6c7",
+                        "primary": "#ffffff",
+                        "on-error": "#690005",
+                        "surface-container-highest": "#353434",
+                        "on-tertiary-container": "#636565",
+                        "inverse-primary": "#5d5f5f",
+                        "secondary": "#c7c6ca",
+                        "secondary-fixed-dim": "#c7c6ca",
+                        "surface-container-lowest": "#0e0e0e",
+                        "primary-fixed-dim": "#c6c6c7",
+                        "background": "#141313",
+                        "inverse-surface": "#e5e2e1",
+                        "tertiary-fixed": "#e2e2e2",
+                        "surface-container-high": "#2a2a2a",
+                        "on-tertiary-fixed": "#1a1c1c",
+                        "on-secondary-container": "#b5b4b8",
+                        "surface-container-low": "#1c1b1b",
+                        "surface-bright": "#3a3939",
+                        "on-surface-variant": "#c4c7c8",
+                        "on-background": "#e5e2e1",
+                        "tertiary-fixed-dim": "#c6c6c7",
+                        "tertiary": "#ffffff",
+                        "tertiary-container": "#e2e2e2",
+                        "on-secondary": "#2f3033",
+                        "primary-fixed": "#e2e2e2",
+                        "on-secondary-fixed": "#1a1b1e",
+                        "on-error-container": "#ffdad6",
+                        "inverse-on-surface": "#313030",
+                        "on-tertiary": "#2f3131",
+                        "surface-container": "#201f1f",
+                        "on-tertiary-fixed-variant": "#454747",
+                        "on-primary-fixed": "#1a1c1c",
+                        "surface-dim": "#141313",
+                        "on-primary-container": "#636565",
+                        "on-primary-fixed-variant": "#454747",
+                        "surface-variant": "#353434",
+                        "on-secondary-fixed-variant": "#46464a",
+                        "error-container": "#93000a",
+                        "surface": "#141313",
+                        "primary-container": "#e2e2e2",
+                        "secondary-container": "#46464a",
+                        "outline-variant": "#444748",
+                        "on-primary": "#2f3131",
+                        "error": "#ffb4ab",
+                        "secondary-fixed": "#e3e2e6",
+                        "outline": "#8e9192"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-md": "16px",
+                        "stack-lg": "32px",
+                        "container-max": "1280px",
+                        "stack-sm": "8px",
+                        "panel-padding": "32px",
+                        "margin-page": "40px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-sm": ["Geist", "sans-serif"],
+                        "body-lg": ["Geist", "sans-serif"],
+                        "label-caps": ["Geist", "sans-serif"],
+                        "display-lg": ["Geist", "sans-serif"],
+                        "body-md": ["Geist", "sans-serif"],
+                        "headline-md-mobile": ["Geist", "sans-serif"],
+                        "headline-md": ["Geist", "sans-serif"]
+                    },
+                    "fontSize": {
+                        "headline-sm": ["24px", { "lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "label-caps": ["12px", { "lineHeight": "1", "letterSpacing": "0.18em", "fontWeight": "500" }],
+                        "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "headline-md-mobile": ["28px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "headline-md": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Geist', sans-serif; background-color: #0A0A0B; color: #e5e2e1; overflow-x: hidden; }
+        
+        /* Cinematic Bloom Effects */
+        .bloom-ambient {
+            position: fixed;
+            top: 20%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80vw;
+            height: 80vh;
+            background: radial-gradient(ellipse at center, rgba(30, 64, 175, 0.15) 0%, rgba(10, 10, 11, 0) 70%);
+            z-index: -2;
+            pointer-events: none;
+            filter: blur(100px);
+        }
+        
+        .bloom-accent-1 {
+            position: absolute;
+            top: -10%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(217, 119, 6, 0.08) 0%, transparent 60%);
+            z-index: -1;
+            pointer-events: none;
+            filter: blur(80px);
+        }
+
+        .bloom-accent-2 {
+            position: absolute;
+            bottom: -10%;
+            left: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.08) 0%, transparent 60%);
+            z-index: -1;
+            pointer-events: none;
+            filter: blur(80px);
+        }
+
+        /* Glass Panel Styling */
+        .glass-panel {
+            background: #111214;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .glass-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+            z-index: 10;
+        }
+
+        .glass-panel-inner {
+            background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, transparent 100%);
+            height: 100%;
+            width: 100%;
+        }
+
+        /* Custom Scrollbar for sleekness */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0A0A0B; }
+        ::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #444748; }
+
+        /* Hide TopNavBar on Mobile */
+        @media (max-width: 768px) {
+            .nav-top { display: none !important; }
+            .main-content { margin-left: 0 !important; margin-top: 0 !important; }
+        }
+        
+        /* Hide SideNavBar on Web if needed, but keeping as per instructions for Insights dashboard */
+        @media (min-width: 769px) {
+            .nav-bottom { display: none !important; }
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface antialiased selection:bg-surface-container-high selection:text-primary min-h-screen flex">
+<!-- Lock Overlay for Ingestion Check -->
+<div id="stateLockOverlay" class="fixed inset-0 z-[100] flex items-center justify-center bg-[#0A0A0B]/85 backdrop-blur-md hidden">
+    <div class="glass-panel rounded-2xl p-8 max-w-md text-center bg-panel-gradient relative border border-white/10 shadow-2xl">
+        <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+        <div class="w-16 h-16 rounded-full bg-[#1c1b1b] flex items-center justify-center mx-auto mb-6 border border-white/10">
+            <span class="material-symbols-outlined text-3xl text-amber-500">lock</span>
+        </div>
+        <h2 class="font-headline-sm text-primary mb-3">Market Insights Locked</h2>
+        <p class="font-body-md text-on-surface-variant mb-6 text-sm">
+            Please upload your resume and verify your GitHub repository details in the Profile Auditor first to unlock compatibility analysis.
+        </p>
+        <a href="profile-auditor.html" class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-background font-label-caps font-bold hover:bg-white/90 transition-all text-sm">
+            Go to Profile Auditor
+            <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+        </a>
+    </div>
+</div>
+<!-- Ambient Lighting -->
+<div class="bloom-ambient"></div>
+<!-- SideNavBar (Web Anchor) -->
+<nav aria-label="Sidebar Navigation" class="hidden md:flex flex-col h-screen w-64 fixed left-0 top-0 z-40 bg-surface-container-low border-r border-white/5 py-panel-padding px-4">
+<!-- Header -->
+<div class="flex items-center gap-3 mb-stack-lg px-2">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center border border-white/10 shrink-0 overflow-hidden">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">robot_2</span>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-primary leading-tight">CareerLaunch AI</span>
+<span class="font-label-caps text-label-caps text-secondary-fixed-dim mt-1">Cinematic Intelligence</span>
+</div>
+</div>
+<!-- Navigation Links -->
+<div class="flex-1 flex flex-col gap-2">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-secondary-fixed-dim hover:bg-surface-container/50 hover:bg-surface-container-high transition-colors duration-200 active:opacity-80 group" href="team-planner.html">
+<span class="material-symbols-outlined text-[20px]">dashboard</span>
+<span class="font-body-md text-body-md font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-secondary-fixed-dim hover:bg-surface-container/50 hover:bg-surface-container-high transition-colors duration-200 active:opacity-80 group" href="team-planner.html">
+<span class="material-symbols-outlined text-[20px]">work</span>
+<span class="font-body-md text-body-md font-medium">Applications</span>
+</a>
+<a aria-current="page" class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-surface-container-highest text-primary border-r-2 border-primary active:opacity-80 group" href="insights.html">
+<span class="material-symbols-outlined text-[20px]">strategy</span>
+<span class="font-body-md text-body-md font-medium">Strategy</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-secondary-fixed-dim hover:bg-surface-container/50 hover:bg-surface-container-high transition-colors duration-200 active:opacity-80 group" href="profile-auditor.html">
+<span class="material-symbols-outlined text-[20px]">description</span>
+<span class="font-body-md text-body-md font-medium">Resume Builder</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-secondary-fixed-dim hover:bg-surface-container/50 hover:bg-surface-container-high transition-colors duration-200 active:opacity-80 group" href="#">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+<span class="font-body-md text-body-md font-medium">Settings</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-primary px-4 py-3 hover:bg-white/5 transition-all rounded-lg group" href="mock-interview.html"><span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">record_voice_over</span><span class="font-body-md text-body-md">Mock Interview</span></a></div>
+<!-- Footer Actions -->
+<div class="mt-auto pt-stack-md border-t border-white/5 flex flex-col gap-2">
+<button class="w-full py-2.5 px-4 rounded-lg bg-primary text-on-primary font-body-md text-body-md font-medium hover:bg-primary/90 transition-colors mb-4 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">bolt</span>
+                Upgrade to Pro
+            </button>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-secondary-fixed-dim hover:bg-surface-container/50 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[18px]">help</span>
+<span class="font-body-md text-body-md text-sm">Help</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-secondary-fixed-dim hover:bg-surface-container/50 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[18px]">logout</span>
+<span class="font-body-md text-body-md text-sm">Logout</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<div class="flex-1 md:ml-64 relative min-h-screen flex flex-col">
+<!-- TopNavBar (Web Anchor) -->
+<header class="nav-top fixed top-0 w-[calc(100%-16rem)] z-50 bg-background/80 backdrop-blur-xl border-b border-white/5 flex justify-end items-center px-margin-page py-4">
+<!-- Trailing Action -->
+<div class="flex items-center gap-4">
+<div class="relative group cursor-pointer hidden lg:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-secondary-fixed-dim text-[20px]">search</span>
+<input class="bg-surface-container-low border border-white/10 rounded-full py-2 pl-10 pr-4 text-sm text-primary placeholder-secondary-fixed-dim focus:outline-none focus:border-white/30 focus:bg-surface-container transition-all w-48 group-hover:w-64" placeholder="Search insights..." type="text"/>
+</div>
+<button class="bg-primary text-on-primary font-body-md text-body-md px-5 py-2 rounded-full font-medium hover:bg-primary/90 transition-colors active:scale-95">Get Started</button>
+<div class="w-9 h-9 rounded-full bg-surface-container-high border border-white/10 overflow-hidden ml-2 cursor-pointer hover:border-white/30 transition-colors">
+<img alt="User profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUh9MZ8ErX8MF44ha3kpYXdUPhq_4evE8OwxXDFSx7Ucvo4ofYYnGrEnNzGzywhA4l-3jbz7ue-MbEhXn15mjNMEu772r2mCGBh7E5eyAoj8eF2UjPxNc2TB71H6D3QdFKBQdchomkmHwR5Lqrq3gCVzlKZ3CPJYAAHy9acXMGO6WmvWAwOrLFjQ3RB_adQvyfKVJV1f3Jg9XX-sLhUoNMLRaBuXu7-vJjaG-pD_bNhZPdOKsCG0WF7KNogMoeZYkb_TAFO2efQoue"/>
+</div>
+</div>
+</header>
+<!-- Canvas -->
+<main class="flex-1 p-6 md:p-margin-page pt-24 md:pt-[100px] max-w-container-max mx-auto w-full z-10 relative">
+<div class="bloom-accent-1"></div>
+<div class="bloom-accent-2"></div>
+<header class="mb-stack-lg">
+<h1 class="font-display-lg text-display-lg text-primary mb-2">Market Intelligence</h1>
+<p class="font-body-lg text-body-lg text-secondary max-w-2xl">Strategic analysis of your career trajectory mapped against global industry vectors.</p>
+</header>
+<!-- Grid Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter flex-grow">
+        <!-- Left Column: Inputs -->
+        <section class="lg:col-span-5 flex flex-col gap-6">
+            <!-- API Key Card -->
+            <div class="glass-panel rounded-2xl p-6 bg-panel-gradient relative overflow-hidden">
+                <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+                <h3 class="font-label-caps text-label-caps text-primary uppercase tracking-wider mb-4 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-[18px]">key</span> Developer Settings
+                </h3>
+                <div>
+                    <label class="block font-label-caps text-xs text-on-surface-variant uppercase tracking-wider mb-2">Groq API Key</label>
+                    <input type="password" id="groqApiKey" class="input-glass w-full rounded-lg py-2.5 px-4 font-body-md text-sm focus:ring-0 placeholder:text-on-surface-variant/30 bg-[#0A0A0B]" placeholder="gsk_..." />
+                    <p class="text-[11px] text-on-surface-variant/50 mt-2">Saved locally. Enter a key for live LLM analysis, or leave blank for offline demo mode.</p>
+                </div>
+            </div>
+
+            <!-- Job Description Input Card -->
+            <div class="glass-panel rounded-2xl p-6 bg-panel-gradient relative flex-grow flex flex-col justify-between overflow-hidden">
+                <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+                <div class="flex flex-col gap-4 h-full">
+                    <h3 class="font-label-caps text-label-caps text-primary uppercase tracking-wider flex items-center gap-2">
+                        <span class="material-symbols-outlined text-[18px]">work_history</span> Target Job Description
+                    </h3>
+                    <textarea id="jobDescriptionInput" class="w-full bg-[#0A0A0B] text-primary font-body-md text-sm p-4 rounded-xl border border-white/5 focus:border-white/20 focus:ring-0 focus:outline-none resize-none flex-grow min-h-[300px] transition-all placeholder-on-surface-variant/30" placeholder="Paste the target job description here..."></textarea>
+                </div>
+                <button id="analyzeBtn" class="w-full mt-6 py-3.5 rounded-full bg-primary text-background font-label-caps font-bold hover:bg-white transition-all shadow-[0_0_20px_rgba(255,255,255,0.05)]">
+                    Analyze Compatibility
+                </button>
+            </div>
+        </section>
+
+        <!-- Right Column: Outputs -->
+        <section id="resultsSection" class="lg:col-span-7 flex flex-col gap-6">
+            <!-- Unlocked message when no analysis has run -->
+            <div id="unlockedMessage" class="glass-panel rounded-2xl p-panel-padding bg-panel-gradient flex flex-col items-center justify-center text-center flex-grow min-h-[400px]">
+                <span class="material-symbols-outlined text-4xl text-on-surface-variant/40 mb-4 animate-pulse">lock_open</span>
+                <h3 class="font-headline-sm text-primary mb-2">Awaiting Job Description</h3>
+                <p class="font-body-md text-on-surface-variant max-w-sm">
+                    Paste a job description on the left and run analysis to unlock compatibility metrics.
+                </p>
+            </div>
+
+            <!-- Results Dashboard Card (hidden initially) -->
+            <div id="resultsDashboard" class="glass-panel rounded-2xl p-6 bg-panel-gradient hidden flex-col gap-6 overflow-hidden">
+                <div class="flex justify-between items-center border-b border-white/5 pb-4">
+                    <h3 class="font-label-caps text-label-caps text-primary uppercase tracking-wider flex items-center gap-2">
+                        <span class="material-symbols-outlined text-[18px]">analytics</span> Compatibility Scorecard
+                    </h3>
+                    <span class="text-xs text-on-surface-variant font-label-caps uppercase tracking-wider" id="gapSeverity">Urgency: Medium</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Score Card -->
+                    <div class="bg-[#0A0A0B]/80 border border-white/5 rounded-xl p-5 flex flex-col justify-center items-center relative overflow-hidden group">
+                        <div class="text-xs text-on-surface-variant font-label-caps uppercase tracking-wider mb-2">Match Score</div>
+                        <div id="matchScoreDisplay" class="text-5xl font-black text-primary tracking-tight">0%</div>
+                        <div class="absolute -right-10 -bottom-10 w-24 h-24 bg-primary/5 rounded-full blur-xl group-hover:scale-125 transition-transform duration-500"></div>
+                    </div>
+                    
+                    <!-- Match Justification -->
+                    <div class="bg-[#0A0A0B]/80 border border-white/5 rounded-xl p-5 flex flex-col justify-center">
+                        <div class="text-xs text-on-surface-variant font-label-caps uppercase tracking-wider mb-2">Match Justification</div>
+                        <p id="justificationText" class="text-sm text-on-surface-variant leading-relaxed">-</p>
+                    </div>
+                </div>
+
+                <!-- Skills Badges Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Matched Skills -->
+                    <div class="bg-[#0A0A0B]/80 border border-white/5 rounded-xl p-5 flex flex-col gap-3">
+                        <div class="text-xs text-emerald-400 font-label-caps uppercase tracking-wider">Matched Skills</div>
+                        <div id="matchedSkillsContainer" class="flex flex-wrap gap-2">
+                            <!-- Badges -->
+                        </div>
+                    </div>
+
+                    <!-- Skill Gaps -->
+                    <div class="bg-[#0A0A0B]/80 border border-white/5 rounded-xl p-5 flex flex-col gap-3">
+                        <div class="text-xs text-red-400 font-label-caps uppercase tracking-wider">Skill Gaps</div>
+                        <div id="skillGapsContainer" class="flex flex-wrap gap-2">
+                            <!-- Badges -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Learning Roadmap -->
+                <div class="bg-[#0A0A0B]/80 border border-white/5 rounded-xl p-5 flex flex-col gap-4">
+                    <div class="text-xs text-primary font-label-caps uppercase tracking-wider flex items-center gap-2">
+                        <span class="material-symbols-outlined text-[16px] text-primary">school</span> Bridges & Roadmaps
+                    </div>
+                    <div id="roadmapContainer" class="space-y-4 max-h-[200px] overflow-y-auto pr-2">
+                        <!-- Recommendations -->
+                    </div>
+                </div>
+
+                <!-- Action Button -->
+                <div class="flex justify-end border-t border-white/5 pt-4">
+                    <a href="mock-interview.html" class="px-6 py-3 rounded-full bg-primary text-background font-label-caps font-bold hover:bg-white/90 transition-all flex items-center gap-2">
+                        Proceed to Mock Interview
+                        <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+</div>
+<script>
+        const lockOverlay = document.getElementById('stateLockOverlay');
+        const apiKeyInput = document.getElementById('groqApiKey');
+        const jdTextArea = document.getElementById('jobDescriptionInput');
+        const analyzeBtn = document.getElementById('analyzeBtn');
+        const unlockedMessage = document.getElementById('unlockedMessage');
+        const resultsDashboard = document.getElementById('resultsDashboard');
+        
+        const matchScoreDisplay = document.getElementById('matchScoreDisplay');
+        const justificationText = document.getElementById('justificationText');
+        const matchedSkillsContainer = document.getElementById('matchedSkillsContainer');
+        const skillGapsContainer = document.getElementById('skillGapsContainer');
+        const roadmapContainer = document.getElementById('roadmapContainer');
+        const gapSeverityDisplay = document.getElementById('gapSeverity');
+
+        // Check FSM state gating
+        const fsmState = parseInt(localStorage.getItem('fsm_state') || '0');
+        if (fsmState < 2) {
+            lockOverlay.classList.remove('hidden');
+        }
+
+        // Key Down for command palette
+        document.addEventListener('keydown', function(e) {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                e.preventDefault();
+                window.location.href = 'command-palette.html';
+            }
+        });
+
+        // Load saved API Key
+        apiKeyInput.value = localStorage.getItem('groq_api_key') || '';
+        apiKeyInput.addEventListener('input', () => {
+            localStorage.setItem('groq_api_key', apiKeyInput.value.trim());
+        });
+
+        // Load saved Job Description & Analysis if exists
+        const savedAnalysis = localStorage.getItem('job_analysis') ? JSON.parse(localStorage.getItem('job_analysis')) : null;
+        if (savedAnalysis) {
+            jdTextArea.value = savedAnalysis.job_description || '';
+            renderAnalysis(savedAnalysis);
+        }
+
+        analyzeBtn.addEventListener('click', async () => {
+            const jd = jdTextArea.value.trim();
+            if (!jd) {
+                alert('Please paste a target Job Description.');
+                return;
+            }
+
+            const apiKey = apiKeyInput.value.trim();
+            const resumeText = localStorage.getItem('resume_text') || '';
+            const gitMeta = localStorage.getItem('github_analysis') ? JSON.parse(localStorage.getItem('github_analysis')) : {};
+
+            analyzeBtn.textContent = 'Analyzing compatibility...';
+            analyzeBtn.disabled = true;
+
+            if (apiKey) {
+                try {
+                    const prompt = `
+You are an expert Solutions Architect and technical hiring manager.
+Analyze the user's resume and GitHub data, mapping their skills and achievements against the target job description. Identify matched skills and missing gaps, and output a valid JSON response matching the requested schema.
+
+TARGET JOB DESCRIPTION:
+${jd}
+
+CANDIDATE RESUME TEXT:
+${resumeText}
+
+VALIDATED GITHUB METRICS:
+- Repository Name: ${gitMeta.name || 'N/A'}
+- Description: ${gitMeta.description || 'N/A'}
+- Language Focus: ${gitMeta.language || 'N/A'}
+- Repository File Structure: ${gitMeta.file_tree ? gitMeta.file_tree.join(', ') : 'N/A'}
+- Verified Skills from Code: ${gitMeta.verified_skills ? gitMeta.verified_skills.join(', ') : 'N/A'}
+- Recent Commits: ${gitMeta.commit_history ? JSON.stringify(gitMeta.commit_history.slice(0, 5)) : '[]'}
+
+Your response must be a valid, parseable JSON object matching this schema structure:
+{
+  "match_score": number (0 to 100),
+  "matched_skills": string[],
+  "skill_gaps": string[],
+  "match_justification": string,
+  "learning_roadmap": {
+    "[SkillName]": {
+      "concept_to_learn": string,
+      "recommended_resource": string,
+      "estimated_hours": number
+    }
+  }
+}
+Output ONLY the raw JSON object. Do not wrap in markdown tags or include explanations.
+`;
+
+                    const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${apiKey}`
+                        },
+                        body: JSON.stringify({
+                            model: 'llama-3.1-8b-instant',
+                            messages: [
+                                { role: 'system', content: 'You are an AI Technical Evaluator. Output valid JSON only.' },
+                                { role: 'user', content: prompt }
+                            ],
+                            temperature: 0.1,
+                            response_format: { type: 'json_object' }
+                        })
+                    });
+
+                    if (!response.ok) throw new Error('API request failed');
+                    const resJson = await response.json();
+                    const analysis = JSON.parse(resJson.choices[0].message.content);
+                    
+                    analysis.job_description = jd;
+                    localStorage.setItem('job_analysis', JSON.stringify(analysis));
+                    localStorage.setItem('fsm_state', '3'); // Shift state
+                    
+                    renderAnalysis(analysis);
+                } catch(e) {
+                    console.error(e);
+                    alert('Error calling Groq API. Falling back to offline simulator mode.');
+                    runOfflineFallback(jd);
+                } finally {
+                    analyzeBtn.textContent = 'Analyze Compatibility';
+                    analyzeBtn.disabled = false;
+                }
+            } else {
+                // Offline fallback mode
+                setTimeout(() => {
+                    runOfflineFallback(jd);
+                    analyzeBtn.textContent = 'Analyze Compatibility';
+                    analyzeBtn.disabled = false;
+                }, 1500);
+            }
+        });
+
+        function runOfflineFallback(jd) {
+            const gitMeta = localStorage.getItem('github_analysis') ? JSON.parse(localStorage.getItem('github_analysis')) : {};
+            const resumeSkills = localStorage.getItem('candidate_profile') ? JSON.parse(localStorage.getItem('candidate_profile')).skills : ["PYTHON", "JAVASCRIPT"];
+            
+            // Generate some smart mock analysis matching the job description keyword
+            const lowerJd = jd.toLowerCase();
+            const allPossibleGaps = ["Docker", "Redis", "CI/CD", "Kubernetes", "AWS", "Kafka", "System Design"];
+            const gaps = [];
+            const matched = [];
+
+            allPossibleGaps.forEach(skill => {
+                if (lowerJd.includes(skill.toLowerCase())) {
+                    if (gitMeta.verified_skills && gitMeta.verified_skills.some(s => s.toLowerCase() === skill.toLowerCase())) {
+                        matched.push(skill);
+                    } else if (resumeSkills.some(s => s.toLowerCase() === skill.toLowerCase())) {
+                        matched.push(skill);
+                    } else {
+                        gaps.push(skill);
+                    }
+                }
+            });
+
+            // Default fallback if no gaps/matches found
+            if (gaps.length === 0 && matched.length === 0) {
+                gaps.push("Docker", "Redis");
+                matched.push("Python", "FastAPI");
+            }
+
+            const analysis = {
+                job_description: jd,
+                match_score: Math.max(50, Math.floor(100 - (gaps.length * 10))),
+                matched_skills: matched,
+                skill_gaps: gaps,
+                match_justification: `The candidate demonstrates core competency in ${matched.join(', ')} backed by historical resume records. However, development files show missing gaps in modern tooling like ${gaps.join(', ')} required for enterprise production systems.`,
+                learning_roadmap: {}
+            };
+
+            gaps.forEach(gap => {
+                analysis.learning_roadmap[gap] = {
+                    concept_to_learn: `Production configurations, lifecycle events, and API caching structures.`,
+                    recommended_resource: `Official ${gap} Guides & Architectural Blueprints`,
+                    estimated_hours: 6
+                };
+            });
+
+            localStorage.setItem('job_analysis', JSON.stringify(analysis));
+            localStorage.setItem('fsm_state', '3'); // Shift state to 3
+            renderAnalysis(analysis);
+        }
+
+        function renderAnalysis(analysis) {
+            unlockedMessage.classList.add('hidden');
+            resultsDashboard.classList.remove('hidden');
+            resultsDashboard.classList.add('flex');
+
+            matchScoreDisplay.textContent = `${analysis.match_score}%`;
+            justificationText.textContent = analysis.match_justification;
+
+            // Render matched badges
+            matchedSkillsContainer.innerHTML = '';
+            analysis.matched_skills.forEach(skill => {
+                const badge = document.createElement('span');
+                badge.className = 'px-3 py-1 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-semibold';
+                badge.textContent = skill;
+                matchedSkillsContainer.appendChild(badge);
+            });
+
+            // Render gap badges
+            skillGapsContainer.innerHTML = '';
+            analysis.skill_gaps.forEach(skill => {
+                const badge = document.createElement('span');
+                badge.className = 'px-3 py-1 rounded bg-red-500/10 text-red-400 border border-red-500/20 text-xs font-semibold';
+                badge.textContent = skill;
+                skillGapsContainer.appendChild(badge);
+            });
+
+            // Severity text
+            const gapCount = analysis.skill_gaps.length;
+            const severityText = gapCount > 3 ? 'Urgent' : gapCount > 1 ? 'Moderate' : 'Low';
+            gapSeverityDisplay.textContent = `Urgency: ${severityText}`;
+            gapSeverityDisplay.className = `text-xs font-label-caps uppercase tracking-wider ${
+                gapCount > 3 ? 'text-red-400' : gapCount > 1 ? 'text-amber-400' : 'text-emerald-400'
+            }`;
+
+            // Render roadmap recommendations
+            roadmapContainer.innerHTML = '';
+            Object.entries(analysis.learning_roadmap).forEach(([skill, road]) => {
+                const item = document.createElement('div');
+                item.className = 'bg-[#0A0A0B]/60 border border-white/5 rounded-lg p-4 flex flex-col gap-2 w-full';
+                item.innerHTML = `
+                    <div class="flex justify-between items-center w-full">
+                        <span class="text-sm font-semibold text-primary">${skill}</span>
+                        <span class="text-xs text-on-surface-variant/80 bg-white/5 px-2 py-0.5 rounded font-mono">${road.estimated_hours} Hours</span>
+                    </div>
+                    <p class="text-xs text-on-surface-variant leading-relaxed">
+                        <strong class="text-primary/95">Focus:</strong> ${road.concept_to_learn}
+                    </p>
+                    <p class="text-[11px] text-on-surface-variant/60 italic">
+                        Resource: ${road.recommended_resource}
+                    </p>
+                `;
+                roadmapContainer.appendChild(item);
+            });
+        }
+    </script></body></html>
