@@ -5,6 +5,7 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Profile Auditor - CareerLaunch AI</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -228,7 +229,7 @@
 <a class="text-on-surface-variant font-label-caps uppercase tracking-[0.18em] text-[12px] font-medium hover:text-primary transition-colors hover:bg-white/5 duration-300 px-2 py-1 rounded-sm" href="insights.html">Insights</a>
 <a class="text-on-surface-variant font-label-caps uppercase tracking-[0.18em] text-[12px] font-medium hover:text-primary transition-colors hover:bg-white/5 duration-300 px-2 py-1 rounded-sm" href="#">Network</a>
 <a class="text-on-surface-variant font-label-caps uppercase tracking-[0.18em] text-[12px] font-medium hover:text-primary transition-colors hover:bg-white/5 duration-300 px-2 py-1 rounded-sm" href="#">Resources</a>
-<a class="text-on-surface-variant font-label-caps uppercase tracking-[0.18em] text-[12px] font-medium hover:text-primary transition-colors hover:bg-white/5 duration-300 px-2 py-1 rounded-sm" href="mock-interview.html">Interview</a></div>
+<a class="text-on-surface-variant font-label-caps uppercase tracking-[0.18em] text-[12px] font-medium hover:text-primary transition-colors hover:bg-white/5 duration-300 px-2 py-1 rounded-sm" href="mock-interview.html">Interview</a><a class="text-on-surface-variant font-label-caps uppercase tracking-[0.18em] text-[12px] font-medium hover:text-primary transition-colors hover:bg-white/5 duration-300 px-2 py-1 rounded-sm" href="mock-interview.html">Interview</a></div>
 <!-- Actions -->
 <div class="flex items-center gap-4">
 <a class="hidden md:block text-on-surface-variant font-label-caps uppercase tracking-[0.18em] text-[12px] hover:text-primary transition-colors py-2 px-4" href="#">Sign In</a>
@@ -277,6 +278,8 @@
 <div class="lg:col-span-7 relative">
 <!-- Main Upload Panel -->
 <div class="glass-panel rounded-2xl p-panel-padding relative z-20 w-full bg-panel-gradient">
+<!-- Form View -->
+<div class="flex flex-col" id="auditor-form-view">
 <!-- Tabs -->
 <div class="flex items-center gap-6 border-b border-white/5 pb-4 mb-8">
 <button class="font-label-caps text-label-caps text-primary border-b-2 border-primary pb-4 -mb-[17px] uppercase tracking-[0.18em]">Resume Upload</button>
@@ -284,23 +287,77 @@
 </div>
 <!-- Dropzone -->
 <div class="dropzone-area rounded-xl p-12 flex flex-col items-center justify-center text-center cursor-pointer group mb-6 min-h-[240px]">
+<input accept=".pdf" class="hidden" id="resume-file-input" type="file"/>
 <div class="w-16 h-16 rounded-full bg-surface-container flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 border border-white/5">
 <span class="material-symbols-outlined text-3xl text-on-surface-variant group-hover:text-primary transition-colors">upload_file</span>
 </div>
 <h3 class="font-headline-sm text-headline-sm text-primary mb-2">Drop your resume to begin analysis</h3>
 <p class="font-body-md text-body-md text-on-surface-variant max-w-sm">
-                            Supports PDF, DOCX, or TXT. Maximum file size 10MB.
-                        </p>
+                Supports PDF. Maximum file size 10MB.
+            </p>
 <button class="mt-6 px-6 py-2 rounded-full border border-white/15 text-primary font-label-caps text-label-caps uppercase tracking-wider hover:bg-white/5 transition-colors">
-                            Browse Files
-                        </button>
+                Browse Files
+            </button>
 </div>
 <!-- Github Integration Input -->
 <div class="mt-6">
-<label class="block font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider mb-3">Optional: Developer Portfolio</label>
+<label class="block font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider mb-3">Optional: Developer Portfolio Repository</label>
 <div class="relative flex items-center">
 <span class="material-symbols-outlined absolute left-4 text-on-surface-variant pointer-events-none">code</span>
-<input class="input-glass w-full rounded-lg py-3 pl-12 pr-4 font-body-md text-body-md focus:ring-0 placeholder:text-on-surface-variant/50" placeholder="github.com/username" type="text"/>
+<input class="input-glass w-full rounded-lg py-3 pl-12 pr-4 font-body-md text-body-md focus:ring-0 placeholder:text-on-surface-variant/50" id="github-url-input" placeholder="github.com/owner/repo" type="text"/>
+</div>
+<div class="text-error text-sm mt-2 hidden" id="github-error"></div>
+<button class="mt-4 w-full bg-primary text-surface font-label-caps uppercase tracking-[0.18em] text-[12px] font-bold py-3.5 px-6 rounded-lg hover:bg-white/90 transition-all active:scale-95 flex items-center justify-center gap-2" id="run-audit-btn">
+<span id="audit-btn-text">Run Audit</span>
+<span class="material-symbols-outlined text-[16px] hidden animate-spin" id="audit-btn-spinner">autorenew</span>
+<span class="material-symbols-outlined text-[16px]" id="audit-btn-icon">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Success Card View -->
+<div class="hidden flex flex-col gap-6" id="success-card-view">
+<div class="flex items-center gap-4 border-b border-white/5 pb-4 mb-4">
+<div class="w-12 h-12 rounded-full bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+<span class="material-symbols-outlined text-2xl">check_circle</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-primary">Audit Complete</h3>
+<p class="font-body-md text-sm text-on-surface-variant">Profile synced &amp; validated</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest/50 border border-white/5 rounded-xl p-5 flex flex-col gap-4">
+<div class="flex justify-between items-start">
+<div class="flex-grow pr-4">
+<span class="font-label-caps text-label-caps text-secondary-fixed-dim bg-surface-container-high/50 px-2.5 py-0.5 rounded-full border border-white/5" id="success-repo-name">
+                        owner/repo
+                    </span>
+<p class="font-body-md text-sm text-on-surface-variant mt-3" id="success-repo-desc">
+                        Repository description...
+                    </p>
+</div>
+<div class="flex items-center gap-1.5 text-amber-400 bg-amber-400/10 px-2.5 py-1 rounded-full border border-amber-400/20 text-xs font-semibold font-label-caps shrink-0">
+<span class="material-symbols-outlined text-sm">star</span>
+<span id="success-repo-stars">0</span>
+</div>
+</div>
+<div class="flex items-center gap-4 text-xs font-label-caps border-t border-white/5 pt-4">
+<span class="text-on-surface-variant">Language: <strong class="text-primary" id="success-repo-lang">JavaScript</strong></span>
+</div>
+</div>
+<div class="flex flex-col gap-3">
+<h4 class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">Recent Repository Activity (Last 5 Commits)</h4>
+<ul class="flex flex-col gap-2.5 max-h-48 overflow-y-auto pr-1" id="success-repo-commits">
+<!-- Commit messages dynamically inserted -->
+</ul>
+</div>
+<div class="mt-6 flex flex-col gap-3">
+<a class="w-full bg-primary text-surface font-label-caps uppercase tracking-[0.18em] text-[12px] font-bold py-3.5 px-6 rounded-lg hover:bg-white/90 transition-all active:scale-95 flex items-center justify-center gap-2" href="insights.html">
+<span>Proceed to Insights</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+<button class="w-full border border-white/10 text-on-surface-variant hover:text-primary font-label-caps uppercase tracking-wider text-[11px] py-2 px-4 rounded-lg hover:bg-white/5 transition-all" id="reset-audit-btn">
+                Upload Different Profile
+            </button>
 </div>
 </div>
 </div>
@@ -326,62 +383,341 @@
 </div>
 </footer>
 <script>
-        // Simple drag and drop visual feedback
+        // Configure PDF.js Worker
+        if (window.pdfjsLib) {
+            pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+        }
+
+        // Element Selectors
         const dropzone = document.querySelector('.dropzone-area');
-        if(dropzone) {
+        const fileInput = document.getElementById('resume-file-input');
+        const githubInput = document.getElementById('github-url-input');
+        const runAuditBtn = document.getElementById('run-audit-btn');
+        const githubError = document.getElementById('github-error');
+        const auditBtnText = document.getElementById('audit-btn-text');
+        const auditBtnSpinner = document.getElementById('audit-btn-spinner');
+        const auditBtnIcon = document.getElementById('audit-btn-icon');
+        const resetBtn = document.getElementById('reset-audit-btn');
+
+        // Drag and drop event listeners
+        if (dropzone) {
             ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
                 dropzone.addEventListener(eventName, preventDefaults, false);
             });
 
-            function preventDefaults (e) {
+            function preventDefaults(e) {
                 e.preventDefault();
                 e.stopPropagation();
             }
 
             ['dragenter', 'dragover'].forEach(eventName => {
-                dropzone.addEventListener(eventName, highlight, false);
+                dropzone.addEventListener(eventName, () => dropzone.classList.add('active'), false);
             });
 
             ['dragleave', 'drop'].forEach(eventName => {
-                dropzone.addEventListener(eventName, unhighlight, false);
+                dropzone.addEventListener(eventName, () => dropzone.classList.remove('active'), false);
             });
 
-            function highlight(e) {
-                dropzone.classList.add('active');
-            }
-
-            function unhighlight(e) {
-                dropzone.classList.remove('active');
-            }
-            
             dropzone.addEventListener('drop', handleDrop, false);
-            
-            function handleDrop(e) {
-                let dt = e.dataTransfer;
-                let files = dt.files;
-                // Just visual feedback for the demo
-                if(files.length > 0) {
-                    const h3 = dropzone.querySelector('h3');
-                    const p = dropzone.querySelector('p');
-                    const icon = dropzone.querySelector('.material-symbols-outlined');
-                    
-                    h3.textContent = files[0].name;
-                    h3.classList.add('text-primary');
-                    p.textContent = 'Processing document...';
-                    icon.textContent = 'autorenew';
-                    icon.classList.add('animate-spin', 'text-primary');
-                    
-                    setTimeout(() => {
-                        h3.textContent = 'Analysis Complete';
-                        p.textContent = 'Ready for review.';
-                        icon.textContent = 'check_circle';
-                        icon.classList.remove('animate-spin');
-                    }, 2000);
+
+            // Click dropzone to trigger hidden file input
+            dropzone.addEventListener('click', (e) => {
+                if (e.target !== fileInput) {
+                    fileInput.click();
                 }
+            });
+
+            if (fileInput) {
+                fileInput.addEventListener('change', (e) => {
+                    if (e.target.files.length > 0) {
+                        handleFileSelect(e.target.files[0]);
+                    }
+                });
             }
         }
+
+        function handleDrop(e) {
+            let dt = e.dataTransfer;
+            let files = dt.files;
+            if (files.length > 0) {
+                handleFileSelect(files[0]);
+            }
+        }
+
+        // Parse PDF content using PDF.js
+        async function handleFileSelect(file) {
+            if (!file) return;
+
+            const h3 = dropzone.querySelector('h3');
+            const p = dropzone.querySelector('p');
+            const icon = dropzone.querySelector('.material-symbols-outlined');
+
+            if (file.type !== 'application/pdf' && !file.name.endsWith('.pdf')) {
+                h3.textContent = 'Invalid File Type';
+                h3.classList.add('text-error');
+                p.textContent = 'Please upload a PDF document.';
+                icon.textContent = 'error';
+                icon.classList.remove('animate-spin');
+                icon.classList.add('text-error');
+                return;
+            }
+
+            try {
+                // UI Loading state
+                h3.textContent = file.name;
+                h3.classList.remove('text-error');
+                h3.classList.add('text-primary');
+                p.textContent = 'Extracting resume text...';
+                icon.textContent = 'autorenew';
+                icon.classList.add('animate-spin', 'text-primary');
+                icon.classList.remove('text-error', 'text-emerald-400');
+
+                // Read PDF Array Buffer
+                const arrayBuffer = await file.arrayBuffer();
+                const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer });
+                const pdf = await loadingTask.promise;
+                let extractedText = '';
+
+                for (let i = 1; i <= pdf.numPages; i++) {
+                    const page = await pdf.getPage(i);
+                    const textContent = await page.getTextContent();
+                    const pageText = textContent.items.map(item => item.str).join(' ');
+                    extractedText += pageText + '\n';
+                }
+
+                if (!extractedText.trim()) {
+                    throw new Error('PDF file appears to be empty or contains scanned images only.');
+                }
+
+                // Save to LocalStorage
+                localStorage.setItem('resume_text', extractedText);
+                
+                // If fsm_state is 0 or uninitialized, advance to 1 (resume loaded)
+                const currentState = localStorage.getItem('fsm_state');
+                if (!currentState || currentState === '0') {
+                    localStorage.setItem('fsm_state', '1');
+                }
+
+                // Success visual state
+                h3.textContent = 'Resume Loaded';
+                p.textContent = `${file.name} successfully parsed.`;
+                icon.textContent = 'check_circle';
+                icon.classList.remove('animate-spin');
+                icon.classList.add('text-emerald-400');
+
+                checkCompletion();
+            } catch (error) {
+                console.error('PDF extraction error:', error);
+                h3.textContent = 'Parsing Failed';
+                h3.classList.add('text-error');
+                p.textContent = error.message || 'Error occurred while reading the PDF.';
+                icon.textContent = 'error';
+                icon.classList.remove('animate-spin');
+                icon.classList.add('text-error');
+            }
+        }
+
+        // GitHub Repository URL Parser
+        function parseGitHubUrl(url) {
+            let cleanUrl = url.trim().replace(/\/$/, ""); // trim and strip trailing slash
+            
+            // Matches https://github.com/owner/repo or github.com/owner/repo
+            const regex = /(?:https?:\/\/)?(?:www\.)?github\.com\/([^\/]+)\/([^\/]+)/i;
+            const match = cleanUrl.match(regex);
+            if (match) {
+                return { owner: match[1], repo: match[2] };
+            }
+            
+            // Matches owner/repo format
+            const simpleRegex = /^([^\/]+)\/([^\/]+)$/;
+            const simpleMatch = cleanUrl.match(simpleRegex);
+            if (simpleMatch) {
+                return { owner: simpleMatch[1], repo: simpleMatch[2] };
+            }
+            
+            return null;
+        }
+
+        // Run Audit Event Listener
+        if (runAuditBtn) {
+            runAuditBtn.addEventListener('click', async () => {
+                const urlInput = githubInput.value.trim();
+                githubError.classList.add('hidden');
+                githubError.textContent = '';
+
+                if (!urlInput) {
+                    githubError.textContent = 'Please enter a GitHub repository URL.';
+                    githubError.classList.remove('hidden');
+                    return;
+                }
+
+                const parsed = parseGitHubUrl(urlInput);
+                if (!parsed) {
+                    githubError.textContent = 'Invalid format. Please use github.com/owner/repo or owner/repo.';
+                    githubError.classList.remove('hidden');
+                    return;
+                }
+
+                const { owner, repo } = parsed;
+                setGithubLoading(true);
+
+                try {
+                    // Fetch primary repository metrics
+                    const repoResponse = await fetch(`https://api.github.com/repos/${owner}/${repo}`);
+                    if (!repoResponse.ok) {
+                        if (repoResponse.status === 404) {
+                            throw new Error('Repository not found. Make sure the repository is public and spelled correctly.');
+                        }
+                        throw new Error(`GitHub API Error: ${repoResponse.statusText}`);
+                    }
+                    const repoData = await repoResponse.json();
+
+                    // Fetch last 5 commits
+                    const commitsResponse = await fetch(`https://api.github.com/repos/${owner}/${repo}/commits?per_page=5`);
+                    if (!commitsResponse.ok) {
+                        throw new Error(`Failed to retrieve commit history: ${commitsResponse.statusText}`);
+                    }
+                    const commitsData = await commitsResponse.json();
+
+                    // Extract required metrics
+                    const stargazers_count = repoData.stargazers_count;
+                    const language = repoData.language || 'Unknown';
+                    const description = repoData.description || 'No description provided';
+                    const commitMessages = commitsData.map(item => item.commit.message);
+
+                    // Synthesize GitHub Analysis Data
+                    const githubData = {
+                        owner,
+                        repo,
+                        stargazers_count,
+                        language,
+                        description,
+                        commits: commitMessages
+                    };
+
+                    localStorage.setItem('github_analysis', JSON.stringify(githubData));
+                    setGithubLoading(false);
+                    checkCompletion();
+                } catch (error) {
+                    console.error('GitHub integration error:', error);
+                    githubError.textContent = error.message || 'An error occurred during GitHub sync.';
+                    githubError.classList.remove('hidden');
+                    setGithubLoading(false);
+                }
+            });
+        }
+
+        function setGithubLoading(isLoading) {
+            if (isLoading) {
+                githubInput.disabled = true;
+                runAuditBtn.disabled = true;
+                auditBtnSpinner.classList.remove('hidden');
+                auditBtnIcon.classList.add('hidden');
+                auditBtnText.textContent = 'Auditing Repo...';
+            } else {
+                githubInput.disabled = false;
+                runAuditBtn.disabled = false;
+                auditBtnSpinner.classList.add('hidden');
+                auditBtnIcon.classList.remove('hidden');
+                auditBtnText.textContent = 'Run Audit';
+            }
+        }
+
+        // Check overall completion state
+        function checkCompletion() {
+            const resumeText = localStorage.getItem('resume_text');
+            const githubAnalysis = localStorage.getItem('github_analysis');
+
+            if (resumeText && githubAnalysis) {
+                // Update FSM state to unlocked (State 2)
+                localStorage.setItem('fsm_state', '2');
+                showSuccessCard(JSON.parse(githubAnalysis));
+            }
+        }
+
+        // Render the Success Card details
+        function showSuccessCard(githubData) {
+            const formView = document.getElementById('auditor-form-view');
+            const successView = document.getElementById('success-card-view');
+
+            if (!formView || !successView) return;
+
+            document.getElementById('success-repo-name').textContent = `${githubData.owner}/${githubData.repo}`;
+            document.getElementById('success-repo-desc').textContent = githubData.description;
+            document.getElementById('success-repo-stars').textContent = githubData.stargazers_count;
+            document.getElementById('success-repo-lang').textContent = githubData.language;
+
+            const commitsList = document.getElementById('success-repo-commits');
+            commitsList.innerHTML = '';
+
+            if (githubData.commits && githubData.commits.length > 0) {
+                githubData.commits.forEach(msg => {
+                    const li = document.createElement('li');
+                    li.className = 'bg-surface-container/50 border border-white/5 rounded-lg p-3 text-sm text-on-surface-variant flex items-start gap-2.5 hover:border-white/10 transition-colors';
+                    li.innerHTML = `
+                        <span class="material-symbols-outlined text-[16px] text-primary/40 mt-0.5">commit</span>
+                        <span class="line-clamp-2">${escapeHtml(msg)}</span>
+                    `;
+                    commitsList.appendChild(li);
+                });
+            } else {
+                commitsList.innerHTML = '<li class="text-on-surface-variant text-sm italic">No recent commits found.</li>';
+            }
+
+            formView.classList.add('hidden');
+            successView.classList.remove('hidden');
+        }
+
+        function escapeHtml(text) {
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.replace(/[&<>"']/g, m => map[m]);
+        }
+
+        // Reset audit to allow re-upload
+        if (resetBtn) {
+            resetBtn.addEventListener('click', () => {
+                localStorage.removeItem('resume_text');
+                localStorage.removeItem('github_analysis');
+                localStorage.setItem('fsm_state', '0');
+
+                // Restore dropzone default view
+                const h3 = dropzone.querySelector('h3');
+                const p = dropzone.querySelector('p');
+                const icon = dropzone.querySelector('.material-symbols-outlined');
+                
+                h3.textContent = 'Drop your resume to begin analysis';
+                h3.classList.remove('text-primary', 'text-error');
+                p.textContent = 'Supports PDF. Maximum file size 10MB.';
+                icon.textContent = 'upload_file';
+                icon.classList.remove('animate-spin', 'text-primary', 'text-emerald-400', 'text-error');
+
+                githubInput.value = '';
+                fileInput.value = '';
+
+                document.getElementById('auditor-form-view').classList.remove('hidden');
+                document.getElementById('success-card-view').classList.add('hidden');
+            });
+        }
+
+        // Initialize state on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            checkCompletion();
+        });
     </script>
 <script>
+    document.addEventListener('keydown', function(e) {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+            e.preventDefault();
+            window.location.href = 'command-palette.html';
+        }
+    });
+    </script><script>
     document.addEventListener('keydown', function(e) {
         if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
             e.preventDefault();

@@ -160,7 +160,7 @@
 <span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors" data-icon="settings">settings</span>
 <span class="font-body-md text-body-md">Settings</span>
 </a>
-<a class="flex items-center gap-3 text-on-surface-variant hover:text-primary px-4 py-3 hover:bg-white/5 transition-all rounded-lg group" href="mock-interview.html"><span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">record_voice_over</span><span class="font-body-md text-body-md">Mock Interview</span></a></div>
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-primary px-4 py-3 hover:bg-white/5 transition-all rounded-lg group" href="mock-interview.html"><span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">record_voice_over</span><span class="font-body-md text-body-md">Mock Interview</span></a><a class="flex items-center gap-3 text-on-surface-variant hover:text-primary px-4 py-3 hover:bg-white/5 transition-all rounded-lg group" href="mock-interview.html"><span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">record_voice_over</span><span class="font-body-md text-body-md">Mock Interview</span></a></div>
 <!-- Footer Actions -->
 <div class="mt-auto pt-6 border-t border-white/5 flex flex-col gap-2">
 <button class="w-full py-3 mb-4 bg-primary text-on-primary rounded-lg font-body-md font-medium hover:bg-primary-fixed transition-colors">
@@ -358,6 +358,13 @@
         }
     </style>
 <script>
+    document.addEventListener('keydown', function(e) {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+            e.preventDefault();
+            window.location.href = 'command-palette.html';
+        }
+    });
+    </script><script>
     document.addEventListener('keydown', function(e) {
         if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
             e.preventDefault();
