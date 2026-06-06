@@ -198,7 +198,7 @@
 </div>
 <!-- Navigation Links -->
 <div class="flex-1 flex flex-col gap-2">
-<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-secondary-fixed-dim hover:bg-surface-container/50 hover:bg-surface-container-high transition-colors duration-200 active:opacity-80 group" href="team-planner.html">
+<a aria-current="page" class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-surface-container-highest text-primary border-r-2 border-primary active:opacity-80 group" href="insights.html">
 <span class="material-symbols-outlined text-[20px]">dashboard</span>
 <span class="font-body-md text-body-md font-medium">Dashboard</span>
 </a>
@@ -206,7 +206,7 @@
 <span class="material-symbols-outlined text-[20px]">work</span>
 <span class="font-body-md text-body-md font-medium">Applications</span>
 </a>
-<a aria-current="page" class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-surface-container-highest text-primary border-r-2 border-primary active:opacity-80 group" href="insights.html">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-secondary-fixed-dim hover:bg-surface-container/50 hover:bg-surface-container-high transition-colors duration-200 active:opacity-80 group" href="team-planner.html">
 <span class="material-symbols-outlined text-[20px]">strategy</span>
 <span class="font-body-md text-body-md font-medium">Strategy</span>
 </a>
@@ -218,18 +218,18 @@
 <span class="material-symbols-outlined text-[20px]">settings</span>
 <span class="font-body-md text-body-md font-medium">Settings</span>
 </a>
-<a class="flex items-center gap-3 text-on-surface-variant hover:text-primary px-4 py-3 hover:bg-white/5 transition-all rounded-lg group" href="mock-interview.html"><span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">record_voice_over</span><span class="font-body-md text-body-md">Mock Interview</span></a><a class="flex items-center gap-3 text-on-surface-variant hover:text-primary px-4 py-3 hover:bg-white/5 transition-all rounded-lg group" href="mock-interview.html"><span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">record_voice_over</span><span class="font-body-md text-body-md">Mock Interview</span></a></div>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-secondary-fixed-dim hover:bg-surface-container/50 hover:bg-surface-container-high transition-colors duration-200 active:opacity-80 group" href="mock-interview.html">
+<span class="material-symbols-outlined text-[20px]">record_voice_over</span>
+<span class="font-body-md text-body-md font-medium">Mock Interview</span>
+</a>
+</div>
 <!-- Footer Actions -->
 <div class="mt-auto pt-stack-md border-t border-white/5 flex flex-col gap-2">
-<button class="w-full py-2.5 px-4 rounded-lg bg-primary text-on-primary font-body-md text-body-md font-medium hover:bg-primary/90 transition-colors mb-4 flex items-center justify-center gap-2">
-<span class="material-symbols-outlined text-[18px]">bolt</span>
-                Upgrade to Pro
-            </button>
 <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-secondary-fixed-dim hover:bg-surface-container/50 transition-colors group" href="#">
 <span class="material-symbols-outlined text-[18px]">help</span>
 <span class="font-body-md text-body-md text-sm">Help</span>
 </a>
-<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-secondary-fixed-dim hover:bg-surface-container/50 transition-colors group" href="#">
+<a class="sidebar-logout flex items-center gap-3 px-3 py-2 rounded-lg text-secondary-fixed-dim hover:bg-surface-container/50 hover:text-error transition-colors group cursor-pointer" href="insights.html" id="sidebar-logout">
 <span class="material-symbols-outlined text-[18px]">logout</span>
 <span class="font-body-md text-body-md text-sm">Logout</span>
 </a>
@@ -849,7 +849,23 @@ Do not add markdown formatting, do not wrap in backticks, do not write anything 
         const justificationText = document.getElementById('justification-text');
         justificationText.value = analysis.roadmap || '';
     }
-</script><script>
+</script>
+<script>
+    (function () {
+        function performLogout(e) {
+            if (e) e.preventDefault();
+            ['resume_text', 'github_analysis', 'linkedin_profile', 'fsm_state', 'job_analysis', 'groq_api_key'].forEach(function (key) {
+                localStorage.removeItem(key);
+            });
+            sessionStorage.clear();
+            window.location.href = 'insights.html';
+        }
+        document.querySelectorAll('.sidebar-logout').forEach(function (el) {
+            el.addEventListener('click', performLogout);
+        });
+    })();
+</script>
+<script>
     document.addEventListener('keydown', function(e) {
         if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
             e.preventDefault();

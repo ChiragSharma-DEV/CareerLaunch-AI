@@ -284,7 +284,7 @@
 </div>
 <!-- Navigation Links -->
 <div class="flex flex-col gap-2 flex-grow">
-<a class="flex items-center gap-3 text-on-surface-variant hover:text-primary px-4 py-3 hover:bg-white/5 transition-all rounded-lg group" href="team-planner.html">
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-primary px-4 py-3 hover:bg-white/5 transition-all rounded-lg group" href="insights.html">
 <span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors" data-icon="dashboard">dashboard</span>
 <span class="font-body-md text-body-md">Dashboard</span>
 </a>
@@ -292,8 +292,7 @@
 <span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors" data-icon="work_outline">work_outline</span>
 <span class="font-body-md text-body-md">Applications</span>
 </a>
-<!-- Active Item: Strategy (Best semantic fit for Planner) -->
-<a class="flex items-center gap-3 bg-white/10 text-primary rounded-lg px-4 py-3 transition-all shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05)]" href="insights.html">
+<a class="flex items-center gap-3 bg-white/10 text-primary rounded-lg px-4 py-3 transition-all shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05)]" href="team-planner.html">
 <span class="material-symbols-outlined text-primary" data-icon="Insights">insights</span>
 <span class="font-body-md text-body-md font-medium">Strategy</span>
 </a>
@@ -305,17 +304,18 @@
 <span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors" data-icon="settings">settings</span>
 <span class="font-body-md text-body-md">Settings</span>
 </a>
-<a class="flex items-center gap-3 text-on-surface-variant hover:text-primary px-4 py-3 hover:bg-white/5 transition-all rounded-lg group" href="mock-interview.html"><span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">record_voice_over</span><span class="font-body-md text-body-md">Mock Interview</span></a><a class="flex items-center gap-3 text-on-surface-variant hover:text-primary px-4 py-3 hover:bg-white/5 transition-all rounded-lg group" href="mock-interview.html"><span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">record_voice_over</span><span class="font-body-md text-body-md">Mock Interview</span></a></div>
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-primary px-4 py-3 hover:bg-white/5 transition-all rounded-lg group" href="mock-interview.html">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors" data-icon="record_voice_over">record_voice_over</span>
+<span class="font-body-md text-body-md">Mock Interview</span>
+</a>
+</div>
 <!-- Footer Actions -->
 <div class="mt-auto pt-6 border-t border-white/5 flex flex-col gap-2">
-<button class="w-full py-3 mb-4 bg-primary text-on-primary rounded-lg font-body-md font-medium hover:bg-primary-fixed transition-colors">
-                    Upgrade to Pro
-                </button>
 <a class="flex items-center gap-3 text-on-surface-variant hover:text-primary px-4 py-2 hover:bg-white/5 transition-all rounded-lg group" href="#">
 <span class="material-symbols-outlined text-[20px]" data-icon="help_outline">help_outline</span>
 <span class="font-body-md text-body-md text-sm">Support</span>
 </a>
-<a class="flex items-center gap-3 text-on-surface-variant hover:text-error px-4 py-2 hover:bg-error/10 transition-all rounded-lg group" href="#">
+<a class="sidebar-logout flex items-center gap-3 text-on-surface-variant hover:text-error px-4 py-2 hover:bg-error/10 transition-all rounded-lg group cursor-pointer" href="insights.html" id="sidebar-logout">
 <span class="material-symbols-outlined text-[20px]" data-icon="logout">logout</span>
 <span class="font-body-md text-body-md text-sm">Log Out</span>
 </a>
@@ -841,6 +841,21 @@
             window.open('https://meet.google.com/new', '_blank', 'noopener,noreferrer');
         });
     });
+</script>
+<script>
+    (function () {
+        function performLogout(e) {
+            if (e) e.preventDefault();
+            ['resume_text', 'github_analysis', 'linkedin_profile', 'fsm_state', 'job_analysis', 'groq_api_key'].forEach(function (key) {
+                localStorage.removeItem(key);
+            });
+            sessionStorage.clear();
+            window.location.href = 'insights.html';
+        }
+        document.querySelectorAll('.sidebar-logout').forEach(function (el) {
+            el.addEventListener('click', performLogout);
+        });
+    })();
 </script>
 <script>
     document.addEventListener('keydown', function(e) {
