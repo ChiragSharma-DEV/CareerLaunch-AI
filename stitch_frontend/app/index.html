@@ -1,13 +1,21 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>CareerLaunch AI — Dashboard</title>
-<meta http-equiv="refresh" content="0; url=insights.html"/>
+<meta content="0; url=insights.html" http-equiv="refresh"/>
 <script>window.location.replace('insights.html');</script>
 </head>
 <body>
-<p>Redirecting to dashboard… <a href="insights.html">Continue to Dashboard</a></p>
-</body>
+<p>Redirecting to dashboard… <a href="team-planner.html">Continue to Dashboard</a></p>
+<script>
+    document.addEventListener('keydown', function(e) {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+            e.preventDefault();
+            window.location.href = 'command-palette.html';
+        }
+    });
+    </script></body>
 </html>

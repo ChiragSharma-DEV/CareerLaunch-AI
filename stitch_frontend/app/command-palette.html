@@ -5,31 +5,22 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>CareerLaunch AI - Command Palette</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link rel="stylesheet" href="theme.css"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <style>
-        @import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800;900&display=swap');
-
-        .glass-panel {
-            background: var(--surface-container, rgba(32, 31, 31, 1));
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.5);
-        }
-
         .command-input-wrapper {
             position: relative;
-            background: rgba(10, 10, 11, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.1);
             transition: all 0.3s ease;
         }
-
         .command-input-wrapper:focus-within {
-            border-color: rgba(255, 255, 255, 0.3);
-            box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1);
+            border-color: rgba(168,85,247,0.45);
+            box-shadow: 0 0 0 3px rgba(168,85,247,0.12), 0 0 20px -8px rgba(168,85,247,0.25);
         }
-
         .shortcut-key {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.12);
             box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.3);
         }
     </style>
@@ -185,11 +176,14 @@
         }
     </script>
 </head>
-<body class="bg-black/80 text-on-background min-h-screen flex flex-col font-body-md overflow-hidden antialiased backdrop-blur-sm">
+<body class="text-on-background min-h-screen flex flex-col font-body-md overflow-hidden antialiased" style="background:rgba(8,7,15,0.9);backdrop-filter:blur(8px);">
+<!-- Atmospheric Background -->
+<div class="atmo-bg"></div>
+<div class="atmo-blob-blue"></div>
 <!-- Main Content Canvas -->
 <main class="flex-grow flex items-center justify-center p-margin-page relative w-full h-full min-h-screen z-50">
 <!-- Command Palette Modal -->
-<div class="glass-panel bg-surface-container rounded-xl w-full max-w-[600px] overflow-hidden flex flex-col shadow-2xl transform scale-100 transition-transform duration-300">
+<div class="glass-panel command-palette rounded-2xl w-full max-w-[600px] overflow-hidden flex flex-col shadow-2xl transform scale-100 transition-transform duration-300">
 <!-- Input Area -->
 <div class="p-4 border-b border-white/5">
 <div class="command-input-wrapper rounded-lg flex items-center px-4 py-3 bg-surface-container-lowest">
@@ -210,7 +204,7 @@
 <ul class="space-y-1">
 <!-- Item -->
 <li>
-<button class="w-full flex items-center justify-between px-4 py-3 rounded-lg bg-surface-variant border border-white/5 group relative overflow-hidden" onclick="window.location.href='insights.html'">
+<button class="w-full flex items-center justify-between px-4 py-3 rounded-lg bg-surface-variant border border-white/5 group relative overflow-hidden" onclick="window.location.href='team-planner.html'">
 <div class="flex items-center gap-3 relative z-10">
 <span class="material-symbols-outlined text-on-surface text-lg">dashboard</span>
 <span class="font-body-md text-on-surface font-medium">Go to Dashboard</span>
@@ -261,6 +255,13 @@
         }
     </style>
 <script>
+    document.addEventListener('keydown', function(e) {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+            e.preventDefault();
+            window.location.href = 'command-palette.html';
+        }
+    });
+    </script><script>
     document.addEventListener('keydown', function(e) {
         if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
             e.preventDefault();

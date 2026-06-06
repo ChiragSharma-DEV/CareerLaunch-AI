@@ -5,6 +5,8 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>CareerLaunch AI - Team Planner</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link rel="stylesheet" href="theme.css"/>
+<script src="auth.js" defer></script>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
 <style>
@@ -273,10 +275,14 @@
         }
     </script>
 </head>
-<body class="bg-background text-on-surface font-body-md antialiased overflow-hidden selection:bg-primary/20 selection:text-primary">
+<body class="text-on-surface font-body-md antialiased overflow-hidden selection:bg-primary/20 selection:text-primary" style="background-color:#08070f;">
+<!-- Atmospheric Background -->
+<div class="atmo-bg"></div>
+<div class="atmo-blob-blue"></div>
+<div class="atmo-blob-teal"></div>
 <div class="relative z-10 flex h-screen w-full max-w-[1600px] mx-auto">
 <!-- SideNavBar Shared Component -->
-<nav class="hidden md:flex flex-col h-full p-stack-md bg-surface-container-lowest border-r border-white/5 w-64 flex-shrink-0 z-20">
+<nav class="hidden md:flex flex-col h-full p-stack-md sidebar-premium w-64 flex-shrink-0 z-20">
 <!-- Brand -->
 <div class="px-4 py-6 mb-stack-lg">
 <h1 class="font-headline-sm text-headline-sm font-black text-primary tracking-tight">Executive Suite</h1>
@@ -284,16 +290,16 @@
 </div>
 <!-- Navigation Links -->
 <div class="flex flex-col gap-2 flex-grow">
-<a class="flex items-center gap-3 text-on-surface-variant hover:text-primary px-4 py-3 hover:bg-white/5 transition-all rounded-lg group" href="insights.html">
-<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors" data-icon="dashboard">dashboard</span>
-<span class="font-body-md text-body-md">Dashboard</span>
+<a class="flex items-center gap-3 bg-white/10 text-primary rounded-lg px-4 py-3 transition-all shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05)]" href="team-planner.html">
+<span class="material-symbols-outlined text-primary" data-icon="dashboard">dashboard</span>
+<span class="font-body-md text-body-md font-medium">Dashboard</span>
 </a>
 <a class="flex items-center gap-3 text-on-surface-variant hover:text-primary px-4 py-3 hover:bg-white/5 transition-all rounded-lg group" href="team-planner.html">
 <span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors" data-icon="work_outline">work_outline</span>
 <span class="font-body-md text-body-md">Applications</span>
 </a>
-<a class="flex items-center gap-3 bg-white/10 text-primary rounded-lg px-4 py-3 transition-all shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05)]" href="team-planner.html">
-<span class="material-symbols-outlined text-primary" data-icon="Insights">insights</span>
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-primary px-4 py-3 hover:bg-white/5 transition-all rounded-lg group" href="insights.html">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors" data-icon="Insights">insights</span>
 <span class="font-body-md text-body-md font-medium">Strategy</span>
 </a>
 <a class="flex items-center gap-3 text-on-surface-variant hover:text-primary px-4 py-3 hover:bg-white/5 transition-all rounded-lg group" href="profile-auditor.html">
@@ -307,7 +313,6 @@
 <a class="flex items-center gap-3 text-on-surface-variant hover:text-primary px-4 py-3 hover:bg-white/5 transition-all rounded-lg group" href="mock-interview.html">
 <span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors" data-icon="record_voice_over">record_voice_over</span>
 <span class="font-body-md text-body-md">Mock Interview</span>
-</a>
 </div>
 <!-- Footer Actions -->
 <div class="mt-auto pt-6 border-t border-white/5 flex flex-col gap-2">
@@ -341,13 +346,13 @@
 <span class="font-headline-sm text-headline-sm text-primary" id="calendar-month-label">April 2024</span>
 <span class="font-body-md text-sm text-on-surface-variant hidden md:inline" id="selected-date-chip"></span>
 <div class="flex bg-surface-container-highest rounded-lg p-1 border border-white/5" id="calendar-view-toggle">
-<button type="button" id="calendar-view-week" class="calendar-view-btn is-active px-3 py-1 text-sm font-medium" data-view="Week">Week</button>
-<button type="button" id="calendar-view-month" class="calendar-view-btn px-3 py-1 text-sm font-medium" data-view="Month">Month</button>
+<button class="calendar-view-btn is-active px-3 py-1 text-sm font-medium" data-view="Week" id="calendar-view-week" type="button">Week</button>
+<button class="calendar-view-btn px-3 py-1 text-sm font-medium" data-view="Month" id="calendar-view-month" type="button">Month</button>
 </div>
 </div>
 <div class="flex gap-2">
-<button type="button" id="calendar-prev" class="p-2 rounded-full hover:bg-white/5 text-on-surface-variant transition-colors" title="Previous week"><span class="material-symbols-outlined">chevron_left</span></button>
-<button type="button" id="calendar-next" class="p-2 rounded-full hover:bg-white/5 text-on-surface-variant transition-colors" title="Next week"><span class="material-symbols-outlined">chevron_right</span></button>
+<button class="p-2 rounded-full hover:bg-white/5 text-on-surface-variant transition-colors" id="calendar-prev" title="Previous week" type="button"><span class="material-symbols-outlined">chevron_left</span></button>
+<button class="p-2 rounded-full hover:bg-white/5 text-on-surface-variant transition-colors" id="calendar-next" title="Next week" type="button"><span class="material-symbols-outlined">chevron_right</span></button>
 </div>
 </div>
 <!-- Timeline Canvas Area -->
@@ -385,7 +390,7 @@
 </div>
 <p class="font-body-md text-sm text-on-surface mb-5 leading-relaxed" id="meeting-description">Weekly review and refinement of core project prototypes prior to staging.</p>
 <div class="flex items-center justify-between mb-5">
-<button type="button" id="join-meeting-btn" class="bg-primary/10 text-primary hover:bg-primary/20 border border-primary/20 px-4 py-1.5 rounded-full font-medium text-sm flex items-center gap-2 transition-colors">
+<button class="bg-primary/10 text-primary hover:bg-primary/20 border border-primary/20 px-4 py-1.5 rounded-full font-medium text-sm flex items-center gap-2 transition-colors" id="join-meeting-btn" type="button">
 <span class="material-symbols-outlined text-[16px]">videocam</span>
                                         Join Meeting
                                     </button>
@@ -412,9 +417,9 @@
 <div class="mt-5 flex items-center justify-between border-t border-white/5 pt-4 relative z-20">
 <span class="font-body-md text-sm text-on-surface-variant">Going?</span>
 <div class="flex gap-2" id="rsvp-toggle">
-<button type="button" id="rsvp-yes" class="rsvp-btn is-active px-3 py-1 rounded-full border text-xs font-medium" data-rsvp="Yes">Yes</button>
-<button type="button" id="rsvp-no" class="rsvp-btn px-3 py-1 rounded-full border text-xs font-medium" data-rsvp="No">No</button>
-<button type="button" id="rsvp-maybe" class="rsvp-btn px-3 py-1 rounded-full border text-xs font-medium" data-rsvp="Maybe">Maybe</button>
+<button class="rsvp-btn is-active px-3 py-1 rounded-full border text-xs font-medium" data-rsvp="Yes" id="rsvp-yes" type="button">Yes</button>
+<button class="rsvp-btn px-3 py-1 rounded-full border text-xs font-medium" data-rsvp="No" id="rsvp-no" type="button">No</button>
+<button class="rsvp-btn px-3 py-1 rounded-full border text-xs font-medium" data-rsvp="Maybe" id="rsvp-maybe" type="button">Maybe</button>
 </div>
 </div>
 </div>
@@ -843,21 +848,13 @@
     });
 </script>
 <script>
-    (function () {
-        function performLogout(e) {
-            if (e) e.preventDefault();
-            ['resume_text', 'github_analysis', 'linkedin_profile', 'fsm_state', 'job_analysis', 'groq_api_key'].forEach(function (key) {
-                localStorage.removeItem(key);
-            });
-            sessionStorage.clear();
-            window.location.href = 'insights.html';
+    document.addEventListener('keydown', function(e) {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+            e.preventDefault();
+            window.location.href = 'command-palette.html';
         }
-        document.querySelectorAll('.sidebar-logout').forEach(function (el) {
-            el.addEventListener('click', performLogout);
-        });
-    })();
-</script>
-<script>
+    });
+    </script><script>
     document.addEventListener('keydown', function(e) {
         if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
             e.preventDefault();

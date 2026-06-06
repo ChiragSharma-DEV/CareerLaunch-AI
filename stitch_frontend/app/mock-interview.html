@@ -5,7 +5,9 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>CareerLaunch AI - Mock Interview</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link rel="stylesheet" href="theme.css"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="auth.js" defer></script>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <style>
         @import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800;900&display=swap');
@@ -103,22 +105,22 @@
     </script>
 </head>
 <body class="bg-background text-on-surface font-body-md min-h-screen flex flex-col relative overflow-x-hidden">
-<!-- Cinematic Bloom Background -->
-<div class="fixed inset-0 z-0 pointer-events-none overflow-hidden">
-<div class="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-blue-500/10 blur-[120px] rounded-full mix-blend-screen"></div>
-<div class="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] bg-purple-500/5 blur-[150px] rounded-full mix-blend-screen"></div>
-<div class="absolute top-[40%] left-[50%] -translate-x-1/2 w-[40%] h-[40%] bg-white/5 blur-[100px] rounded-full"></div>
-</div>
+<!-- Atmospheric Background -->
+<div class="atmo-bg"></div>
+<div class="atmo-blob-blue"></div>
+<div class="atmo-blob-teal"></div>
 <!-- TopNavBar (Shared Component) -->
-<nav class="relative z-50 flex justify-between items-center px-margin-page py-6 w-full max-w-container-max mx-auto bg-gradient-to-b from-surface/80 to-transparent backdrop-blur-md full-width top-0">
+<nav class="relative z-50 flex justify-between items-center px-margin-page py-6 w-full max-w-container-max mx-auto nav-glass full-width top-0">
 <div class="flex items-center gap-12">
-<a class="font-headline-md text-headline-md font-bold tracking-tighter text-primary" href="#">CareerLaunch AI</a>
+<a class="font-headline-md text-headline-md font-bold tracking-tighter text-white flex items-center gap-2" href="#">
+  <span class="brand-logo-dot"></span>CareerLaunch AI
+</a>
 <div class="hidden md:flex items-center gap-8">
 <a class="text-on-surface-variant font-label-caps hover:text-primary transition-colors hover:bg-white/5 transition-all duration-300 px-3 py-2 rounded-md" href="profile-auditor.html">Platform</a>
 <a class="text-on-surface-variant font-label-caps hover:text-primary transition-colors hover:bg-white/5 transition-all duration-300 px-3 py-2 rounded-md" href="insights.html">Insights</a>
 <a class="text-on-surface-variant font-label-caps hover:text-primary transition-colors hover:bg-white/5 transition-all duration-300 px-3 py-2 rounded-md" href="#">Network</a>
 <a class="text-primary border-b border-primary pb-1 font-label-caps hover:bg-white/5 transition-all duration-300 px-3 py-2 rounded-md" href="#">Resources</a>
-<a class="text-on-surface-variant font-label-caps uppercase tracking-[0.18em] text-[12px] font-medium hover:text-primary transition-colors hover:bg-white/5 duration-300 px-2 py-1 rounded-sm" href="mock-interview.html">Interview</a><a class="text-on-surface-variant font-label-caps uppercase tracking-[0.18em] text-[12px] font-medium hover:text-primary transition-colors hover:bg-white/5 duration-300 px-2 py-1 rounded-sm" href="mock-interview.html">Interview</a></div>
+<a class="text-on-surface-variant font-label-caps uppercase tracking-[0.18em] text-[12px] font-medium hover:text-primary transition-colors hover:bg-white/5 duration-300 px-2 py-1 rounded-sm" href="mock-interview.html">Interview</a></div>
 </div>
 <div class="hidden md:flex items-center gap-4">
 <button class="text-on-surface-variant hover:text-primary transition-colors font-label-caps hover:bg-white/5 transition-all duration-300 px-4 py-2 rounded-md">Sign In</button>
@@ -275,8 +277,13 @@
 
     let interview_memory = [];
     let currentQuestionData = null;
+    function escapeHtml(text) {
+        const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+        return String(text).replace(/[&<>"']/g, m => map[m]);
+    }
     let recognition = null;
     let isRecording = false;
+    let isProcessing = false;
 
     document.addEventListener('DOMContentLoaded', () => {
         const fsmState = localStorage.getItem('fsm_state');
@@ -285,7 +292,8 @@
         const interviewContainer = document.getElementById('interview-container');
 
         // State Gating
-        if (!fsmState || parseInt(fsmState, 10) < 3) {
+        const fsmNum = parseInt(fsmState, 10);
+        if (!fsmState || isNaN(fsmNum) || fsmNum < 3) {
             gateWarning.classList.remove('hidden');
             return;
         }
@@ -335,6 +343,8 @@
     }
 
     async function startInterviewSession() {
+        if (isProcessing) return;
+        isProcessing = true;
         const groqKeyInput = document.getElementById('groq-key-input');
         const apiKey = groqKeyInput.value.trim();
         if (!apiKey) {
@@ -415,6 +425,9 @@ Do not write any other text. No explanation. No markdown wrapper. Only valid JSO
             }
 
             const data = await response.json();
+            if (!data.choices || !data.choices[0] || !data.choices[0].message) {
+                throw new Error('Unexpected API response structure.');
+            }
             let contentText = data.choices[0].message.content.trim();
             if (contentText.startsWith('```json')) contentText = contentText.substring(7);
             if (contentText.endsWith('```')) contentText = contentText.substring(0, contentText.length - 3);
@@ -423,12 +436,12 @@ Do not write any other text. No explanation. No markdown wrapper. Only valid JSO
             currentQuestionData = JSON.parse(contentText);
             renderAIQuestion(currentQuestionData.question, currentQuestionData.focus, currentQuestionData.duration);
         } catch (error) {
-            console.error(error);
             alert(`Failed to load first question: ${error.message}. Please check your API key and try again.`);
             // Go back to setup
             setupView.classList.remove('hidden');
             interviewContainer.classList.add('hidden');
         } finally {
+            isProcessing = false;
             loadingOverlay.classList.add('hidden');
         }
     }
@@ -442,10 +455,10 @@ Do not write any other text. No explanation. No markdown wrapper. Only valid JSO
                 </div>
                 <div class="bg-surface-container-low rounded-xl rounded-tl-none p-5 border border-white/5 relative group flex-grow">
                     <div class="absolute -left-[1px] top-4 bottom-4 w-[2px] bg-blue-500/50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    <p class="font-body-lg text-body-lg text-primary mb-4 leading-relaxed">${question}</p>
+                    <p class="font-body-lg text-body-lg text-primary mb-4 leading-relaxed">${escapeHtml(question)}</p>
                     <div class="flex items-center gap-4 text-on-surface-variant/60 font-label-caps text-label-caps">
-                        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">psychology</span> ${focus}</span>
-                        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">timer</span> ${duration} Target</span>
+                        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">psychology</span> ${escapeHtml(focus)}</span>
+                        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">timer</span> ${escapeHtml(duration)} Target</span>
                     </div>
                 </div>
             </div>
@@ -463,7 +476,7 @@ Do not write any other text. No explanation. No markdown wrapper. Only valid JSO
                     <img alt="User Profile" class="w-full h-full object-cover" src="${userAvatar}"/>
                 </div>
                 <div class="bg-surface-container-low rounded-xl rounded-tr-none p-5 border border-white/5 relative group flex-grow">
-                    <p class="font-body-md text-body-md text-primary leading-relaxed">${answer}</p>
+                    <p class="font-body-md text-body-md text-primary leading-relaxed">${escapeHtml(answer)}</p>
                 </div>
             </div>
         `;
@@ -477,14 +490,14 @@ Do not write any other text. No explanation. No markdown wrapper. Only valid JSO
         let strengthsLi = strengths.map(s => `
             <li class="flex gap-3 text-body-md text-on-surface">
                 <span class="material-symbols-outlined text-green-400 text-[18px] mt-0.5">add</span>
-                <span>${s}</span>
+                <span>${escapeHtml(s)}</span>
             </li>
         `).join('');
 
         let growthLi = growthAreas.map(g => `
             <li class="flex gap-3 text-body-md text-on-surface">
                 <span class="material-symbols-outlined text-orange-400 text-[18px] mt-0.5">arrow_upward</span>
-                <span>${g}</span>
+                <span>${escapeHtml(g)}</span>
             </li>
         `).join('');
 
@@ -524,6 +537,8 @@ Do not write any other text. No explanation. No markdown wrapper. Only valid JSO
     }
 
     async function submitUserResponse() {
+        if (isProcessing) return;
+        isProcessing = true;
         const userResponseInput = document.getElementById('user-response');
         const responseText = userResponseInput.value.trim();
         if (!responseText) {
@@ -609,6 +624,9 @@ Evaluate the latest response.`;
             }
 
             const data = await response.json();
+            if (!data.choices || !data.choices[0] || !data.choices[0].message) {
+                throw new Error('Unexpected API response structure.');
+            }
             let contentText = data.choices[0].message.content.trim();
             if (contentText.startsWith('```json')) contentText = contentText.substring(7);
             if (contentText.endsWith('```')) contentText = contentText.substring(0, contentText.length - 3);
@@ -640,14 +658,16 @@ Evaluate the latest response.`;
             }, 1000);
 
         } catch (error) {
-            console.error(error);
             alert(`Evaluation failed: ${error.message}`);
         } finally {
+            isProcessing = false;
             loadingOverlay.classList.add('hidden');
         }
     }
 
     async function skipActiveQuestion() {
+        if (isProcessing) return;
+        isProcessing = true;
         const userResponseInput = document.getElementById('user-response');
         userResponseInput.value = '';
 
@@ -702,6 +722,9 @@ Do not write any other text. No explanation. No markdown wrapper. Only valid JSO
             }
 
             const data = await response.json();
+            if (!data.choices || !data.choices[0] || !data.choices[0].message) {
+                throw new Error('Unexpected API response structure.');
+            }
             let contentText = data.choices[0].message.content.trim();
             if (contentText.startsWith('```json')) contentText = contentText.substring(7);
             if (contentText.endsWith('```')) contentText = contentText.substring(0, contentText.length - 3);
@@ -710,9 +733,9 @@ Do not write any other text. No explanation. No markdown wrapper. Only valid JSO
             currentQuestionData = JSON.parse(contentText);
             renderAIQuestion(currentQuestionData.question, currentQuestionData.focus, currentQuestionData.duration);
         } catch (error) {
-            console.error(error);
             alert(`Failed to skip question: ${error.message}`);
         } finally {
+            isProcessing = false;
             loadingOverlay.classList.add('hidden');
         }
     }
@@ -804,6 +827,12 @@ Do not write any other text. No explanation. No markdown wrapper. Only valid JSO
             return;
         }
 
+        if (!window.jspdf) {
+            alert("PDF library failed to load. Please check your internet connection and reload the page.");
+            return;
+        }
+
+        try {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
 
@@ -911,6 +940,9 @@ Do not write any other text. No explanation. No markdown wrapper. Only valid JSO
 
         // Trigger Download
         doc.save(`CareerLaunch_Interview_Scorecard_${new Date().getTime()}.pdf`);
+        } catch (err) {
+            alert(`Failed to generate PDF report: ${err.message}`);
+        }
     }
 </script>
 <style>
@@ -925,11 +957,4 @@ Do not write any other text. No explanation. No markdown wrapper. Only valid JSO
         }
     }
 </style>
-<script>
-    document.addEventListener('keydown', function(e) {
-        if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
-            e.preventDefault();
-            window.location.href = 'command-palette.html';
-        }
-    });
-    </script></body></html>
+</body></html>

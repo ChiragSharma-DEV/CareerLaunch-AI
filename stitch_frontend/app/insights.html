@@ -5,6 +5,8 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Insights - CareerLaunch AI</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link rel="stylesheet" href="theme.css"/>
+<script src="auth.js" defer></script>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
         tailwind.config = {
@@ -98,94 +100,45 @@
         }
     </script>
 <style>
-        body { font-family: 'Geist', sans-serif; background-color: #0A0A0B; color: #e5e2e1; overflow-x: hidden; }
-        
-        /* Cinematic Bloom Effects */
-        .bloom-ambient {
-            position: fixed;
-            top: 20%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 80vw;
-            height: 80vh;
-            background: radial-gradient(ellipse at center, rgba(30, 64, 175, 0.15) 0%, rgba(10, 10, 11, 0) 70%);
-            z-index: -2;
-            pointer-events: none;
-            filter: blur(100px);
-        }
-        
+        body { font-family: 'Inter', 'Geist', sans-serif; background-color: #08070f; color: #f0eeff; overflow-x: hidden; }
+
+        /* Bloom accents — now with purple/pink/teal palette */
         .bloom-accent-1 {
-            position: absolute;
-            top: -10%;
-            right: -10%;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(217, 119, 6, 0.08) 0%, transparent 60%);
-            z-index: -1;
-            pointer-events: none;
-            filter: blur(80px);
+            position: absolute; top: -10%; right: -10%;
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(168,85,247,0.1) 0%, transparent 60%);
+            z-index: -1; pointer-events: none; filter: blur(80px);
         }
-
         .bloom-accent-2 {
-            position: absolute;
-            bottom: -10%;
-            left: -10%;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(56, 189, 248, 0.08) 0%, transparent 60%);
-            z-index: -1;
-            pointer-events: none;
-            filter: blur(80px);
+            position: absolute; bottom: -10%; left: -10%;
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(236,72,153,0.09) 0%, transparent 60%);
+            z-index: -1; pointer-events: none; filter: blur(80px);
         }
 
-        /* Glass Panel Styling */
-        .glass-panel {
-            background: #111214;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .glass-panel::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
-            z-index: 10;
-        }
-
+        /* Glass Panel — overridden by theme.css, keep for compat */
         .glass-panel-inner {
-            background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, transparent 100%);
-            height: 100%;
-            width: 100%;
+            background: linear-gradient(180deg, rgba(255,255,255,0.025) 0%, transparent 100%);
+            height: 100%; width: 100%;
         }
-
-        /* Custom Scrollbar for sleekness */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #0A0A0B; }
-        ::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #444748; }
 
         /* Hide TopNavBar on Mobile */
         @media (max-width: 768px) {
             .nav-top { display: none !important; }
             .main-content { margin-left: 0 !important; margin-top: 0 !important; }
         }
-        
-        /* Hide SideNavBar on Web if needed, but keeping as per instructions for Insights dashboard */
         @media (min-width: 769px) {
             .nav-bottom { display: none !important; }
         }
     </style>
 </head>
 <body class="bg-background text-on-surface antialiased selection:bg-surface-container-high selection:text-primary min-h-screen flex">
-<!-- Ambient Lighting -->
-<div class="bloom-ambient"></div>
+<!-- Atmospheric Background -->
+<div class="atmo-bg"></div>
+<div class="atmo-blob-blue"></div>
+<div class="atmo-blob-teal"></div>
 <!-- SideNavBar (Web Anchor) -->
-<nav aria-label="Sidebar Navigation" class="hidden md:flex flex-col h-screen w-64 fixed left-0 top-0 z-40 bg-surface-container-low border-r border-white/5 py-panel-padding px-4">
+<nav aria-label="Sidebar Navigation" class="hidden md:flex flex-col h-screen w-64 fixed left-0 top-0 z-40 sidebar-premium py-panel-padding px-4">
 <!-- Header -->
 <div class="flex items-center gap-3 mb-stack-lg px-2">
 <div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center border border-white/10 shrink-0 overflow-hidden">
@@ -198,7 +151,7 @@
 </div>
 <!-- Navigation Links -->
 <div class="flex-1 flex flex-col gap-2">
-<a aria-current="page" class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-surface-container-highest text-primary border-r-2 border-primary active:opacity-80 group" href="insights.html">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-secondary-fixed-dim hover:bg-surface-container/50 hover:bg-surface-container-high transition-colors duration-200 active:opacity-80 group" href="team-planner.html">
 <span class="material-symbols-outlined text-[20px]">dashboard</span>
 <span class="font-body-md text-body-md font-medium">Dashboard</span>
 </a>
@@ -206,7 +159,7 @@
 <span class="material-symbols-outlined text-[20px]">work</span>
 <span class="font-body-md text-body-md font-medium">Applications</span>
 </a>
-<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-secondary-fixed-dim hover:bg-surface-container/50 hover:bg-surface-container-high transition-colors duration-200 active:opacity-80 group" href="team-planner.html">
+<a aria-current="page" class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-surface-container-highest text-primary border-r-2 border-primary active:opacity-80 group" href="insights.html">
 <span class="material-symbols-outlined text-[20px]">strategy</span>
 <span class="font-body-md text-body-md font-medium">Strategy</span>
 </a>
@@ -221,7 +174,6 @@
 <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-secondary-fixed-dim hover:bg-surface-container/50 hover:bg-surface-container-high transition-colors duration-200 active:opacity-80 group" href="mock-interview.html">
 <span class="material-symbols-outlined text-[20px]">record_voice_over</span>
 <span class="font-body-md text-body-md font-medium">Mock Interview</span>
-</a>
 </div>
 <!-- Footer Actions -->
 <div class="mt-auto pt-stack-md border-t border-white/5 flex flex-col gap-2">
@@ -621,7 +573,8 @@
         const mainElement = document.querySelector('main');
         const dashboardContent = document.getElementById('dashboard-content');
         
-        if (!fsmState || parseInt(fsmState, 10) < 2) {
+        const fsmNum = parseInt(fsmState, 10);
+        if (!fsmState || isNaN(fsmNum) || fsmNum < 2) {
             // Hide all children of main element except the ambient lights
             Array.from(mainElement.children).forEach(child => {
                 if (!child.classList.contains('bloom-accent-1') && !child.classList.contains('bloom-accent-2')) {
@@ -720,6 +673,7 @@
             const githubAnalysis = localStorage.getItem('github_analysis') || '';
 
             loadingOverlay.classList.remove('hidden');
+            analyzeBtn.disabled = true;
 
             try {
                 const systemPrompt = `You are a Senior Technical Recruiter & Talent AI.
@@ -766,6 +720,9 @@ Do not add markdown formatting, do not wrap in backticks, do not write anything 
                 }
 
                 const data = await response.json();
+                if (!data.choices || !data.choices[0] || !data.choices[0].message) {
+                    throw new Error('Unexpected API response structure.');
+                }
                 let contentText = data.choices[0].message.content.trim();
                 
                 // Clean markdown blocks if LLM bypasses json_object restriction
@@ -787,9 +744,9 @@ Do not add markdown formatting, do not wrap in backticks, do not write anything 
                 localStorage.setItem('fsm_state', '3');
 
             } catch (error) {
-                console.error(error);
                 alert(`Error running compatibility analysis: ${error.message}`);
             } finally {
+                analyzeBtn.disabled = false;
                 loadingOverlay.classList.add('hidden');
             }
         });
@@ -849,27 +806,4 @@ Do not add markdown formatting, do not wrap in backticks, do not write anything 
         const justificationText = document.getElementById('justification-text');
         justificationText.value = analysis.roadmap || '';
     }
-</script>
-<script>
-    (function () {
-        function performLogout(e) {
-            if (e) e.preventDefault();
-            ['resume_text', 'github_analysis', 'linkedin_profile', 'fsm_state', 'job_analysis', 'groq_api_key'].forEach(function (key) {
-                localStorage.removeItem(key);
-            });
-            sessionStorage.clear();
-            window.location.href = 'insights.html';
-        }
-        document.querySelectorAll('.sidebar-logout').forEach(function (el) {
-            el.addEventListener('click', performLogout);
-        });
-    })();
-</script>
-<script>
-    document.addEventListener('keydown', function(e) {
-        if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
-            e.preventDefault();
-            window.location.href = 'command-palette.html';
-        }
-    });
-    </script></body></html>
+</script></body></html>
