@@ -35,6 +35,151 @@
         .panel-highlight {
             box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
         }
+
+        /* Interactive toggles — plain CSS so JS class toggles always work (Tailwind CDN won't generate dynamic classes) */
+        .calendar-view-btn {
+            color: #c4c7c8;
+            background: transparent;
+            transition: color 0.15s, background 0.15s;
+        }
+        .calendar-view-btn:hover {
+            color: #ffffff;
+        }
+        .calendar-view-btn.is-active {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 0.25rem;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .rsvp-btn {
+            color: #c4c7c8;
+            background: transparent;
+            border-color: rgba(255, 255, 255, 0.1);
+            transition: color 0.15s, background 0.15s, border-color 0.15s;
+            cursor: pointer;
+            position: relative;
+            z-index: 20;
+        }
+        .rsvp-btn:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .rsvp-btn.is-active {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.35);
+        }
+
+        .calendar-panel.is-hidden {
+            display: none;
+        }
+
+        .month-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 6px;
+            padding: 24px 24px 24px 72px;
+        }
+        .month-grid .day-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: #c4c7c8;
+            text-align: center;
+            padding-bottom: 8px;
+        }
+        .month-grid .day-cell {
+            min-height: 72px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 8px;
+            padding: 8px;
+            background: rgba(32, 31, 31, 0.5);
+            font-size: 13px;
+            color: #c4c7c8;
+            cursor: pointer;
+            text-align: left;
+            width: 100%;
+            font-family: inherit;
+            transition: border-color 0.15s, background 0.15s, color 0.15s, box-shadow 0.15s;
+        }
+        .month-grid .day-cell:hover:not(.is-selected) {
+            border-color: rgba(255, 255, 255, 0.22);
+            background: rgba(255, 255, 255, 0.06);
+            color: #ffffff;
+        }
+        .month-grid .day-cell:focus-visible {
+            outline: 2px solid rgba(255, 255, 255, 0.45);
+            outline-offset: 2px;
+        }
+        .month-grid .day-cell.is-selected {
+            border-color: rgba(255, 255, 255, 0.6);
+            background: rgba(255, 255, 255, 0.14);
+            color: #ffffff;
+            box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.2);
+        }
+        .month-grid .day-cell.is-today:not(.is-selected) {
+            border-color: rgba(255, 180, 171, 0.4);
+            background: rgba(255, 180, 171, 0.08);
+            color: #ffffff;
+        }
+        .month-grid .day-cell.is-today.is-selected {
+            border-color: rgba(255, 180, 171, 0.85);
+            background: rgba(255, 180, 171, 0.18);
+        }
+        .month-grid .day-cell.has-event .event-dot {
+            display: block;
+        }
+        .month-grid .event-dot {
+            display: none;
+            width: 6px;
+            height: 6px;
+            border-radius: 9999px;
+            background: rgba(255, 255, 255, 0.7);
+            margin-top: 6px;
+        }
+        .month-grid .day-cell.is-selected .event-dot {
+            background: #ffffff;
+        }
+        .month-grid .day-cell.is-muted {
+            opacity: 0.35;
+            pointer-events: none;
+            cursor: default;
+        }
+
+        .week-picker {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .week-chip {
+            color: #c4c7c8;
+            background: rgba(32, 31, 31, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 9999px;
+            padding: 8px 14px;
+            font-size: 13px;
+            font-family: inherit;
+            cursor: pointer;
+            transition: border-color 0.15s, background 0.15s, color 0.15s;
+        }
+        .week-chip:hover:not(.is-selected) {
+            border-color: rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.06);
+            color: #ffffff;
+        }
+        .week-chip:focus-visible {
+            outline: 2px solid rgba(255, 255, 255, 0.45);
+            outline-offset: 2px;
+        }
+        .week-chip.is-selected {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.14);
+            border-color: rgba(255, 255, 255, 0.55);
+            box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.15);
+        }
+        .week-chip.is-current:not(.is-selected) {
+            border-color: rgba(255, 180, 171, 0.35);
+        }
     </style>
 <script id="tailwind-config">
         tailwind.config = {
@@ -193,19 +338,28 @@
 <!-- Header / Controls for Timeline -->
 <div class="p-6 border-b border-white/5 flex justify-between items-center bg-surface-container-highest/30">
 <div class="flex items-center gap-4">
-<span class="font-headline-sm text-headline-sm text-primary">April 2024</span>
-<div class="flex bg-surface-container-highest rounded-lg p-1 border border-white/5">
-<button class="px-3 py-1 text-sm font-medium text-primary bg-white/10 rounded shadow-sm">Week</button>
-<button class="px-3 py-1 text-sm font-medium text-on-surface-variant hover:text-primary transition-colors">Month</button>
+<span class="font-headline-sm text-headline-sm text-primary" id="calendar-month-label">April 2024</span>
+<span class="font-body-md text-sm text-on-surface-variant hidden md:inline" id="selected-date-chip"></span>
+<div class="flex bg-surface-container-highest rounded-lg p-1 border border-white/5" id="calendar-view-toggle">
+<button type="button" id="calendar-view-week" class="calendar-view-btn is-active px-3 py-1 text-sm font-medium" data-view="Week">Week</button>
+<button type="button" id="calendar-view-month" class="calendar-view-btn px-3 py-1 text-sm font-medium" data-view="Month">Month</button>
 </div>
 </div>
 <div class="flex gap-2">
-<button class="p-2 rounded-full hover:bg-white/5 text-on-surface-variant transition-colors"><span class="material-symbols-outlined">chevron_left</span></button>
-<button class="p-2 rounded-full hover:bg-white/5 text-on-surface-variant transition-colors"><span class="material-symbols-outlined">chevron_right</span></button>
+<button type="button" id="calendar-prev" class="p-2 rounded-full hover:bg-white/5 text-on-surface-variant transition-colors" title="Previous week"><span class="material-symbols-outlined">chevron_left</span></button>
+<button type="button" id="calendar-next" class="p-2 rounded-full hover:bg-white/5 text-on-surface-variant transition-colors" title="Next week"><span class="material-symbols-outlined">chevron_right</span></button>
 </div>
 </div>
 <!-- Timeline Canvas Area -->
-<div class="flex-grow relative timeline-grid min-h-[500px]">
+<div class="flex-grow relative min-h-[500px]" id="timeline-canvas">
+<!-- Week View -->
+<div class="calendar-panel h-full flex flex-col min-h-[500px]" id="week-view">
+<div class="px-6 py-4 border-b border-white/5 bg-surface-container-highest/20">
+<p class="font-label-caps text-[10px] uppercase tracking-widest text-on-surface-variant mb-3">Select week</p>
+<div class="week-picker" id="week-picker"></div>
+<p class="font-body-md text-sm text-on-surface-variant mt-3" id="selected-week-summary">Week of Apr 15 – 21 · Design meeting</p>
+</div>
+<div class="relative flex-grow timeline-grid min-h-[400px]" id="week-timeline">
 <!-- Background Time Markers (Vertical lines logic) -->
 <div class="absolute left-0 top-0 bottom-0 w-16 border-r border-white/5 flex flex-col text-on-surface-variant font-label-caps text-[10px] text-right pr-2 pt-6 gap-12 opacity-50">
 <span>9 AM</span>
@@ -223,15 +377,15 @@
 <div class="absolute left-24 top-16 w-80 bg-surface-container-high border border-white/10 rounded-xl p-5 shadow-lg transform transition-transform hover:-translate-y-1 cursor-pointer z-10 group panel-highlight">
 <div class="flex justify-between items-start mb-3">
 <div>
-<h3 class="font-headline-sm text-lg text-primary leading-tight mb-1">Design meeting</h3>
-<p class="font-body-md text-sm text-on-surface-variant">03:00 - 04:00 pm</p>
-<p class="font-body-md text-xs text-on-surface-variant opacity-70">Weekly on Monday</p>
+<h3 class="font-headline-sm text-lg text-primary leading-tight mb-1" id="meeting-title">Design meeting</h3>
+<p class="font-body-md text-sm text-on-surface-variant" id="meeting-time">03:00 - 04:00 pm</p>
+<p class="font-body-md text-xs text-on-surface-variant opacity-70" id="meeting-recurrence">Weekly on Monday</p>
 </div>
 <button class="text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity hover:text-primary"><span class="material-symbols-outlined text-[20px]">more_horiz</span></button>
 </div>
-<p class="font-body-md text-sm text-on-surface mb-5 leading-relaxed">Weekly review and refinement of core project prototypes prior to staging.</p>
+<p class="font-body-md text-sm text-on-surface mb-5 leading-relaxed" id="meeting-description">Weekly review and refinement of core project prototypes prior to staging.</p>
 <div class="flex items-center justify-between mb-5">
-<button class="bg-primary/10 text-primary hover:bg-primary/20 border border-primary/20 px-4 py-1.5 rounded-full font-medium text-sm flex items-center gap-2 transition-colors">
+<button type="button" id="join-meeting-btn" class="bg-primary/10 text-primary hover:bg-primary/20 border border-primary/20 px-4 py-1.5 rounded-full font-medium text-sm flex items-center gap-2 transition-colors">
 <span class="material-symbols-outlined text-[16px]">videocam</span>
                                         Join Meeting
                                     </button>
@@ -255,19 +409,32 @@
 </div>
 </div>
 </div>
-<div class="mt-5 flex items-center justify-between border-t border-white/5 pt-4">
+<div class="mt-5 flex items-center justify-between border-t border-white/5 pt-4 relative z-20">
 <span class="font-body-md text-sm text-on-surface-variant">Going?</span>
-<div class="flex gap-2">
-<button class="px-3 py-1 rounded-full border border-white/10 text-xs font-medium hover:bg-white/5 transition-colors bg-white/5 text-primary">Yes</button>
-<button class="px-3 py-1 rounded-full border border-white/10 text-xs font-medium text-on-surface-variant hover:bg-white/5 transition-colors">No</button>
-<button class="px-3 py-1 rounded-full border border-white/10 text-xs font-medium text-on-surface-variant hover:bg-white/5 transition-colors">Maybe</button>
+<div class="flex gap-2" id="rsvp-toggle">
+<button type="button" id="rsvp-yes" class="rsvp-btn is-active px-3 py-1 rounded-full border text-xs font-medium" data-rsvp="Yes">Yes</button>
+<button type="button" id="rsvp-no" class="rsvp-btn px-3 py-1 rounded-full border text-xs font-medium" data-rsvp="No">No</button>
+<button type="button" id="rsvp-maybe" class="rsvp-btn px-3 py-1 rounded-full border text-xs font-medium" data-rsvp="Maybe">Maybe</button>
 </div>
 </div>
 </div>
 <!-- Ghost Event Block (Contextual depth) -->
-<div class="absolute left-1/2 top-[40%] w-64 bg-surface-container/40 border border-white/5 rounded-lg p-4 opacity-60 z-0">
-<h4 class="font-headline-sm text-sm text-on-surface mb-1">Discuss detailed plans</h4>
-<p class="text-xs text-on-surface-variant">11:30 - 01:00 pm</p>
+<div class="absolute left-1/2 top-[40%] w-64 bg-surface-container/40 border border-white/5 rounded-lg p-4 opacity-60 z-0" id="ghost-event">
+<h4 class="font-headline-sm text-sm text-on-surface mb-1" id="ghost-event-title">Discuss detailed plans</h4>
+<p class="text-xs text-on-surface-variant" id="ghost-event-time">11:30 - 01:00 pm</p>
+</div>
+</div>
+</div>
+<!-- Month View -->
+<div class="calendar-panel is-hidden h-full min-h-[500px] bg-surface-container/30 flex flex-col" id="month-view">
+<div class="px-6 py-4 border-b border-white/5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 bg-surface-container-highest/20">
+<div>
+<p class="font-label-caps text-[10px] uppercase tracking-widest text-on-surface-variant mb-1">Selected date</p>
+<p class="font-body-md text-primary font-medium" id="selected-date-display">Monday, April 15, 2024</p>
+</div>
+<p class="font-body-md text-sm text-on-surface-variant" id="selected-date-events">Design meeting · 3:00 PM</p>
+</div>
+<div class="month-grid flex-grow" id="month-grid"></div>
 </div>
 </div>
 </section>
@@ -358,13 +525,324 @@
         }
     </style>
 <script>
-    document.addEventListener('keydown', function(e) {
-        if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
-            e.preventDefault();
-            window.location.href = 'command-palette.html';
+    document.addEventListener('DOMContentLoaded', function () {
+        var weekView = document.getElementById('week-view');
+        var monthView = document.getElementById('month-view');
+        var monthGrid = document.getElementById('month-grid');
+        var rsvpStatus = document.querySelector('#rsvp-toggle').previousElementSibling;
+        var selectedDateDisplay = document.getElementById('selected-date-display');
+        var selectedDateEvents = document.getElementById('selected-date-events');
+        var selectedDateChip = document.getElementById('selected-date-chip');
+        var weekPicker = document.getElementById('week-picker');
+        var selectedWeekSummary = document.getElementById('selected-week-summary');
+        var ghostEvent = document.getElementById('ghost-event');
+
+        var calendarYear = 2024;
+        var calendarMonth = 3; /* April (0-indexed) */
+        var todayDay = 15;
+        var selectedDay = todayDay;
+        var selectedWeekIndex = 2;
+
+        var weeks = [
+            { start: 1, end: 7, label: 'Apr 1 – 7' },
+            { start: 8, end: 14, label: 'Apr 8 – 14' },
+            { start: 15, end: 21, label: 'Apr 15 – 21' },
+            { start: 22, end: 28, label: 'Apr 22 – 28' },
+            { start: 29, end: 30, label: 'Apr 29 – 30' }
+        ];
+
+        var dayEvents = {
+            8: 'Sprint planning · 10:00 AM',
+            15: 'Design meeting · 3:00 PM',
+            18: 'Code review · 2:00 PM',
+            22: 'Team retrospective · 4:00 PM',
+            29: 'Monthly review · 11:00 AM'
+        };
+
+        var weekFeaturedEvents = [
+            {
+                title: 'Quarterly planning',
+                time: '09:00 - 10:00 am',
+                recurrence: 'Monday, Apr 1',
+                description: 'Align team goals and milestones for the opening week of April.'
+            },
+            {
+                title: 'Sprint planning',
+                time: '10:00 - 11:30 am',
+                recurrence: 'Monday, Apr 8',
+                description: 'Break down backlog items and assign owners for the new sprint.'
+            },
+            {
+                title: 'Design meeting',
+                time: '03:00 - 04:00 pm',
+                recurrence: 'Monday, Apr 15',
+                description: 'Weekly review and refinement of core project prototypes prior to staging.'
+            },
+            {
+                title: 'Team retrospective',
+                time: '04:00 - 05:00 pm',
+                recurrence: 'Monday, Apr 22',
+                description: 'Reflect on delivery wins, blockers, and process improvements.'
+            },
+            {
+                title: 'Monthly review',
+                time: '11:00 - 12:00 pm',
+                recurrence: 'Monday, Apr 29',
+                description: 'Close out April with stakeholder updates and next-month priorities.'
+            }
+        ];
+
+        var weekGhostEvents = [
+            null,
+            null,
+            { title: 'Discuss detailed plans', time: '11:30 - 01:00 pm' },
+            null,
+            null
+        ];
+        var dayLabels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        var monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+        function formatSelectedDate(day) {
+            var date = new Date(calendarYear, calendarMonth, day);
+            return date.toLocaleDateString('en-US', {
+                weekday: 'long',
+                month: 'long',
+                day: 'numeric',
+                year: 'numeric'
+            });
         }
+
+        function formatShortDate(day) {
+            var date = new Date(calendarYear, calendarMonth, day);
+            return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        }
+
+        function getEventText(day) {
+            return dayEvents[day] || 'No events scheduled';
+        }
+
+        function getWeekIndexForDay(day) {
+            for (var i = 0; i < weeks.length; i++) {
+                if (day >= weeks[i].start && day <= weeks[i].end) return i;
+            }
+            return 0;
+        }
+
+        function getWeekEventSummary(weekIndex) {
+            var week = weeks[weekIndex];
+            var events = [];
+            for (var day = week.start; day <= week.end; day++) {
+                if (dayEvents[day]) events.push('Apr ' + day + ': ' + dayEvents[day]);
+            }
+            return events.length ? events.join(' · ') : 'No events this week';
+        }
+
+        function renderWeekTimeline(weekIndex) {
+            var featured = weekFeaturedEvents[weekIndex];
+            document.getElementById('meeting-title').textContent = featured.title;
+            document.getElementById('meeting-time').textContent = featured.time;
+            document.getElementById('meeting-recurrence').textContent = featured.recurrence;
+            document.getElementById('meeting-description').textContent = featured.description;
+
+            var ghost = weekGhostEvents[weekIndex];
+            if (ghost) {
+                ghostEvent.classList.remove('is-hidden');
+                ghostEvent.style.display = '';
+                document.getElementById('ghost-event-title').textContent = ghost.title;
+                document.getElementById('ghost-event-time').textContent = ghost.time;
+            } else {
+                ghostEvent.style.display = 'none';
+            }
+        }
+
+        function selectWeek(weekIndex) {
+            selectedWeekIndex = weekIndex;
+            var week = weeks[weekIndex];
+            selectedDay = week.start;
+
+            weekPicker.querySelectorAll('.week-chip').forEach(function (chip) {
+                var index = parseInt(chip.dataset.weekIndex, 10);
+                chip.classList.toggle('is-selected', index === weekIndex);
+                chip.setAttribute('aria-pressed', index === weekIndex ? 'true' : 'false');
+            });
+
+            monthGrid.querySelectorAll('.day-cell[data-day]').forEach(function (cell) {
+                var day = parseInt(cell.dataset.day, 10);
+                cell.classList.toggle('is-selected', day === selectedDay);
+                cell.setAttribute('aria-pressed', day === selectedDay ? 'true' : 'false');
+            });
+
+            selectedWeekSummary.textContent = 'Week of ' + week.label + ' · ' + getWeekEventSummary(weekIndex);
+            selectedDateChip.textContent = '· Week ' + week.label;
+            selectedDateDisplay.textContent = formatSelectedDate(selectedDay);
+            selectedDateEvents.textContent = getEventText(selectedDay);
+            renderWeekTimeline(weekIndex);
+
+            console.log('Selected week: ' + week.label);
+        }
+
+        function buildWeekPicker() {
+            weekPicker.innerHTML = '';
+            weeks.forEach(function (week, index) {
+                var chip = document.createElement('button');
+                chip.type = 'button';
+                chip.className = 'week-chip';
+                chip.dataset.weekIndex = String(index);
+                chip.textContent = week.label;
+                chip.setAttribute('aria-label', 'Select week ' + week.label);
+                chip.setAttribute('aria-pressed', 'false');
+
+                if (todayDay >= week.start && todayDay <= week.end) {
+                    chip.classList.add('is-current');
+                }
+
+                chip.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    selectWeek(index);
+                });
+
+                weekPicker.appendChild(chip);
+            });
+        }
+
+        function selectDate(day) {
+            selectedDay = day;
+            selectedWeekIndex = getWeekIndexForDay(day);
+
+            monthGrid.querySelectorAll('.day-cell[data-day]').forEach(function (cell) {
+                cell.classList.toggle('is-selected', parseInt(cell.dataset.day, 10) === day);
+                cell.setAttribute('aria-pressed', cell.classList.contains('is-selected') ? 'true' : 'false');
+            });
+
+            weekPicker.querySelectorAll('.week-chip').forEach(function (chip) {
+                var index = parseInt(chip.dataset.weekIndex, 10);
+                chip.classList.toggle('is-selected', index === selectedWeekIndex);
+                chip.setAttribute('aria-pressed', index === selectedWeekIndex ? 'true' : 'false');
+            });
+
+            var label = formatSelectedDate(day);
+            var week = weeks[selectedWeekIndex];
+            selectedDateDisplay.textContent = label;
+            selectedDateEvents.textContent = getEventText(day);
+            selectedDateChip.textContent = '· ' + formatShortDate(day);
+            selectedWeekSummary.textContent = 'Week of ' + week.label + ' · ' + getWeekEventSummary(selectedWeekIndex);
+            renderWeekTimeline(selectedWeekIndex);
+
+            console.log('Selected date: ' + label);
+        }
+
+        function buildMonthGrid() {
+            monthGrid.innerHTML = '';
+            dayLabels.forEach(function (label) {
+                var el = document.createElement('div');
+                el.className = 'day-label';
+                el.textContent = label;
+                monthGrid.appendChild(el);
+            });
+
+            var firstWeekday = new Date(calendarYear, calendarMonth, 1).getDay();
+            var daysInMonth = new Date(calendarYear, calendarMonth + 1, 0).getDate();
+
+            for (var pad = 0; pad < firstWeekday; pad++) {
+                var empty = document.createElement('div');
+                empty.className = 'day-cell is-muted';
+                empty.setAttribute('aria-hidden', 'true');
+                monthGrid.appendChild(empty);
+            }
+
+            for (var day = 1; day <= daysInMonth; day++) {
+                var cell = document.createElement('button');
+                cell.type = 'button';
+                cell.className = 'day-cell';
+                cell.dataset.day = String(day);
+                cell.setAttribute('aria-label', formatSelectedDate(day));
+                cell.setAttribute('aria-pressed', 'false');
+
+                if (day === todayDay) cell.classList.add('is-today');
+                if (dayEvents[day]) cell.classList.add('has-event');
+
+                var eventPreview = dayEvents[day] ? dayEvents[day].split(' · ')[0] : '';
+                cell.innerHTML =
+                    '<span class="font-medium">' + day + '</span>' +
+                    (eventPreview ? '<p class="text-[10px] mt-1 text-on-surface-variant leading-tight line-clamp-2">' + eventPreview + '</p>' : '') +
+                    '<span class="event-dot" aria-hidden="true"></span>';
+
+                cell.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    selectDate(parseInt(this.dataset.day, 10));
+                });
+
+                monthGrid.appendChild(cell);
+            }
+
+            selectDate(selectedDay);
+        }
+
+        function switchCalendarView(view) {
+            document.querySelectorAll('.calendar-view-btn').forEach(function (btn) {
+                btn.classList.toggle('is-active', btn.dataset.view === view);
+            });
+
+            if (view === 'Week') {
+                weekView.classList.remove('is-hidden');
+                monthView.classList.add('is-hidden');
+                selectedWeekIndex = getWeekIndexForDay(selectedDay);
+                selectWeek(selectedWeekIndex);
+            } else {
+                weekView.classList.add('is-hidden');
+                monthView.classList.remove('is-hidden');
+            }
+
+            console.log('Switched to ' + view + ' view');
+        }
+
+        buildWeekPicker();
+        buildMonthGrid();
+
+        document.querySelectorAll('.calendar-view-btn').forEach(function (btn) {
+            btn.addEventListener('click', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                switchCalendarView(btn.dataset.view);
+            });
+        });
+
+        document.getElementById('calendar-prev').addEventListener('click', function (e) {
+            e.preventDefault();
+            var newIndex = selectedWeekIndex - 1;
+            if (newIndex >= 0) selectWeek(newIndex);
+        });
+
+        document.getElementById('calendar-next').addEventListener('click', function (e) {
+            e.preventDefault();
+            var newIndex = selectedWeekIndex + 1;
+            if (newIndex < weeks.length) selectWeek(newIndex);
+        });
+
+        document.querySelectorAll('.rsvp-btn').forEach(function (btn) {
+            btn.addEventListener('click', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                document.querySelectorAll('.rsvp-btn').forEach(function (other) {
+                    other.classList.toggle('is-active', other === btn);
+                });
+                if (rsvpStatus) {
+                    rsvpStatus.textContent = 'RSVP: ' + btn.dataset.rsvp;
+                }
+                console.log('RSVP set to ' + btn.dataset.rsvp);
+            });
+        });
+
+        document.getElementById('join-meeting-btn').addEventListener('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            window.open('https://meet.google.com/new', '_blank', 'noopener,noreferrer');
+        });
     });
-    </script><script>
+</script>
+<script>
     document.addEventListener('keydown', function(e) {
         if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
             e.preventDefault();
