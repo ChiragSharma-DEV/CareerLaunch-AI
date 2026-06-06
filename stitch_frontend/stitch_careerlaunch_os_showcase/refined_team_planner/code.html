@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CareerLaunch AI - Team Planner</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Subtle grid background for timeline area */
+        .timeline-grid {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
+
+        /* Panel inner top highlight */
+        .panel-highlight {
+            box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-surface": "#e5e2e1",
+                        "surface-bright": "#3a3939",
+                        "error": "#ffb4ab",
+                        "on-secondary": "#2f3033",
+                        "secondary-fixed": "#e3e2e6",
+                        "on-tertiary": "#2f3131",
+                        "secondary-container": "#46464a",
+                        "on-primary": "#2f3131",
+                        "inverse-on-surface": "#313030",
+                        "primary-fixed": "#e2e2e2",
+                        "error-container": "#93000a",
+                        "secondary": "#c7c6ca",
+                        "on-primary-fixed-variant": "#454747",
+                        "on-background": "#e5e2e1",
+                        "tertiary-container": "#e2e2e2",
+                        "surface-dim": "#141313",
+                        "primary-fixed-dim": "#c6c6c7",
+                        "on-secondary-fixed-variant": "#46464a",
+                        "tertiary-fixed": "#e2e2e2",
+                        "surface-tint": "#c6c6c7",
+                        "surface-container-highest": "#353434",
+                        "on-surface-variant": "#c4c7c8",
+                        "on-error-container": "#ffdad6",
+                        "on-tertiary-fixed": "#1a1c1c",
+                        "on-primary-fixed": "#1a1c1c",
+                        "surface": "#141313",
+                        "surface-variant": "#353434",
+                        "inverse-primary": "#5d5f5f",
+                        "surface-container": "#201f1f",
+                        "outline": "#8e9192",
+                        "on-secondary-container": "#b5b4b8",
+                        "surface-container-low": "#1c1b1b",
+                        "tertiary": "#ffffff",
+                        "outline-variant": "#444748",
+                        "surface-container-high": "#2a2a2a",
+                        "inverse-surface": "#e5e2e1",
+                        "tertiary-fixed-dim": "#c6c6c7",
+                        "primary-container": "#e2e2e2",
+                        "secondary-fixed-dim": "#c7c6ca",
+                        "surface-container-lowest": "#0e0e0e",
+                        "primary": "#ffffff",
+                        "on-tertiary-fixed-variant": "#454747",
+                        "on-tertiary-container": "#636565",
+                        "on-primary-container": "#636565",
+                        "on-error": "#690005",
+                        "background": "#141313",
+                        "on-secondary-fixed": "#1a1b1e"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-md": "16px",
+                        "gutter": "24px",
+                        "stack-lg": "32px",
+                        "margin-page": "40px",
+                        "panel-padding": "32px",
+                        "stack-sm": "8px",
+                        "container-max": "1280px"
+                    },
+                    "fontFamily": {
+                        "headline-sm": ["Geist"],
+                        "headline-md": ["Geist"],
+                        "label-caps": ["Geist"],
+                        "body-md": ["Geist"],
+                        "headline-md-mobile": ["Geist"],
+                        "body-lg": ["Geist"],
+                        "display-lg": ["Geist"]
+                    },
+                    "fontSize": {
+                        "headline-sm": ["24px", { "lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "headline-md": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "label-caps": ["12px", { "lineHeight": "1", "letterSpacing": "0.18em", "fontWeight": "500" }],
+                        "body-md": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "headline-md-mobile": ["28px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body-md antialiased overflow-hidden selection:bg-primary/20 selection:text-primary">
+<div class="relative z-10 flex h-screen w-full max-w-[1600px] mx-auto">
+<!-- SideNavBar Shared Component -->
+<nav class="hidden md:flex flex-col h-full p-stack-md bg-surface-container-lowest border-r border-white/5 w-64 flex-shrink-0 z-20">
+<!-- Brand -->
+<div class="px-4 py-6 mb-stack-lg">
+<h1 class="font-headline-sm text-headline-sm font-black text-primary tracking-tight">Executive Suite</h1>
+<p class="font-label-caps text-label-caps text-on-surface-variant mt-2 uppercase tracking-widest">Premium Tier</p>
+</div>
+<!-- Navigation Links -->
+<div class="flex flex-col gap-2 flex-grow">
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-primary px-4 py-3 hover:bg-white/5 transition-all rounded-lg group" href="#">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors" data-icon="dashboard">dashboard</span>
+<span class="font-body-md text-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-primary px-4 py-3 hover:bg-white/5 transition-all rounded-lg group" href="#">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors" data-icon="work_outline">work_outline</span>
+<span class="font-body-md text-body-md">Applications</span>
+</a>
+<!-- Active Item: Strategy (Best semantic fit for Planner) -->
+<a class="flex items-center gap-3 bg-white/10 text-primary rounded-lg px-4 py-3 transition-all shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05)]" href="#">
+<span class="material-symbols-outlined text-primary" data-icon="Insights">insights</span>
+<span class="font-body-md text-body-md font-medium">Strategy</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-primary px-4 py-3 hover:bg-white/5 transition-all rounded-lg group" href="#">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors" data-icon="description">description</span>
+<span class="font-body-md text-body-md">Resume Builder</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-primary px-4 py-3 hover:bg-white/5 transition-all rounded-lg group" href="#">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors" data-icon="settings">settings</span>
+<span class="font-body-md text-body-md">Settings</span>
+</a>
+</div>
+<!-- Footer Actions -->
+<div class="mt-auto pt-6 border-t border-white/5 flex flex-col gap-2">
+<button class="w-full py-3 mb-4 bg-primary text-on-primary rounded-lg font-body-md font-medium hover:bg-primary-fixed transition-colors">
+                    Upgrade to Pro
+                </button>
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-primary px-4 py-2 hover:bg-white/5 transition-all rounded-lg group" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="help_outline">help_outline</span>
+<span class="font-body-md text-body-md text-sm">Support</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-error px-4 py-2 hover:bg-error/10 transition-all rounded-lg group" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="logout">logout</span>
+<span class="font-body-md text-body-md text-sm">Log Out</span>
+</a>
+</div>
+</nav>
+<!-- Main Canvas -->
+<main class="flex-1 h-full overflow-y-auto overflow-x-hidden relative scroll-smooth bg-surface-container-low">
+<div class="p-4 md:p-margin-page max-w-7xl mx-auto w-full min-h-full flex flex-col">
+<!-- Page Header -->
+<header class="mb-stack-lg flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<h2 class="font-display-lg text-display-lg text-primary tracking-tight">Team Planner</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mt-2 max-w-2xl">Keep track of the bigger picture by viewing individual tasks and strategic meetings in one centralized calendar.</p>
+</div>
+</header>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter flex-grow">
+<!-- Left Column: Timeline / Calendar View (Span 7) -->
+<section class="lg:col-span-7 flex flex-col relative rounded-2xl border border-white/5 bg-surface/40 backdrop-blur-md overflow-hidden panel-highlight">
+<!-- Header / Controls for Timeline -->
+<div class="p-6 border-b border-white/5 flex justify-between items-center bg-surface-container-highest/30">
+<div class="flex items-center gap-4">
+<span class="font-headline-sm text-headline-sm text-primary">April 2024</span>
+<div class="flex bg-surface-container-highest rounded-lg p-1 border border-white/5">
+<button class="px-3 py-1 text-sm font-medium text-primary bg-white/10 rounded shadow-sm">Week</button>
+<button class="px-3 py-1 text-sm font-medium text-on-surface-variant hover:text-primary transition-colors">Month</button>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="p-2 rounded-full hover:bg-white/5 text-on-surface-variant transition-colors"><span class="material-symbols-outlined">chevron_left</span></button>
+<button class="p-2 rounded-full hover:bg-white/5 text-on-surface-variant transition-colors"><span class="material-symbols-outlined">chevron_right</span></button>
+</div>
+</div>
+<!-- Timeline Canvas Area -->
+<div class="flex-grow relative timeline-grid min-h-[500px]">
+<!-- Background Time Markers (Vertical lines logic) -->
+<div class="absolute left-0 top-0 bottom-0 w-16 border-r border-white/5 flex flex-col text-on-surface-variant font-label-caps text-[10px] text-right pr-2 pt-6 gap-12 opacity-50">
+<span>9 AM</span>
+<span>10 AM</span>
+<span>11 AM</span>
+<span>12 PM</span>
+<span>1 PM</span>
+<span>2 PM</span>
+</div>
+<!-- Horizontal 'current time' line -->
+<div class="absolute left-16 right-0 top-[35%] h-[1px] bg-error/30 z-0">
+<div class="absolute -left-1 -top-1 w-2 h-2 rounded-full bg-error shadow-[0_0_8px_rgba(255,180,171,0.6)]"></div>
+</div>
+<!-- Floating Glassmorphic Meeting Card (Hero Element) -->
+<div class="absolute left-24 top-16 w-80 bg-surface-container-high border border-white/10 rounded-xl p-5 shadow-lg transform transition-transform hover:-translate-y-1 cursor-pointer z-10 group panel-highlight">
+<div class="flex justify-between items-start mb-3">
+<div>
+<h3 class="font-headline-sm text-lg text-primary leading-tight mb-1">Design meeting</h3>
+<p class="font-body-md text-sm text-on-surface-variant">03:00 - 04:00 pm</p>
+<p class="font-body-md text-xs text-on-surface-variant opacity-70">Weekly on Monday</p>
+</div>
+<button class="text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity hover:text-primary"><span class="material-symbols-outlined text-[20px]">more_horiz</span></button>
+</div>
+<p class="font-body-md text-sm text-on-surface mb-5 leading-relaxed">Weekly review and refinement of core project prototypes prior to staging.</p>
+<div class="flex items-center justify-between mb-5">
+<button class="bg-primary/10 text-primary hover:bg-primary/20 border border-primary/20 px-4 py-1.5 rounded-full font-medium text-sm flex items-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-[16px]">videocam</span>
+                                        Join Meeting
+                                    </button>
+<button class="p-2 rounded-full hover:bg-white/5 text-on-surface-variant transition-colors" title="Copy Link"><span class="material-symbols-outlined text-[18px]">content_copy</span></button>
+</div>
+<div class="space-y-3 border-t border-white/5 pt-4">
+<div class="flex items-center gap-3 text-on-surface-variant text-sm">
+<span class="material-symbols-outlined text-[18px]">notifications</span>
+<span>10 minutes before</span>
+</div>
+<div class="flex items-center gap-3 text-on-surface-variant text-sm">
+<span class="material-symbols-outlined text-[18px]">group</span>
+<div class="flex items-center flex-grow">
+<span>8 guests</span>
+<div class="flex -space-x-2 ml-auto">
+<img alt="Avatar" class="w-6 h-6 rounded-full border-2 border-surface-container-high data-alt='A professional headshot of a person in a minimalist modern office setting, soft cinematic lighting, neutral background, high contrast, sharp focus.'" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVeIPXJuhHMRmFPtQKgmjDMRoOKf8v0VEDHDD46V5CBiwqvg_5hQ6tZVcAjLZGPLv4b7KSE0WAYOpYrvMEFW_a62eJXBqZIUpXyLvaDeUxqTDTW4zxC8LOqAY58rKLif1KFgxkQtXsJ5kmELPm8mAoGwsXfQiC-8Yx8KhljtCarhmAQkWzh6Wu_OpFai-1LUFAlyXm67a6JHbuXHp2eNYAGZ5dHgd8bOLPVkUnl1mOtSX2lIUtGe6oepGOhVhzRXznFRctm_kzv3yu"/>
+<img alt="Avatar" class="w-6 h-6 rounded-full border-2 border-surface-container-high data-alt='A professional headshot of a person in a minimalist modern office setting, soft cinematic lighting, neutral background, high contrast, sharp focus.'" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhKvvWxDFu1v9_Pyj75Tg8I9y3NZZ7lDlYysgQDagnR-C-906-fKjO3xcfu7oUi4gSacIHBtb_OF-N16_ffsZAhqnXSB-UiWoBq9q1Ig-nxSh97HeXGDpMO2X4RHzsgW3qhiL1ECv6suk885ZnhtAj47-p-EvIo0wsuEUuvd3e2S2-A-nXqNuLDcQdJ4GBcJcbupguc6rC8XfJEDJScNCPxqHsODZwGYCf2a3rpbuMCE3ecaQPipf4xfCiYW7Hl0NvSZvr5tDe8h2L"/>
+<img alt="Avatar" class="w-6 h-6 rounded-full border-2 border-surface-container-high data-alt='A professional headshot of a person in a minimalist modern office setting, soft cinematic lighting, neutral background, high contrast, sharp focus.'" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAvDw08Z9cADs_MP542n1NPRstY12u2acJqA6xSq6TzYzZLIW7u1shjGtWKf9SqFmQs9-Xtwcjy5tn9L4Pky5J5HXXlOPhGgF2erbj4tTgR76ps6Quk2WOYwenSE042Wskyrb51zb02cTMkfKY6_CIcGe0AHr3rKSGXDhk1dCMFJmutuPF6CRPSRSvWszwZ0lGXlMgfkaX_3g9Pyy2GLBiMNAittOnk90TZvzYyJznZsekclA9rpHCRYeZqijS7T_yAyCce_UBCgW_-"/>
+<div class="w-6 h-6 rounded-full bg-surface-container-highest border-2 border-surface-container-high flex items-center justify-center text-[8px] font-bold text-on-surface-variant">+5</div>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-5 flex items-center justify-between border-t border-white/5 pt-4">
+<span class="font-body-md text-sm text-on-surface-variant">Going?</span>
+<div class="flex gap-2">
+<button class="px-3 py-1 rounded-full border border-white/10 text-xs font-medium hover:bg-white/5 transition-colors bg-white/5 text-primary">Yes</button>
+<button class="px-3 py-1 rounded-full border border-white/10 text-xs font-medium text-on-surface-variant hover:bg-white/5 transition-colors">No</button>
+<button class="px-3 py-1 rounded-full border border-white/10 text-xs font-medium text-on-surface-variant hover:bg-white/5 transition-colors">Maybe</button>
+</div>
+</div>
+</div>
+<!-- Ghost Event Block (Contextual depth) -->
+<div class="absolute left-1/2 top-[40%] w-64 bg-surface-container/40 border border-white/5 rounded-lg p-4 opacity-60 z-0">
+<h4 class="font-headline-sm text-sm text-on-surface mb-1">Discuss detailed plans</h4>
+<p class="text-xs text-on-surface-variant">11:30 - 01:00 pm</p>
+</div>
+</div>
+</section>
+<!-- Right Column: Task Planner (Span 5) -->
+<section class="lg:col-span-5 flex flex-col h-full">
+<!-- "Today" Panel Container -->
+<div class="flex-grow bg-surface rounded-2xl border border-white/5 p-6 relative overflow-hidden flex flex-col shadow-lg panel-highlight">
+<header class="flex justify-between items-center mb-6 relative z-10">
+<h3 class="font-headline-md text-2xl text-primary flex items-center gap-3">
+                                    Today
+                                    <span class="px-2 py-0.5 rounded-full bg-surface-container-highest text-xs font-medium text-on-surface-variant border border-white/5">3</span>
+</h3>
+</header>
+<!-- Task List -->
+<div class="space-y-4 relative z-10 overflow-y-auto pr-2 custom-scrollbar">
+<!-- Task Card 1 (High Priority) -->
+<article class="bg-surface-container-low rounded-xl p-5 border border-white/5 hover:border-white/10 transition-colors group cursor-pointer relative shadow-[inset_0_1px_0_0_rgba(255,255,255,0.02)]">
+<div class="flex justify-between items-start mb-3">
+<span class="px-2.5 py-1 rounded bg-error/10 text-error font-label-caps text-[10px] uppercase tracking-wider font-semibold border border-error/20">High</span>
+<button class="text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity"><span class="material-symbols-outlined text-[18px]">more_horiz</span></button>
+</div>
+<h4 class="font-body-lg text-lg text-primary leading-snug mb-4">Refactor legacy code to improve maintainability</h4>
+<div class="flex justify-between items-end mt-auto">
+<div class="flex items-center gap-4 text-on-surface-variant text-sm">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">schedule</span> Apr 18</span>
+</div>
+<img alt="Assignee" class="w-7 h-7 rounded-full border border-white/10 data-alt='A professional headshot of a person in a minimalist modern office setting, soft cinematic lighting, neutral background, high contrast, sharp focus.'" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC7nzzhp0naTkdPX7LmcrkWR7-Azryy97OZIBC6D2zsYv7drOhtePdafwgXfD_AdCa9z1Aub6ZOh-G1Pf93cwhEn88q6eDGZ3kXEychktXDXqZIQfGHtDVnFY6Zq52uZ9HXCovP4SUOdWHuBZLmWWlNDc-bhbwVMVBVvYiXXPgyiZEX2GUCcRwL5z1XisGP-w5ZbwnafL0wKstYv5_50u2O8Gk1DBLnv7L15b-IvqAqo1fZ0U1anqdyCuTRikEjHYpihRhso6cVSE2O"/>
+</div>
+</article>
+<!-- Task Card 2 (Medium Priority) -->
+<article class="bg-surface-container-low rounded-xl p-5 border border-white/5 hover:border-white/10 transition-colors group cursor-pointer relative shadow-[inset_0_1px_0_0_rgba(255,255,255,0.02)]">
+<div class="flex justify-between items-start mb-3">
+<span class="px-2.5 py-1 rounded bg-amber-500/10 text-amber-400 font-label-caps text-[10px] uppercase tracking-wider font-semibold border border-amber-500/20">Medium</span>
+<button class="text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity"><span class="material-symbols-outlined text-[18px]">more_horiz</span></button>
+</div>
+<h4 class="font-body-lg text-lg text-primary leading-snug mb-4">Perform SEO audit and enhance web visibility</h4>
+<div class="flex justify-between items-end mt-auto">
+<div class="flex items-center gap-4 text-on-surface-variant text-sm">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">schedule</span> Apr 24</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">chat_bubble_outline</span> 4</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">attachment</span> 3</span>
+</div>
+<img alt="Assignee" class="w-7 h-7 rounded-full border border-white/10 data-alt='A professional headshot of a person in a minimalist modern office setting, soft cinematic lighting, neutral background, high contrast, sharp focus.'" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBvo0DTYlF4Iy3Pa9p3dmX-JUmy0cZQS8xSPeNWxthRtKE8onCKO-zc6iWyp7u7VBbMvHNuAYbItAlRTCdkw1Wyq6aadYi8GN3yGrwkvcvLl-2XMOWmSgKnVT94stSgSb5obF3ubbTAKEgzg-mOg_zacTCKPUpgYSzttZC6qu3Zj1pA4kc4lTscEEMfAZGO5ZAI8o47Gyiiitu_UIHiodM7KLpsgV24bot0K3fp_6tKCGIA4Xxrp-eoOrQTssMM_pe5nlBBxVAvoDcI"/>
+</div>
+</article>
+<!-- Task Card 3 (Completed / Dimmed state) -->
+<article class="bg-surface-container-lowest rounded-xl p-5 border border-white/5 opacity-60 group relative shadow-[inset_0_1px_0_0_rgba(255,255,255,0.01)]">
+<div class="absolute inset-0 bg-black/20 rounded-xl pointer-events-none"></div>
+<div class="flex justify-between items-start mb-3 relative z-10">
+<span class="px-2.5 py-1 rounded bg-white/5 text-on-surface-variant font-label-caps text-[10px] uppercase tracking-wider font-semibold border border-white/10">Low</span>
+<span class="material-symbols-outlined text-primary text-[20px]">check_circle</span>
+</div>
+<h4 class="font-body-lg text-lg text-on-surface-variant line-through leading-snug mb-4 relative z-10">Update landing page hero section with latest client quotes</h4>
+<div class="flex justify-between items-end mt-auto relative z-10">
+<div class="flex items-center gap-4 text-on-surface-variant text-sm">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">schedule</span> Done</span>
+</div>
+</div>
+</article>
+</div>
+<!-- "Create New Task" Quick Input at bottom -->
+<div class="mt-6 pt-4 border-t border-white/5 relative z-10">
+<div class="bg-background/50 rounded-lg border border-white/5 p-1 flex items-center focus-within:border-primary/50 focus-within:bg-surface-container transition-all">
+<span class="material-symbols-outlined text-on-surface-variant ml-2">add</span>
+<input class="w-full bg-transparent border-none text-body-md text-primary placeholder:text-on-surface-variant/50 focus:ring-0" placeholder="Quick add task..." type="text"/>
+</div>
+</div>
+</div>
+</section>
+</div>
+</div>
+</main>
+</div>
+<style>
+        /* Custom scrollbar for task list to keep it clean */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</body></html>
